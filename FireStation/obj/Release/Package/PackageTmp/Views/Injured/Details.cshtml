@@ -1,0 +1,75 @@
+﻿@model FireStation.Models.tbl_Injured
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_LayoutPannel.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>tbl_Injured</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.InjuredName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.InjuredName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.InjuredLastName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.InjuredLastName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.InjuredSex)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.InjuredSex)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.InjuredType)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.InjuredType)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.InjuredTypeinjury)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.InjuredTypeinjury)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.InjuredDescription)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.InjuredDescription)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.InjuredLocation)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.InjuredLocation)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.InjuredID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

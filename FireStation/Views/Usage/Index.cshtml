@@ -1,0 +1,64 @@
+﻿@model IEnumerable<FireStation.Models.tbl_Usage>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutPannel.cshtml";
+}
+
+<section id="html">
+    <div class="row">
+        @*<p class="offset-8">* جهت ویرایش حوادث به جزئیات بروید.</p>*@
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body collpase show">
+                    <div class="card-block card-dashboard table-responsive">
+                        <h5>نوع کاربری محل حادثه دیده</h5>
+                        <hr />
+                        <div class="btn-group offset-1">
+                            <button class="btn btn-outline-success">@Html.ActionLink("افزودن", "Create")</button>
+                        </div>
+                        <table class="table table-striped table-bordered sourced-data text-center">
+                            <thead class="bg-dark text-light">
+                                <tr>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.UsageId)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.UsageTitel)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.UsageDescription)
+                                    </th>
+                                    <th>
+                                        <a>عملیات</a>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.UsageId)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.UsageTitel)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.UsageDescription)
+                                        </td>
+                                        <td>
+                                            <button class="btn btn-outline-info">@Html.ActionLink("ویرایش", "Edit", new { id = item.UsageId })</button>
+                                            @*<button class="btn btn-outline-warning"> @Html.ActionLink("جزئیات", "Details", new { id = item.UsageId })</button>*@
+                                            <button class="btn btn-outline-danger">@Html.ActionLink("حذف", "Delete", new { id = item.UsageId })</button>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

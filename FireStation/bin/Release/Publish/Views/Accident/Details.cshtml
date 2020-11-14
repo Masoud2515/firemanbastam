@@ -1,0 +1,305 @@
+﻿@model FireStation.Models.tbl_Accident
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_LayoutPannel.cshtml";
+}
+
+<div class="card">
+    <div class="row justify-content-center">
+        <div class="col-lg-12 p-4">
+            <h4>جزئیات حادثه</h4>
+            <hr />
+            <div class="row justify-content-center">
+                <div class="col-lg-4">
+                    <lable class="label-control h6">
+                        @Html.DisplayNameFor(model => model.AccidentEventLocation)
+                    </lable>
+
+                    <p class="form-control">
+                        @Html.DisplayFor(model => model.AccidentEventLocation)
+                    </p>
+
+                    <lable class="label-control h6">
+                        @Html.DisplayNameFor(model => model.AccidentDescrption)
+                    </lable>
+
+                    <p class="form-control">
+                        @Html.DisplayFor(model => model.AccidentDescrption)
+                    </p>
+
+                    <lable class="label-control h6">
+                        @Html.DisplayNameFor(model => model.AccidentTime)
+                    </lable>
+
+                    <p class="form-control">
+                        @Html.DisplayFor(model => model.AccidentTime)
+                    </p>
+
+                    <lable class="label-control h6">
+                        @Html.DisplayNameFor(model => model.AccidentDate)
+                    </lable>
+
+                    <p class="form-control">
+                        @Html.DisplayFor(model => model.AccidentDate)
+                    </p>
+
+                    <lable class="label-control h6">
+                        @Html.DisplayNameFor(model => model.AccidentReportUrl)
+                    </lable>
+
+                    <p class="form-control">
+                        @Html.DisplayFor(model => model.AccidentReportUrl)
+                    </p>
+
+                    <lable class="label-control h6">
+                        @Html.DisplayNameFor(model => model.AccidentZone)
+                    </lable>
+
+                    <p class="form-control">
+                        @Html.DisplayFor(model => model.AccidentZone)
+                    </p>
+
+                    <lable class="label-control h6">
+                        @Html.DisplayNameFor(model => model.AccidentTimeStartOperation)
+                    </lable>
+
+                    <p class="form-control">
+                        @Html.DisplayFor(model => model.AccidentTimeStartOperation)
+                    </p>
+
+                    <lable class="label-control h6">
+                        @Html.DisplayNameFor(model => model.AccidentTimeEndOperation)
+                    </lable>
+
+                    <p class="form-control">
+                        @Html.DisplayFor(model => model.AccidentTimeEndOperation)
+                    </p>
+
+                    <lable class="label-control h6">
+                        @Html.DisplayNameFor(model => model.AccidentTimeToClear)
+                    </lable>
+
+                    <p class="form-control">
+                        @Html.DisplayFor(model => model.AccidentTimeToClear)
+                    </p>
+
+                    <lable class="label-control h6">
+                        @Html.DisplayNameFor(model => model.AccidentReporter)
+                    </lable>
+
+                    <p class="form-control">
+                        @Html.DisplayFor(model => model.AccidentReporter)
+                    </p>
+
+                    <lable class="label-control h6">
+                        @Html.DisplayNameFor(model => model.AccidentReportReciver)
+                    </lable>
+                    <p class="form-control">
+                        @Html.DisplayFor(model => model.AccidentReportReciver)
+                    </p>
+                </div>
+                <div class="col-lg-4">
+
+                    <lable class="label-control h6">
+                        @Html.DisplayNameFor(model => model.AccidentReportType)
+                    </lable>
+
+                    <p class="form-control">
+                        @Html.DisplayFor(model => model.AccidentReportType)
+                    </p>
+
+                    @*<lable class="label-control h6">
+                            @Html.DisplayNameFor(model => model.AccidentOperatingStation)
+                        </lable class="label-control h6">
+
+                        <p class="form-control">
+                            @Html.DisplayFor(model => model.AccidentOperatingStation)
+                        </p class="form-control">*@
+
+                    <lable class="label-control h6">
+                        @Html.DisplayNameFor(model => model.AccidentSiteFloors)
+                    </lable>
+
+                    <p class="form-control">
+                        @Html.DisplayFor(model => model.AccidentSiteFloors)
+                    </p>
+
+                    <lable class="label-control h6">
+                        @Html.DisplayNameFor(model => model.AccidentBuildingType)
+                    </lable>
+
+                    <p class="form-control">
+                        @Html.DisplayFor(model => model.AccidentBuildingType)
+                    </p>
+
+                    <lable class="label-control h6">
+                        @Html.DisplayNameFor(model => model.AccidentBuildingOwner)
+                    </lable>
+
+                    <p class="form-control">
+                        @Html.DisplayFor(model => model.AccidentBuildingOwner)
+                    </p>
+
+                    <lable class="label-control h6">
+                        @Html.DisplayNameFor(model => model.AccidentBuildingTel)
+                    </lable>
+
+                    <p class="form-control">
+                        @Html.DisplayFor(model => model.AccidentBuildingTel)
+                    </p>
+
+                    <lable class="label-control h6">
+                        @Html.DisplayNameFor(model => model.AccidentBuildingTenant)
+                    </lable>
+
+                    <p class="form-control">
+                        @Html.DisplayFor(model => model.AccidentBuildingTenant)
+                    </p>
+
+                    <lable class="label-control h6">
+                        @Html.DisplayNameFor(model => model.AccidentOtherType)
+                    </lable>
+
+                    <p class="form-control">
+                        @Html.DisplayFor(model => model.AccidentOtherType)
+                    </p>
+
+                    <lable class="label-control h6">
+                        @Html.DisplayNameFor(model => model.AccidentPreliminaryMeasures)
+                    </lable>
+
+                    <p class="form-control">
+                        @Html.DisplayFor(model => model.AccidentPreliminaryMeasures)
+                    </p>
+
+                    <lable class="label-control h6">
+                        @Html.DisplayNameFor(model => model.AccidentDescriptionOperation)
+                    </lable>
+
+                    <p class="form-control">
+                        @Html.DisplayFor(model => model.AccidentDescriptionOperation)
+                    </p>
+                </div>
+                <div class="col-lg-4">
+                    <lable class="label-control h6">
+                        @Html.DisplayNameFor(model => model.AccidentDamageDescriptionO)
+                    </lable>
+
+                    <p class="form-control">
+                        @Html.DisplayFor(model => model.AccidentDamageDescriptionO)
+                    </p>
+
+                    <lable class="label-control h6">
+                        @Html.DisplayNameFor(model => model.AccidentDamageDescriptionL)
+                    </lable>
+
+                    <p class="form-control">
+                        @Html.DisplayFor(model => model.AccidentDamageDescriptionL)
+                    </p>
+
+                    <lable class="label-control h6">
+                        @Html.DisplayNameFor(model => model.AccidentReportProducer)
+                    </lable>
+
+                    <p class="form-control">
+                        @Html.DisplayFor(model => model.AccidentReportProducer)
+                    </p>
+
+                    <lable class="label-control h6">
+                        @Html.DisplayNameFor(model => model.AccidentOperationsCommander)
+                    </lable>
+
+                    <p class="form-control">
+                        @Html.DisplayFor(model => model.AccidentOperationsCommander)
+                    </p>
+
+                    @*<lable class="label-control h6">
+                            @Html.DisplayNameFor(model => model.AccidentEmplyoee)
+                        </lable class="label-control h6">
+
+                        <p class="form-control">
+                            @Html.DisplayFor(model => model.AccidentEmplyoee)
+                        </p class="form-control">
+
+                    <lable class="label-control h6">
+                        @Html.DisplayNameFor(model => model.DateAp class="form-control")
+                    </lable>
+
+                    <p class="form-control">
+                        @Html.DisplayFor(model => model.DateAp class="form-control")
+                    </p>
+
+                    <lable class="label-control h6">
+                        @Html.DisplayNameFor(model => model.AccidentOperationProblems)
+                    </lable>
+
+                    <p class="form-control">
+                        @Html.DisplayFor(model => model.AccidentOperationProblems)
+                    </p>
+
+                    @*<lable class="label-control h6">
+                            @Html.DisplayNameFor(model => model.AccidentORID)
+                        </lable class="label-control h6">
+
+                        <p class="form-control">
+                            @Html.DisplayFor(model => model.AccidentORID)
+                        </p class="form-control">
+
+                        <lable class="label-control h6">
+                            @Html.DisplayNameFor(model => model.AccidentInjured)
+                        </lable class="label-control h6">
+
+                        <p class="form-control">
+                            @Html.DisplayFor(model => model.AccidentInjured)
+                        </p class="form-control">
+
+                    <lable class="label-control h6">
+                        @Html.DisplayNameFor(model => model.tbl_AccidentType.AccidentTypeTitel)
+                    </lable>
+
+                    <p class="form-control">
+                        @Html.DisplayFor(model => model.tbl_AccidentType.AccidentTypeTitel)
+                    </p>
+
+                    <lable class="label-control h6">
+                        @Html.DisplayNameFor(model => model.tbl_Usage.UsageTitel)
+                    </lable>
+
+                    <p class="form-control">
+                        @Html.DisplayFor(model => model.tbl_Usage.UsageTitel)
+                    </p>
+
+                    <lable class="label-control h6">
+                        @Html.DisplayNameFor(model => model.tbl_weather.WeatherTitel)
+                    </lable>
+
+                    <p class="form-control">
+                        @Html.DisplayFor(model => model.tbl_weather.WeatherTitel)
+                    </p>
+
+                    <lable class="label-control h6">
+                        @Html.DisplayNameFor(model => model.tbl_User.UserUserName)
+                    </lable>
+
+                    <p class="form-control">
+                        @Html.DisplayFor(model => model.tbl_User.UserUserName)
+                    </p>*@
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-5 justify-content-center">
+        <div class="col-2">
+            <a class="btn btn-outline-primary btn-block" href="~/Accident/Edit/@Model.AccidentId">
+                ویرایش
+            </a>
+        </div>
+        <div class="col-2">
+            <a class="btn btn-outline-dark btn-block" href="~/Accident">بازگشت</a>
+        </div>
+    </div>
+</div>
+    </div>
+</div>

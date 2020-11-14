@@ -1,0 +1,109 @@
+﻿@model IEnumerable<FireStation.Models.tbl_Injured>
+
+@{
+    //ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutPannel.cshtml";
+}
+
+<section id="html">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body collpase show">
+                    <div class="card-block card-dashboard table-responsive">
+                        <h5>فهرست مصدومین</h5>
+                        <hr />
+                        <div class="btn-group offset-1">
+                            <button class="btn btn-outline-success">@Html.ActionLink("افزودن", "Create")</button>
+                        </div>
+                        <table class="table table-striped table-bordered sourced-data text-center" cellspacing="0" style="width:100%;">
+                            <thead class="bg-dark text-light">
+                                <tr>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.InjuredName)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.InjuredLastName)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.InjuredSex)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.InjuredType)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.InjuredTypeinjury)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.InjuredDescription)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.InjuredLocation)
+                                    </th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.InjuredName)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.InjuredLastName)
+                                        </td>
+                                        <td>
+                                            @if (item.InjuredSex == true)
+                                            {
+                                                <a>مرد</a>
+                                            }
+                                            else
+                                            {
+                                                <a>زن</a>
+                                            }
+                                        </td>
+                                        <td>
+                                            @if (item.InjuredType == true)
+                                            {
+                                                <a>مامور</a>
+                                            }
+                                            else
+                                            {
+                                                <a>غیر مامور</a>
+                                            }
+                                        </td>
+                                        <td>
+                                            @if (item.InjuredTypeinjury == true)
+                                            {
+                                                <a>مجروح</a>
+
+                                            }
+                                            else
+                                            {
+                                                <a>متوفی</a>
+
+                                            }
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.InjuredDescription)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.InjuredLocation)
+                                        </td>
+                                        <td>
+                                            <button class="btn btn-outline-info"> @Html.ActionLink("ویرایش", "Edit", new { id = item.InjuredID }) </button>
+                                            <button class="btn btn-outline-warning"> @Html.ActionLink("جزئیات", "Details", new { id = item.InjuredID }) </button>
+                                            <button class="btn btn-outline-danger"> @Html.ActionLink("حذف", "Delete", new { id = item.InjuredID }) </button>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,270 @@
+﻿@model FireStation.Models.tbl_ShiftRegister
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_LayoutPannel.cshtml";
+}
+<style>
+
+    .align-self-center {
+        -webkit-align-self: center !important;
+        -ms-flex-item-align: center !important;
+        -ms-grid-row-align: center !important;
+        align-self: center !important;
+    }
+
+    .image-uploader {
+        min-height: 10rem;
+        border: 2px dashed #d9d9d9;
+        position: relative;
+        border-radius: 20px;
+    }
+
+        .image-uploader input[type=file] {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            opacity: 0;
+            right: 0 !important;
+        }
+
+    form .form-control {
+        border: 1px solid #A6A9AE;
+        color: #75787D;
+    }
+
+    .image-uploader .uploaded {
+        padding: .5rem;
+        line-height: 0;
+    }
+
+    .radius12 {
+        border-radius: 20px !important;
+    }
+</style>
+@using (Html.BeginForm("Create", "ShiftRegister", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="card">
+        <div class="row">
+            <div class="col-lg-12 p-4">
+                <h4>افزودن گزارش شیفت</h4>
+                <hr />
+                <form class="form-control">
+                    <div class="row justify-content-center">
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label h6">نام ایستگاه</label><span class="required text-danger">*</span>
+                                <select class="form-control border-primary selectpicker" data-live-search="true" onchange="javascript:GetShift(this.value);" required>
+                                    @foreach (var item in ViewBag.OpState)
+                                    {
+                                        <option value="@item.StateId">@item.StateName</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label h6">نام شیفت</label><span class="required text-danger">*</span>
+                                <select id="Shift725" class="form-control border-primary" name="ShiftRegisterShifId" onchange="javascript:GetEmployee(this.value);" required>
+                                    @foreach (var item in ViewBag.shiftname)
+                                    {
+
+                                        <option value="@item.ShiftId">@item.ShiftName</option>
+                                    }
+                                </select>
+                                @Html.ValidationMessageFor(model => model.ShiftRegisterShifId, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                    <h4 class="form-section">
+                        <i class="ft-clock"></i>
+                    </h4>
+                    <div class="row justify-content-center">
+                        <div class="col-lg-3">
+                            <label class="h6"> از ساعت:</label>
+                            <input type="time" class="form-control border-primary" value="07:30" name="ShiftRegisterTimeEnd" />
+                            @Html.ValidationMessageFor(model => model.ShiftRegisterTimeStart, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col-lg-3">
+                            <label class="h6"> از تاریخ:</label><span class="required text-danger">*</span>
+                            <div class="form-group">
+                                <div class="input-group datepiker">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text" data-MdDateTimePicker="true" data-TargetSelector="#inlineFormInputGroup" data-EnableTimePicker="false" data-Placement="left" data-Trigger="click"><img src="~/Content/calendar-512.png" alt="cal" width="20" height="20" /></div>
+                                    </div>
+                                    <input type="text" class="form-control border-primary" name="ShiftRegisterDateStart" id="inlineFormInputGroup" data-MdDateTimePicker="true" data-TargetSelector="#inlineFormInputGroup" data-EnableTimePicker="false" data-Placement="left" data-Trigger="click" placeholder="تاریخ" dir="ltr" required>
+                                </div>
+                            </div>
+                            @Html.ValidationMessageFor(model => model.ShiftRegisterDateStart, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col-lg-3">
+                            <label class="h6"> تا ساعت:</label>
+                            <input type="time" value="07:30" name="ShiftRegisterTimeEnd" class="form-control border-primary" />
+                            @Html.ValidationMessageFor(model => model.ShiftRegisterTimeEnd, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col-lg-3">
+                            <label class="h6"> تا تاریخ:</label><span class="required text-danger">*</span>
+                            <div class="form-group">
+                                <div class="input-group datepiker">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text" data-MdDateTimePicker="true" data-TargetSelector="#inlineFormInputGroup1" data-EnableTimePicker="false" data-Placement="left" data-Trigger="click"><img src="~/Content/calendar-512.png" alt="cal" width="20" height="20" /></div>
+                                    </div>
+                                    <input type="text" class="form-control border-primary" name="ShiftRegisteridDateEnd" id="inlineFormInputGroup1" data-MdDateTimePicker="true" data-TargetSelector="#inlineFormInputGroup1" data-EnableTimePicker="false" data-Placement="left" data-Trigger="click" placeholder="تاریخ" dir="ltr" required>
+                                </div>
+                            </div>
+                            @Html.ValidationMessageFor(model => model.ShiftRegisteridDateEnd, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col-lg-12">
+                            @Html.LabelFor(model => model.ShiftRegisterDec, htmlAttributes: new { @class = "control-label h6" })
+                            <textarea class="form-control border-primary" rows="5" name="ShiftRegisterDec"></textarea>
+                            @Html.ValidationMessageFor(model => model.ShiftRegisterDec, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="row mt-5 justify-content-center">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label h6" for="projectinput6">فرمانده شیفت</label><span class="required text-danger">*</span>
+                                <select id="projectinput6" name="ShiftRegisterCommandor" class="form-control border-primary selectpicker" data-live-search="true" required>
+                                    @foreach (var item in ViewBag.Emp)
+                                    {
+                                        <option value="@item.EmployeeId">@item.EmployeeName  @item.EmployeeLastName </option>
+                                    }
+                                </select>
+                                @Html.ValidationMessageFor(model => model.ShiftRegisterCommandor, "", new { @class = "text-danger" })
+
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="row justify-content-center mt-3">
+                                <div class="col-md-6 m-auto">
+                                    <div class="align-self-center halfway-fab text-center">
+                                        <h6>آپلود فایل اسکن شده گزارش</h6>
+                                        <div class="image-uploader">
+                                            <input type="file"
+                                                   accept="image/*"
+                                                   id="file-input"
+                                                   name="ShiftRegisterurl"
+                                                   class="form-control"
+                                                   value="Select"
+                                                   placeholder="Select">
+                                            <div class="uploaded">
+                                                <img src=""
+                                                     alt=""
+                                                     id="image-previewer"
+                                                     class="img-fluid radius12">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12 m-auto">
+                                    <div class="text-center mt-2">
+                                        <h6 class="font1">
+                                            برای تغییر تصویر خود ،
+                                            تصویر جدید رو داخل کادر
+                                            بیاندازید یا بر روی عکس کلیک
+                                            کنید
+                                        </h6>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="row mt-5 justify-content-center">
+                        <label class="h6"> نفرات حاضر در شیفت:</label>
+
+                        <table class="table table-striped table-bordered sourced-data text-center">
+                            <thead class="bg-dark text-light">
+                                <tr>
+                                    <th>
+                                        ردیف
+                                    </th>
+                                    <th>
+                                        نام و نام خانوادگی
+                                    </th>
+                                    <th>
+                                        کد ملی
+                                    </th>
+                                    <th>وضعیت</th>
+                                </tr>
+                            </thead>
+                            <tbody id="Emp725">
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="row mt-5 justify-content-center">
+                        <div class="col-2">
+                            <input class="btn btn-success btn-block" type="submit" value="ثبت" />
+                        </div>
+                        <div class="col-2">
+                            <a class="btn btn-outline-dark btn-block" href="~/ShiftRegister">بازگشت</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+}
+<!---------------ShiftRegisterurl Preview------------------>
+<script>
+    $(document).ready(function () {
+        $(function () {
+            $('#file-input').imoViewer({
+                'preview': '#image-previewer',
+            })
+        });
+    });
+</script>
+<script src="~/Content/vendors/js/jquery-ui.min.js"></script>
+<script language="javascript" type="text/javascript">
+    function GetShift(_stateId) {
+        var procemessage = "<option value='0'> Please wait...</option>";
+        $("#Shift725").html(procemessage).show();
+        var url = "/ShiftRegister/GetShiftByStateId/";
+
+        $.ajax({
+            url: url,
+            data: { Eid: _stateId },
+            cache: false,
+            type: "POST",
+            success: function (data) {
+                var markup = "<option value='0' selected hidden >انتخاب شیفت</option>";
+                for (var x = 0; x < data.length; x++) {
+                    markup += "<option value=" + data[x].Value + ">" + data[x].Text + "</option>";
+                }
+                $("#Shift725").html(markup).show();
+            },
+            error: function (reponse) {
+                alert("error : " + reponse);
+            }
+        });
+    }
+    function GetEmployee(_ShiftId) {
+        var procemessage = " Please wait...";
+        $("#Emp725").html(procemessage).show();
+        var url = "/ShiftRegister/GetshiftEmployee/";
+
+        $.ajax({
+            url: url,
+            data: { Eid: _ShiftId },
+            cache: false,
+            type: "POST",
+            success: function (data) {
+                var markup = "<tr>";
+                for (var x = 0; x < data.length; x++) {
+                    markup += "<td>" + data[x].Text + "</td>";
+                }
+                markup += "</tr>";
+                $("#Emp725").html(markup).show();
+            },
+            error: function (reponse) {
+                alert("error : " + reponse);
+            }
+        });
+    }
+</script>

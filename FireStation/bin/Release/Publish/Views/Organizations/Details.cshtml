@@ -1,0 +1,47 @@
+﻿@model FireStation.Models.tbl_Organizations
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_LayoutPannel.cshtml";
+}
+
+<h2>جزئیات</h2>
+
+<div>
+    <h4>سازمان</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.OrTel)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.OrTel)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.OrTitel)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.OrTitel)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.OrAdress)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.OrAdress)
+        </dd>
+
+    </dl>
+</div>
+<div class="row mt-5 justify-content-center">
+    <div class="col-2">
+        <button class="btn btn-outline-info btn-block">@Html.ActionLink("ویرایش", "Edit", new { id = Model.OrId })</button>
+    </div>
+    <div class="col-2">
+        <a class="btn btn-outline-dark btn-block" href="~/Organizations">بازگشت</a>
+    </div>
+</div>

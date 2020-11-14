@@ -1,0 +1,311 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="FireStationModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="tbl_Accidence">
+    <Key>
+      <PropertyRef Name="AccidenceId" />
+    </Key>
+    <Property Name="AccidenceId" Type="Int32" Nullable="false" />
+    <Property Name="AccidenceTitel" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="AccidenceDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="tbl_Accident" Relationship="Self.FK_tbl_Accident_tbl_Accidence" FromRole="tbl_Accidence" ToRole="tbl_Accident" />
+  </EntityType>
+  <EntityType Name="tbl_Accident">
+    <Key>
+      <PropertyRef Name="AccidentId" />
+    </Key>
+    <Property Name="AccidentId" Type="Int32" Nullable="false" />
+    <Property Name="AccidentTitel" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="AccidentDescrption" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="AccidentTime" Type="Time" Nullable="false" Precision="7" />
+    <Property Name="AccidentDate" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="AccidentReportUrl" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="AccidentWid" Type="Int32" Nullable="false" />
+    <Property Name="AccidentTypeId" Type="Int32" Nullable="false" />
+    <Property Name="AccidentZone" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+    <Property Name="AccidentUserId" Type="Int32" Nullable="false" />
+    <Property Name="AccidentUsageId" Type="Int32" Nullable="false" />
+    <Property Name="AccidentAccidenceId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="tbl_Accidence" Relationship="Self.FK_tbl_Accident_tbl_Accidence" FromRole="tbl_Accident" ToRole="tbl_Accidence" />
+    <NavigationProperty Name="tbl_AccidentType" Relationship="Self.FK_tbl_Accident_tbl_AccidentType" FromRole="tbl_Accident" ToRole="tbl_AccidentType" />
+    <NavigationProperty Name="tbl_Usage" Relationship="Self.FK_tbl_Accident_tbl_Usage" FromRole="tbl_Accident" ToRole="tbl_Usage" />
+    <NavigationProperty Name="tbl_weather" Relationship="Self.FK_tbl_Accident_tbl_weather" FromRole="tbl_Accident" ToRole="tbl_weather" />
+    <NavigationProperty Name="tbl_User" Relationship="Self.FK_tbl_Accident_tbl_User" FromRole="tbl_Accident" ToRole="tbl_User" />
+    <NavigationProperty Name="tbl_Employee" Relationship="Self.tbl_AccidentEmplyoee" FromRole="tbl_Accident" ToRole="tbl_Employee" />
+    <NavigationProperty Name="tbl_Material" Relationship="Self.tbl_UsedMaterial" FromRole="tbl_Accident" ToRole="tbl_Material" />
+    <NavigationProperty Name="tbl_Organizations" Relationship="Self.tbl_UsedOrganizations" FromRole="tbl_Accident" ToRole="tbl_Organizations" />
+  </EntityType>
+  <EntityType Name="tbl_AccidentType">
+    <Key>
+      <PropertyRef Name="AccidentTypeId" />
+    </Key>
+    <Property Name="AccidentTypeId" Type="Int32" Nullable="false" />
+    <Property Name="AccidentTypeTitel" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="tbl_Accident" Relationship="Self.FK_tbl_Accident_tbl_AccidentType" FromRole="tbl_AccidentType" ToRole="tbl_Accident" />
+  </EntityType>
+  <EntityType Name="tbl_Employee">
+    <Key>
+      <PropertyRef Name="EmployeeId" />
+    </Key>
+    <Property Name="EmployeeId" Type="Int32" Nullable="false" />
+    <Property Name="EmployeeCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="EmployeeName" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="EmployeeLastName" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="EmployeePhone" Type="String" MaxLength="15" FixedLength="true" Unicode="true" Nullable="false" />
+    <Property Name="EmployeeAdress" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="EmployeePicUrl" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="tbl_User" Relationship="Self.FK_tbl_User_tbl_Employee" FromRole="tbl_Employee" ToRole="tbl_User" />
+    <NavigationProperty Name="tbl_Accident" Relationship="Self.tbl_AccidentEmplyoee" FromRole="tbl_Employee" ToRole="tbl_Accident" />
+    <NavigationProperty Name="tbl_State" Relationship="Self.tbl_StateEmployee" FromRole="tbl_Employee" ToRole="tbl_State" />
+  </EntityType>
+  <EntityType Name="tbl_Material">
+    <Key>
+      <PropertyRef Name="MaterialId" />
+    </Key>
+    <Property Name="MaterialId" Type="Int32" Nullable="false" />
+    <Property Name="MaterialCode" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+    <Property Name="MaterialName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="MaterialPic" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="tbl_Repair" Relationship="Self.tbl_MaterialRepair" FromRole="tbl_Material" ToRole="tbl_Repair" />
+    <NavigationProperty Name="tbl_Accident" Relationship="Self.tbl_UsedMaterial" FromRole="tbl_Material" ToRole="tbl_Accident" />
+  </EntityType>
+  <EntityType Name="tbl_Missives">
+    <Key>
+      <PropertyRef Name="MissiveId" />
+    </Key>
+    <Property Name="MissiveId" Type="Int32" Nullable="false" />
+    <Property Name="MissiveTitel" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="MissiveText" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="MissiveFileUrl" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="MissiveDate" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="MissiveNumber" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+    <Property Name="MissiveUserId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="tbl_User" Relationship="Self.FK_tbl_Missives_tbl_User" FromRole="tbl_Missives" ToRole="tbl_User" />
+  </EntityType>
+  <EntityType Name="tbl_Organizations">
+    <Key>
+      <PropertyRef Name="OrId" />
+    </Key>
+    <Property Name="OrId" Type="Int32" Nullable="false" />
+    <Property Name="OrTel" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="OrTitel" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="OrAdress" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="tbl_Accident" Relationship="Self.tbl_UsedOrganizations" FromRole="tbl_Organizations" ToRole="tbl_Accident" />
+  </EntityType>
+  <EntityType Name="tbl_Repair">
+    <Key>
+      <PropertyRef Name="RepairId" />
+    </Key>
+    <Property Name="RepairId" Type="Int32" Nullable="false" />
+    <Property Name="RepairDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="RepairPrice" Type="Int32" Nullable="false" />
+    <Property Name="RepairTitel" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="tbl_Material" Relationship="Self.tbl_MaterialRepair" FromRole="tbl_Repair" ToRole="tbl_Material" />
+  </EntityType>
+  <EntityType Name="tbl_State">
+    <Key>
+      <PropertyRef Name="StateId" />
+    </Key>
+    <Property Name="StateId" Type="Int32" Nullable="false" />
+    <Property Name="StateName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="StateAdress" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="StateTel" Type="String" MaxLength="20" FixedLength="true" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="tbl_Employee" Relationship="Self.tbl_StateEmployee" FromRole="tbl_State" ToRole="tbl_Employee" />
+  </EntityType>
+  <EntityType Name="tbl_Usage">
+    <Key>
+      <PropertyRef Name="UsageId" />
+    </Key>
+    <Property Name="UsageId" Type="Int32" Nullable="false" />
+    <Property Name="UsageTitel" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="UsageDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="tbl_Accident" Relationship="Self.FK_tbl_Accident_tbl_Usage" FromRole="tbl_Usage" ToRole="tbl_Accident" />
+  </EntityType>
+  <EntityType Name="tbl_weather">
+    <Key>
+      <PropertyRef Name="WeatherId" />
+    </Key>
+    <Property Name="WeatherId" Type="Int32" Nullable="false" />
+    <Property Name="WeatherTitel" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="WeatherDec" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="tbl_Accident" Relationship="Self.FK_tbl_Accident_tbl_weather" FromRole="tbl_weather" ToRole="tbl_Accident" />
+  </EntityType>
+  <EntityType Name="tbl_User">
+    <Key>
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="UserId" Type="Int32" Nullable="false" />
+    <Property Name="UserUserName" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+    <Property Name="UserPassword" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="EmployeeId" Type="Int32" Nullable="false" />
+    <Property Name="UserRole" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="tbl_Accident" Relationship="Self.FK_tbl_Accident_tbl_User" FromRole="tbl_User" ToRole="tbl_Accident" />
+    <NavigationProperty Name="tbl_Employee" Relationship="Self.FK_tbl_User_tbl_Employee" FromRole="tbl_User" ToRole="tbl_Employee" />
+    <NavigationProperty Name="tbl_Missives" Relationship="Self.FK_tbl_Missives_tbl_User" FromRole="tbl_User" ToRole="tbl_Missives" />
+  </EntityType>
+  <Association Name="FK_tbl_Accident_tbl_Accidence">
+    <End Role="tbl_Accidence" Type="Self.tbl_Accidence" Multiplicity="1" />
+    <End Role="tbl_Accident" Type="Self.tbl_Accident" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_Accidence">
+        <PropertyRef Name="AccidenceId" />
+      </Principal>
+      <Dependent Role="tbl_Accident">
+        <PropertyRef Name="AccidentAccidenceId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tbl_Accident_tbl_AccidentType">
+    <End Role="tbl_AccidentType" Type="Self.tbl_AccidentType" Multiplicity="1" />
+    <End Role="tbl_Accident" Type="Self.tbl_Accident" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_AccidentType">
+        <PropertyRef Name="AccidentTypeId" />
+      </Principal>
+      <Dependent Role="tbl_Accident">
+        <PropertyRef Name="AccidentTypeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tbl_Accident_tbl_Usage">
+    <End Role="tbl_Usage" Type="Self.tbl_Usage" Multiplicity="1" />
+    <End Role="tbl_Accident" Type="Self.tbl_Accident" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_Usage">
+        <PropertyRef Name="UsageId" />
+      </Principal>
+      <Dependent Role="tbl_Accident">
+        <PropertyRef Name="AccidentUsageId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tbl_Accident_tbl_weather">
+    <End Role="tbl_weather" Type="Self.tbl_weather" Multiplicity="1" />
+    <End Role="tbl_Accident" Type="Self.tbl_Accident" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_weather">
+        <PropertyRef Name="WeatherId" />
+      </Principal>
+      <Dependent Role="tbl_Accident">
+        <PropertyRef Name="AccidentWid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tbl_Accident_tbl_User">
+    <End Role="tbl_User" Type="Self.tbl_User" Multiplicity="1" />
+    <End Role="tbl_Accident" Type="Self.tbl_Accident" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_User">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="tbl_Accident">
+        <PropertyRef Name="AccidentUserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tbl_User_tbl_Employee">
+    <End Role="tbl_Employee" Type="Self.tbl_Employee" Multiplicity="1" />
+    <End Role="tbl_User" Type="Self.tbl_User" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_Employee">
+        <PropertyRef Name="EmployeeId" />
+      </Principal>
+      <Dependent Role="tbl_User">
+        <PropertyRef Name="EmployeeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tbl_Missives_tbl_User">
+    <End Role="tbl_User" Type="Self.tbl_User" Multiplicity="1" />
+    <End Role="tbl_Missives" Type="Self.tbl_Missives" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_User">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="tbl_Missives">
+        <PropertyRef Name="MissiveUserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="tbl_AccidentEmplyoee">
+    <End Role="tbl_Accident" Type="Self.tbl_Accident" Multiplicity="*" />
+    <End Role="tbl_Employee" Type="Self.tbl_Employee" Multiplicity="*" />
+  </Association>
+  <Association Name="tbl_MaterialRepair">
+    <End Role="tbl_Material" Type="Self.tbl_Material" Multiplicity="*" />
+    <End Role="tbl_Repair" Type="Self.tbl_Repair" Multiplicity="*" />
+  </Association>
+  <Association Name="tbl_StateEmployee">
+    <End Role="tbl_Employee" Type="Self.tbl_Employee" Multiplicity="*" />
+    <End Role="tbl_State" Type="Self.tbl_State" Multiplicity="*" />
+  </Association>
+  <Association Name="tbl_UsedMaterial">
+    <End Role="tbl_Accident" Type="Self.tbl_Accident" Multiplicity="*" />
+    <End Role="tbl_Material" Type="Self.tbl_Material" Multiplicity="*" />
+  </Association>
+  <Association Name="tbl_UsedOrganizations">
+    <End Role="tbl_Accident" Type="Self.tbl_Accident" Multiplicity="*" />
+    <End Role="tbl_Organizations" Type="Self.tbl_Organizations" Multiplicity="*" />
+  </Association>
+  <EntityContainer Name="FireStationEntities1" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="tbl_Accidence" EntityType="Self.tbl_Accidence" />
+    <EntitySet Name="tbl_Accident" EntityType="Self.tbl_Accident" />
+    <EntitySet Name="tbl_AccidentType" EntityType="Self.tbl_AccidentType" />
+    <EntitySet Name="tbl_Employee" EntityType="Self.tbl_Employee" />
+    <EntitySet Name="tbl_Material" EntityType="Self.tbl_Material" />
+    <EntitySet Name="tbl_Missives" EntityType="Self.tbl_Missives" />
+    <EntitySet Name="tbl_Organizations" EntityType="Self.tbl_Organizations" />
+    <EntitySet Name="tbl_Repair" EntityType="Self.tbl_Repair" />
+    <EntitySet Name="tbl_State" EntityType="Self.tbl_State" />
+    <EntitySet Name="tbl_Usage" EntityType="Self.tbl_Usage" />
+    <EntitySet Name="tbl_weather" EntityType="Self.tbl_weather" />
+    <EntitySet Name="tbl_User" EntityType="Self.tbl_User" />
+    <AssociationSet Name="FK_tbl_Accident_tbl_Accidence" Association="Self.FK_tbl_Accident_tbl_Accidence">
+      <End Role="tbl_Accidence" EntitySet="tbl_Accidence" />
+      <End Role="tbl_Accident" EntitySet="tbl_Accident" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tbl_Accident_tbl_AccidentType" Association="Self.FK_tbl_Accident_tbl_AccidentType">
+      <End Role="tbl_AccidentType" EntitySet="tbl_AccidentType" />
+      <End Role="tbl_Accident" EntitySet="tbl_Accident" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tbl_Accident_tbl_Usage" Association="Self.FK_tbl_Accident_tbl_Usage">
+      <End Role="tbl_Usage" EntitySet="tbl_Usage" />
+      <End Role="tbl_Accident" EntitySet="tbl_Accident" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tbl_Accident_tbl_weather" Association="Self.FK_tbl_Accident_tbl_weather">
+      <End Role="tbl_weather" EntitySet="tbl_weather" />
+      <End Role="tbl_Accident" EntitySet="tbl_Accident" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tbl_Accident_tbl_User" Association="Self.FK_tbl_Accident_tbl_User">
+      <End Role="tbl_User" EntitySet="tbl_User" />
+      <End Role="tbl_Accident" EntitySet="tbl_Accident" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tbl_User_tbl_Employee" Association="Self.FK_tbl_User_tbl_Employee">
+      <End Role="tbl_Employee" EntitySet="tbl_Employee" />
+      <End Role="tbl_User" EntitySet="tbl_User" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tbl_Missives_tbl_User" Association="Self.FK_tbl_Missives_tbl_User">
+      <End Role="tbl_User" EntitySet="tbl_User" />
+      <End Role="tbl_Missives" EntitySet="tbl_Missives" />
+    </AssociationSet>
+    <AssociationSet Name="tbl_AccidentEmplyoee" Association="Self.tbl_AccidentEmplyoee">
+      <End Role="tbl_Accident" EntitySet="tbl_Accident" />
+      <End Role="tbl_Employee" EntitySet="tbl_Employee" />
+    </AssociationSet>
+    <AssociationSet Name="tbl_MaterialRepair" Association="Self.tbl_MaterialRepair">
+      <End Role="tbl_Material" EntitySet="tbl_Material" />
+      <End Role="tbl_Repair" EntitySet="tbl_Repair" />
+    </AssociationSet>
+    <AssociationSet Name="tbl_StateEmployee" Association="Self.tbl_StateEmployee">
+      <End Role="tbl_Employee" EntitySet="tbl_Employee" />
+      <End Role="tbl_State" EntitySet="tbl_State" />
+    </AssociationSet>
+    <AssociationSet Name="tbl_UsedMaterial" Association="Self.tbl_UsedMaterial">
+      <End Role="tbl_Accident" EntitySet="tbl_Accident" />
+      <End Role="tbl_Material" EntitySet="tbl_Material" />
+    </AssociationSet>
+    <AssociationSet Name="tbl_UsedOrganizations" Association="Self.tbl_UsedOrganizations">
+      <End Role="tbl_Accident" EntitySet="tbl_Accident" />
+      <End Role="tbl_Organizations" EntitySet="tbl_Organizations" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

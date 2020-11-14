@@ -1,0 +1,58 @@
+﻿
+@{
+    ViewBag.Title = "ReportRozaneIstgah";
+    Layout = "~/Views/Shared/_LayoutPannel.cshtml";
+}
+
+@using (Html.BeginForm("ReportRozaneIstgah", "Report", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <div class="card">
+        <div class="row">
+            <div class="col-lg-12 p-4">
+                <h5>گزارش روزانه ایستگاه ها</h5>
+                <hr />
+                <form class="form-control">
+                    <div class="row justify-content-center mt-2">
+                        <div class="col-lg-2">
+                            <label class="h6"> از تاریخ:</label>
+                            <div class="form-group">
+                                <div class="input-group datepiker">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text" data-MdDateTimePicker="true" data-TargetSelector="#inlineFormInputGroup" data-EnableTimePicker="false" data-Placement="left" data-Trigger="click"><img src="~/Content/calendar-512.png" alt="cal" width="20" height="20" /></div>
+                                    </div>
+                                    <input type="text" class="form-control border-primary" name="date" id="inlineFormInputGroup" data-MdDateTimePicker="true" data-TargetSelector="#inlineFormInputGroup" data-EnableTimePicker="false" data-Placement="left" data-Trigger="click" placeholder="تاریخ" dir="ltr">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-2">
+                            <label class="h6"> تا تاریخ:</label>
+                            <div class="form-group">
+                                <div class="input-group datepiker">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text" data-MdDateTimePicker="true" data-TargetSelector="#inlineFormInputGroup1" data-EnableTimePicker="false" data-Placement="left" data-Trigger="click"><img src="~/Content/calendar-512.png" alt="cal" width="20" height="20" /></div>
+                                    </div>
+                                    <input type="text" class="form-control border-primary" name="date" id="inlineFormInputGroup1" data-MdDateTimePicker="true" data-TargetSelector="#inlineFormInputGroup1" data-EnableTimePicker="false" data-Placement="left" data-Trigger="click" placeholder="تاریخ" dir="ltr">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-2">
+                            <label class="h6"> از ساعت:</label>
+                            <input type="time" class="form-control border-primary" />
+                        </div>
+                        <div class="col-lg-2">
+                            <label class="h6"> تا ساعت:</label>
+                            <input type="time" class="form-control border-primary" />
+                        </div>
+                    </div>
+                    <div class="row mt-5 justify-content-center">
+                        <div class="col-2">
+                            <button class="btn btn-primary btn-block">گزارش حادثه</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+}
+
+

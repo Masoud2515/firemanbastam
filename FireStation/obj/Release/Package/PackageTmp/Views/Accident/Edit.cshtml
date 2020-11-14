@@ -1,0 +1,566 @@
+﻿@model FireStation.Models.tbl_Accident
+
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_LayoutPannel.cshtml";
+}
+
+<h2>Edit</h2>
+
+@using (Html.BeginForm("Edit", "Accident", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="card">
+        <div class="row">
+            <div class="col-lg-12 p-4">
+                <form class="form">
+                    <div class="form-body">
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                        <h4 class="form-section">
+                            <i class="icon-direction"></i> تاریخ و زمان حادثه
+                        </h4>
+                        <p>@ViewBag.number</p>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="h6">تاریخ حادثه</label>
+                                    <div class="input-group datepiker">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text" data-MdDateTimePicker="true" data-TargetSelector="#inlineFormInputGroup" data-EnableTimePicker="false" data-Placement="left" data-Trigger="click"><img src="~/Content/calendar-512.png" alt="cal" width="20" height="20" /></div>
+                                        </div>
+                                        <input type="text" class="form-control border-primary" value="@Model.AccidentDate" name="AccidentDate" id="inlineFormInputGroup" data-MdDateTimePicker="true" data-TargetSelector="#inlineFormInputGroup" data-EnableTimePicker="false" data-Placement="left" data-Trigger="click" placeholder="تاریخ" dir="ltr" required>
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.AccidentDate, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label class="control-label h6" for="userinput1">زمان اعلام</label>
+                                    <input type="time" class="form-control border-primary" value="@Model.AccidentTime" name="AccidentTime" required>
+                                    @Html.ValidationMessageFor(model => model.AccidentTime, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label class="control-label h6" for="userinput1">زمان شروع عملیات</label>
+                                    <input type="time" id="timesheetinput5" class="form-control border-primary" value="@Model.AccidentTimeStartOperation" name="AccidentTimeStartOperation" required>
+                                    @Html.ValidationMessageFor(model => model.AccidentTimeStartOperation, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label class="control-label h6" for="userinput1">زمان خاتمه عملیات</label>
+                                    <input type="time" id="timesheetinput5" class="form-control border-primary" value="@Model.AccidentTimeEndOperation" name="AccidentTimeEndOperation" required>
+                                    @Html.ValidationMessageFor(model => model.AccidentTimeEndOperation, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label class="control-label h6" for="userinput1">زمان پاکسازی</label>
+                                    <input type="time" id="timesheetinput5" class="form-control border-primary" value="@Model.AccidentTimeToClear" name="AccidentTimeToClear">
+                                    @Html.ValidationMessageFor(model => model.AccidentTimeToClear, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <h4 class="form-section">
+                            <i class="icon-direction"></i> اطلاعات حادثه
+                        </h4>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label h6" for="userinput8">آدرس محل حادثه</label>
+                                    <textarea id="userinput8" rows="2" class="form-control border-primary" name="AccidentEventLocation" required>@Model.AccidentEventLocation</textarea>
+                                    @Html.ValidationMessageFor(model => model.AccidentEventLocation, "", new { @class = "text-danger" })
+
+                                </div>
+                            </div>
+                            <div class="col-md-1">
+                                <div class="form-group">
+                                    <label class="control-label h6" for="AccidentZone">منطقه</label>
+                                    <select id="AccidentZone" name="AccidentZone" class="form-control border-primary" onfocus='this.size=7;' onblur='this.size=1;' onchange='this.size=1; this.blur();' required>
+                                        <option selected value="@Model.AccidentZone">@Model.AccidentZone</option>
+                                        @for (int i = 1; i <= 20; i++)
+                                        {
+                                            <option value="@i">@i</option>
+                                        }
+                                    </select>
+                                    @Html.ValidationMessageFor(model => model.AccidentZone, "", new { @class = "text-danger" })
+
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="control-label h6" for="userinput2">خبردهنده</label>
+                                    <input type="text" id="userinput2" class="form-control border-primary" name="AccidentReporter" value="@Model.AccidentReporter" required>
+                                    @Html.ValidationMessageFor(model => model.AccidentReporter, "", new { @class = "text-danger" })
+
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label class="control-label h6" for="AccidentReportReciver">گیرنده خبر</label>
+                                    <select class="form-control border-primary selectpicker" data-live-search="true" name="AccidentReportReciver" required>
+                                        <option selected hidden value="@Model.AccidentReportReciver">@Model.tbl_Employee.EmployeeName @Model.tbl_Employee.EmployeeLastName</option>
+                                        @foreach (var item in ViewBag.Emp)
+                                        {
+                                            <option value="@item.EmployeeId">@item.EmployeeName@item.EmployeeLastName </option>
+                                        }
+                                    </select>
+                                    @Html.ValidationMessageFor(model => model.AccidentReportReciver, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label class="control-label h6" for="AccidentReportType">روش خبررسانی</label>
+                                    <select id="AccidentReportType" name="AccidentReportType" class="form-control border-primary" value="@Model.AccidentReportType" required>
+                                        <option value="0" selected>تلفنی</option>
+                                        <option value="1">حضوری</option>
+                                        <option value="2">بی سیم</option>
+                                    </select>
+                                    @Html.ValidationMessageFor(model => model.AccidentReportType, "", new { @class = "text-danger" })
+
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="control-label h6" for="projectinput6">نوع حادثه</label>
+                                    <select id="projectinput6" name="AccidentTypeId" class="form-control border-primary" value="@Model.AccidentTypeId" required>
+                                        @foreach (var item in ViewBag.AccidentTypeId)
+                                        {
+                                            <option value="@item.AccidentTypeId">@item.AccidentTypeTitel</option>
+                                        }
+                                    </select>
+                                    @Html.ValidationMessageFor(model => model.AccidentTypeId, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-1" style="margin-top:33px;">
+                                <a class="btn btn-deep-orange" data-toggle="collapse" data-target="#OtherReason">سایر حادثه ها</a>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="control-label h6" for="projectinput6">مورد کاربری</label>
+                                    <select id="projectinput6" name="AccidentUsageId" class="form-control border-primary" value="@Model.AccidentUsageId" required>
+                                        @foreach (var item in ViewBag.AccidentUsageId)
+                                        {
+                                            <option value="@item.UsageId">@item.UsageTitel</option>
+                                        }
+                                    </select>
+                                    @Html.ValidationMessageFor(model => model.AccidentUsageId, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="h6">علت حادثه</label>
+                                <select class="form-control border-primary selectpicker" name="AccidentCause" required>
+                                    <option selected hidden value="@Model.AccidentCause">@Model.tbl_Cause.CauseTitel</option>
+                                    @foreach (var item in ViewBag.Cause)
+                                    {
+                                        <option value="@item.CauseId">@item.CauseTitel</option>
+                                    }
+                                </select>
+                            </div>
+                            <div class="col-md-1">
+                                <div class="form-group">
+                                    <label class="control-label h6">تعداد طبقات</label>
+                                    <input type="number" value="@Model.AccidentSiteFloors" class="form-control border-primary" name="AccidentSiteFloors">
+                                    @Html.ValidationMessageFor(model => model.AccidentSiteFloors, "", new { @class = "text-danger" })
+
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label class="control-label h6" for="userinput2">نوع ساختمان</label>
+                                    <input type="text" id="userinput2" value="@Model.AccidentBuildingType" class="form-control border-primary" name="AccidentBuildingType">
+                                    @Html.ValidationMessageFor(model => model.AccidentBuildingType, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div id="OtherReason" class="collapse col-md-12 mb-3">
+                                <div class="col-md-6">
+                                    <label class="control-label h6">نوع حادثه</label>
+                                    <input type="text" class="form-control border-primary" name="AccidentTypeId" />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="control-label h6" for="userinput2">مشخصات مالک</label>
+                                    <input type="text" id="userinput2" class="form-control border-primary" value="@Model.AccidentBuildingOwner" name="AccidentBuildingOwner" required>
+                                    @Html.ValidationMessageFor(model => model.AccidentBuildingOwner, "", new { @class = "text-danger" })
+
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="control-label h6" for="userinput2">مستاجر</label>
+                                    <input type="text" id="userinput2" class="form-control border-primary" value="@Model.AccidentBuildingTenant" name="AccidentBuildingTenant">
+                                    @Html.ValidationMessageFor(model => model.AccidentBuildingTenant, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="control-label h6" for="userinput2">شماره تلفن مالک</label>
+                                    <input type="text" id="userinput2" class="form-control border-primary" value="@Model.AccidentBuildingTel" name="AccidentBuildingTel">
+                                    @Html.ValidationMessageFor(model => model.AccidentBuildingTel, "", new { @class = "text-danger" })
+
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label h6" for="userinput8">توضیح علت</label>
+                                    <textarea id="userinput8" rows="3" class="form-control border-primary" name="AccidentDescrption" required>@Model.AccidentDescrption</textarea>
+                                    @Html.ValidationMessageFor(model => model.AccidentDescrption, "", new { @class = "text-danger" })
+
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="control-label h6" for="projectinput6">شرایط جوی</label>
+                                    <select id="projectinput6" name="AccidentWid" class="form-control border-primary" required>
+                                        <option selected hidden value="@Model.AccidentWid">@Model.tbl_weather.WeatherTitel</option>
+                                        @foreach (var item in ViewBag.AccidentWid)
+                                        {
+                                            <option value="@item.WeatherId">@item.WeatherTitel</option>
+                                        }
+                                    </select>
+                                    @Html.ValidationMessageFor(model => model.AccidentWid, "", new { @class = "text-danger" })
+
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <label class="control-label h6">ارگان های حاضر در عملیات</label>
+                                <table class="table table-bordered table-striped table-hover text-center">
+                                    <thead>
+                                        <tr>
+                                            <th>ردیف</th>
+                                            <th>نام سازمان</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @{
+                                            int conterO = 0;
+                                            foreach (var item in ViewBag.Organization)
+                                            {
+                                                conterO++;
+                                                <tr>
+                                                    <td>@conterO</td>
+                                                    <td>@item.OrTitel</td>
+                                                </tr>
+                                            }
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <div class="col-lg-4">
+                                <label class="control-label h6"> ایستگاه های شرکت کننده</label>
+                                <table class="table table-bordered table-striped table-hover text-center">
+                                    <thead>
+                                        <tr>
+                                            <th>ردیف</th>
+                                            <th>نام ایستگاه</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @{
+                                            int conterS = 0;
+                                            foreach (var item in ViewBag.station)
+                                            {
+                                                conterS++;
+                                                <tr>
+                                                    <td>@conterS</td>
+                                                    <td>@item.StateName</td>
+                                                </tr>
+                                            }
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="col-lg-4">
+                                <label class="control-label h6">آتشنشان های حاضر در عملیات</label>
+                                <table class="table table-bordered table-striped table-hover text-center">
+                                    <thead>
+                                        <tr>
+                                            <th>ردیف</th>
+                                            <th>نام و نام خانوادگی</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @{
+                                            int conterF = 0;
+                                            foreach (var item in ViewBag.fireman)
+                                            {
+                                                conterF++;
+                                                <tr>
+                                                    <td>@conterF</td>
+                                                    <td>@item.EmployeeName  @item.EmployeeLastName</td>
+                                                </tr>
+                                            }
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="control-label h6" for="projectinput6">مصدومین</label>
+                                </div>
+                                <table class="table table-bordered table-striped table-hover text-center">
+                                    <thead>
+
+                                        <tr>
+                                            <th>تعداد</th>
+                                            <th>نام و نام خانوادگی</th>
+                                            <th>جنسیت</th>
+                                            <th>مأمور / غیر مأمور</th>
+                                            <th>نوع مصدومیت</th>
+                                            <th>توضیحات</th>
+                                            <th>محل اعزام</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @{
+                                            int f = 0;
+                                            foreach (var item in ViewBag.ACIN)
+                                            {
+                                                f++;
+                                                <tr>
+                                                    <td>@f</td>
+                                                    <td>@item.InjuredName @item.InjuredLastName</td>
+                                                    <td>
+                                                        @if (item.InjuredSex == true)
+                                                        {
+                                                            <a>مرد</a>
+                                                        }
+                                                        else
+                                                        {
+                                                            <a>زن</a>
+                                                        }
+                                                    </td>
+                                                    <td>
+                                                        @if (item.InjuredType == true)
+                                                        {
+                                                            <a>مامور</a>
+                                                        }
+                                                        else
+                                                        {
+                                                            <a>غیر مامور</a>
+                                                        }
+                                                    </td>
+                                                    <td>
+                                                        @if (item.InjuredTypeinjury == true)
+                                                        {
+                                                            <a>مصدوم</a>
+
+                                                        }
+                                                        else
+                                                        {
+                                                            <a>متوفی</a>
+
+                                                        }
+                                                    </td>
+                                                    <td>@item.InjuredDescription</td>
+                                                    <td>@item.InjuredLocation</td>
+                                                </tr>
+                                            }
+                                        }
+
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="control-label h6" for="projectinput6">اقلام تجهیزاتی</label>
+                                </div>
+                                <table class="table table-bordered table-striped table-hover text-center">
+                                    <thead>
+                                        <tr>
+                                            <th>ردیف</th>
+                                            <th>کد تجهیزات</th>
+                                            <th>نام</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @{
+                                            int h = 0;
+                                            foreach (var item in ViewBag.ACMA)
+                                            {
+                                                h++;
+                                                <tr>
+                                                    <td>@h</td>
+                                                    <td>@item.MaterialCode</td>
+                                                    <td>@item.MaterialName</td>
+                                                    <td>
+                                                        <button class="btn btn-outline-warning">@Html.ActionLink("ویرایش", "Edit", "AccidentM", new { id = item.MaterialId, acid = Model.AccidentId }, null)</button>
+                                                        <button class="btn btn-outline-danger">@Html.ActionLink("حذف", "Delete", "AccidentM", new { id = item.MaterialId, acid = Model.AccidentId }, null)</button>
+                                                    </td>
+                                                </tr>
+                                            }
+                                        }
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <h4 class="form-section">
+                            <i class="ft-mail"></i>اقدامات
+                        </h4>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label h6" for="userinput8">اقدامات اولیه</label>
+                                    <textarea id="userinput8" rows="3" class="form-control border-primary" name="AccidentPreliminaryMeasures"></textarea>
+                                    @Html.ValidationMessageFor(model => model.AccidentPreliminaryMeasures, "", new { @class = "text-danger" })
+
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label h6" for="userinput8">شرح عملیات</label>
+                                    <textarea id="userinput8" rows="3" class="form-control border-primary" name="AccidentDescriptionOperation"></textarea>
+                                    @Html.ValidationMessageFor(model => model.AccidentDescriptionOperation, "", new { @class = "text-danger" })
+
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label h6" for="userinput8">شرح مشکلات</label>
+                                    <textarea id="userinput8" rows="3" class="form-control border-primary" name="AccidentOperationProblems"></textarea>
+                                    @Html.ValidationMessageFor(model => model.AccidentOperationProblems, "", new { @class = "text-danger" })
+
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label h6" for="userinput8">شرح خسارت وارده به تجهیزات</label>
+                                    <textarea id="userinput8" rows="3" class="form-control border-primary" name="AccidentDamageDescriptionL"></textarea>
+                                    @Html.ValidationMessageFor(model => model.AccidentDamageDescriptionL, "", new { @class = "text-danger" })
+
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label h6" for="userinput8">شرح حادثه وارده به محل حادثه</label>
+                                    <textarea id="userinput8" rows="3" class="form-control border-primary" name="AccidentDamageDescriptionO"></textarea>
+                                    @Html.ValidationMessageFor(model => model.AccidentDamageDescriptionO, "", new { @class = "text-danger" })
+
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="control-label h6" for="projectinput6">فرمانده عملیات</label>
+                                    <select id="projectinput6" name="AccidentOperationsCommander" class="form-control border-primary selectpicker" data-live-search="true" required>
+                                        @foreach (var item in ViewBag.Emp)
+                                        {
+                                            <option value="@item.EmployeeId">@item.EmployeeName  @item.EmployeeLastName </option>
+                                        }
+                                    </select>
+                                    @Html.ValidationMessageFor(model => model.AccidentOperationsCommander, "", new { @class = "text-danger" })
+
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="control-label h6" for="userinput2">تهیه کننده گذارش</label>
+                                    <select id="projectinput6" name="AccidentReportProducer" class="form-control border-primary selectpicker" data-live-search="true" required>
+                                        @foreach (var item in ViewBag.Emp)
+                                        {
+                                            <option value="@item.EmployeeId">@item.EmployeeName  @item.EmployeeLastName </option>
+                                        }
+                                    </select>
+                                    @Html.ValidationMessageFor(model => model.AccidentReportProducer, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            @*<div class="col-md-4">
+                                    <div class="form-group">
+                                        <fieldset class="form-group">
+                                            <label for="countrySelect">مامورین شرکت کننده</label>
+                                            <select class="form-control" id="countrySelect" multiple="multiple" name="AccidentEmplyoee">
+                                                @foreach (var item in ViewBag.Emp)
+                                                {
+                                                    <option value="@item.EmployeeId">@item.EmployeeName@item.EmployeeLastName </option>
+
+                                                }
+                                            </select>
+                                        </fieldset>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 border-primary">
+                                    <div class="form-group">
+                                        <label for="projectinput6">تعداد وسایل و تجهیزات</label><!--**********-->
+                                        <div class="row" style="height:300px;overflow:auto">
+                                            <input type="text" id="droptxt" class="list d-none" readonly>
+                                            <div id="content" class="content1 col-sm-12 border-primary">
+                                                @foreach (var item in ViewBag.material)
+                                                {
+                                                    <div class="list">
+                                                        <input type="checkbox" id="@item.MaterialId" class="list" value="@item.MaterialName" />
+                                                        <label for="@item.MaterialName" class="list">@item.MaterialName</label>
+                                                        <input type="hidden" class="list quantity" min="1" value="1" />
+                                                    </div>
+                                                }
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>*@
+                        </div>
+                    </div>
+                    <div class="col-2">
+                        <input class="btn btn-success btn-block" type="submit" value="ذخیره" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+}
+
+
+<script>
+    var txt = document.getElementById('droptxt'),
+        content = document.getElementById('content'),
+        list = document.querySelectorAll('.content1 input[type="checkbox"]'),
+        quantity = document.querySelectorAll('.quantity');
+
+    txt.addEventListener('click', function () {
+        content.classList.toggle('show')
+    })
+
+    // Close the dropdown if the user clicks outside of it
+    window.onclick = function (e) {
+        if (!e.target.matches('.list')) {
+            if (content.classList.contains('show')) content.classList.remove('show')
+        }
+    }
+
+    list.forEach(function (item, index) {
+        item.addEventListener('click', function () {
+            quantity[index].type = (item.checked) ? 'number' : 'hidden';
+            calc()
+        })
+    })
+
+    quantity.forEach(function (item) {
+        item.addEventListener('input', calc)
+    })
+
+    function calc() {
+        for (var i = 0, arr = []; i < list.length; i++) {
+            if (list[i].checked) arr.push(quantity[i].value + ' x ' + list[i].value)
+        }
+
+        txt.value = arr.join(', ')
+    }
+
+    $(document).ready(function () {
+        $("#OtherReason").click(function () {
+            $("#otherReasonDiv").css("display", "block");
+
+        });
+    })
+</script>
+

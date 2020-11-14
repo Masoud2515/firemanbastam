@@ -1,0 +1,83 @@
+﻿@model FireStation.Models.tbl_ShiftRegister
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_LayoutPannel.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>tbl_ShiftRegister</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ShiftRegisterDec)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ShiftRegisterDec)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ShiftRegisterCommandor)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ShiftRegisterCommandor)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ShiftRegisterTimeStart)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ShiftRegisterTimeStart)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ShiftRegisterTimeEnd)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ShiftRegisterTimeEnd)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ShiftRegisterDateStart)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ShiftRegisterDateStart)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ShiftRegisteridDateEnd)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ShiftRegisteridDateEnd)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ShiftRegisterurl)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ShiftRegisterurl)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.tbl_shift.ShiftName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tbl_shift.ShiftName)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ShiftRegisterid }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

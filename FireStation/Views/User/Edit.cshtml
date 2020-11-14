@@ -1,0 +1,61 @@
+﻿@model FireStation.Models.tbl_User
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_LayoutPannel.cshtml";
+}
+
+<div class="card">
+    <div class="row">
+        <div class="col-lg-12 p-4">
+            <h3>ویرایش</h3>
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+
+                <form class="form-control">
+                    <div class="row justify-content-center">
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        @Html.HiddenFor(model => model.UserId)
+                        @Html.HiddenFor(model => model.EmployeeId)
+                        <div class="col-lg-2">
+                            @Html.LabelFor(model => model.UserUserName, htmlAttributes: new { @class = "control-label h6" })<span class="required text-danger">*</span>
+                            @Html.EditorFor(model => model.UserUserName, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.UserUserName, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="col-lg-2">
+                            @Html.LabelFor(model => model.UserPassword, htmlAttributes: new { @class = "control-label h6" })<span class="required text-danger">*</span>
+                            @Html.EditorFor(model => model.UserPassword, new { htmlAttributes = new { @class = "form-control border-primary", @type = "password" } })
+                            @Html.ValidationMessageFor(model => model.UserPassword, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col-lg-2">
+                            <label class="control-label h6">نام و نام خانوادگی</label><span class="required text-danger">*</span>
+                            <p class="form-control">@Html.DisplayFor(model => model.tbl_Employee.EmployeeName)@Html.DisplayFor(model => model.tbl_Employee.EmployeeLastName)</p>
+                            
+                        </div>
+                        <div class="col-lg-2">
+                            @Html.LabelFor(model => model.UserRole, htmlAttributes: new { @class = "control-label h6" })<span class="required text-danger">*</span>
+                            <select class="form-control border-primary" name="UserRole">
+                                <option selected disabled hidden>@Model.UserRole</option>
+                                <option value="SUPERADMIN">مدیر اصلی</option>
+                                <option value="SUBADMIN">مدیر سازمان</option>
+                                <option value="ADMIN">رئیس ایستگاه</option>
+                                <option value="OPR">اپراتور</option>
+                            </select>
+                            @Html.ValidationMessageFor(model => model.UserRole, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="row mt-5 justify-content-center">
+                        <div class="col-2">
+                            <input class="btn btn-success btn-block" type="submit" value="ثبت" />
+                        </div>
+                        <div class="col-2">
+                            <a class="btn btn-outline-dark btn-block" href="~/User">بازگشت</a>
+                        </div>
+                    </div>
+                </form>
+            }
+        </div>
+    </div>
+</div>

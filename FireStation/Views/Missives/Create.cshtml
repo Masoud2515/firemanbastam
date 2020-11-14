@@ -1,0 +1,180 @@
+﻿@model FireStation.Models.tbl_Missives
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_LayoutPannel.cshtml";
+}
+<style>
+
+    .align-self-center {
+        -webkit-align-self: center !important;
+        -ms-flex-item-align: center !important;
+        -ms-grid-row-align: center !important;
+        align-self: center !important;
+    }
+
+    .image-uploader {
+        min-height: 10rem;
+        border: 2px dashed #d9d9d9;
+        position: relative;
+        border-radius: 20px;
+    }
+
+        .image-uploader input[type=file] {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            opacity: 0;
+            right: 0 !important;
+        }
+
+    form .form-control {
+        border: 1px solid #A6A9AE;
+        color: #75787D;
+    }
+
+    .image-uploader .uploaded {
+        padding: .5rem;
+        line-height: 0;
+    }
+
+    .radius12 {
+        border-radius: 20px !important;
+    }
+</style>
+<div class="card">
+    <div class="row">
+        <div class="col-lg-12 p-4">
+            <h4>افزودن بخشنامه</h4>
+            <hr />
+            @using (Html.BeginForm("Create", "Missives", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                @Html.AntiForgeryToken()
+
+                <form class="form-control">
+                    <div class="row">
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        <div class="row col-lg-8">
+                            <div class="col-lg-4">
+                                @Html.LabelFor(model => model.MissiveTitel, htmlAttributes: new { @class = "h5" })<span class="required text-danger">*</span>
+                                @Html.EditorFor(model => model.MissiveTitel, new { htmlAttributes = new { @class = "form-control border-primary" } })
+                                @Html.ValidationMessageFor(model => model.MissiveTitel, "", new { @class = "text-danger" })
+                            </div>
+
+                            <div class="col-lg-4">
+                                @Html.LabelFor(model => model.MissiveNumber, htmlAttributes: new { @class = "h5" })<span class="required text-danger">*</span>
+                                @Html.EditorFor(model => model.MissiveNumber, new { htmlAttributes = new { @class = "form-control border-primary" } })
+                                @Html.ValidationMessageFor(model => model.MissiveNumber, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="col-lg-4">
+                                <label class="control-label h5">تاریخ بخشنامه</label><span class="required text-danger">*</span>
+                                <div class="form-group">
+                                    <div class="input-group datepiker">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text" data-MdDateTimePicker="true" data-TargetSelector="#inlineFormInputGroup" data-EnableTimePicker="false" data-Placement="left" data-Trigger="click"><img src="~/Content/calendar-512.png" alt="cal" width="20" height="20" /></div>
+                                        </div>
+                                        <input type="text" class="form-control border-primary" name="MissiveDate" id="inlineFormInputGroup" data-MdDateTimePicker="true" data-TargetSelector="#inlineFormInputGroup" data-EnableTimePicker="false" data-Placement="left" data-Trigger="click" placeholder="تاریخ" dir="ltr">
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.MissiveDate, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                @Html.LabelFor(model => model.MissiveText, htmlAttributes: new { @class = "control-label h6" })<span class="required text-danger">*</span>
+                                <textarea id="userinput8" rows="5" class="form-control border-primary" name="MissiveText"></textarea>
+                                @Html.ValidationMessageFor(model => model.MissiveText, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="row justify-content-center mt-3">
+                                <div class="col-md-6 m-auto">
+                                    <div class="align-self-center halfway-fab text-center">
+                                        <h6>آپلود فایل اسکن شده گزارش</h6>
+                                        <div class="image-uploader">
+                                            <input type="file"
+                                                   accept="image/*"
+                                                   id="file-input"
+                                                   name="Fdoc"
+                                                   class="form-control"
+                                                   value="Select"
+                                                   placeholder="Select">
+                                            <div class="uploaded">
+                                                <img src=""
+                                                     alt=""
+                                                     id="image-previewer"
+                                                     class="img-fluid radius12">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12 m-auto">
+                                    <div class="text-center mt-2">
+                                        <h6 class="font1">
+                                            برای تغییر تصویر خود ،
+                                            تصویر جدید رو داخل کادر
+                                            بیاندازید یا بر روی عکس کلیک
+                                            کنید
+                                        </h6>
+                                    </div>
+                                </div>
+                                @*<div class="col-lg-12">
+                                        <label class="h5">آپلود فایل عکس</label>
+                                        <div class="form-group">
+                                            <div class="input-group">
+                                                <div class="custom-file mb-2">
+                                                    <input class="custom-file-input" type="file" name="Fdoc" id="customFile" accept="image/*" onchange="showMyImage(this)">
+                                                    <label class="custom-file-label getFile" for="customFile">فایل عکس</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <img id="thumbnil" style="width:60%;" src="" alt="" />
+                                        <div id="file-upload-filename" class="mt-2"></div>
+                                        <script>
+                                            //Name of File
+                                            var input = document.getElementById('customFile');
+                                            var infoArea = document.getElementById('file-upload-filename');
+
+                                            input.addEventListener('change', showFileName);
+
+                                            function showFileName(event) {
+
+                                                // the change event gives us the input it occurred in
+                                                var input = event.srcElement;
+
+                                                // the input has an array of files in the `files` property, each one has a name that you can use. We're just using the name here.
+                                                var fileName = input.files[0].name;
+
+                                                // use fileName however fits your app best, i.e. add it into a div
+                                                infoArea.textContent = 'نام فایل: ' + fileName;
+                                            }
+                                        </script>
+                                    </div>*@
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="row mt-5 justify-content-center">
+                        <div class="col-2">
+                            <input class="btn btn-success btn-block" type="submit" value="ثبت" />
+                        </div>
+                        <div class="col-2">
+                            <a class="btn btn-outline-dark btn-block" href="~/Missives">بازگشت</a>
+                        </div>
+                    </div>
+                </form>
+            }
+        </div>
+    </div>
+</div>
+
+<!---------------Missive Preview------------------>
+<script>
+    $(document).ready(function () {
+        $(function () {
+            $('#file-input').imoViewer({
+                'preview': '#image-previewer',
+            })
+        });
+    });
+</script>

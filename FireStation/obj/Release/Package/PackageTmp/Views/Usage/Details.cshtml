@@ -1,0 +1,37 @@
+﻿@model FireStation.Models.tbl_Usage
+
+@{
+    ViewBag.Title = "جزئیات";
+    Layout = "~/Views/Shared/_LayoutPannel.cshtml";
+}
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.UsageTitel)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UsageTitel)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UsageDescription)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UsageDescription)
+        </dd>
+
+    </dl>
+</div>
+<div class="row mt-5 justify-content-center">
+    <div class="col-2">
+        <button class="btn btn-outline-info btn-block">@Html.ActionLink("ویرایش", "Edit", new { id = Model.UsageId })</button>
+    </div>
+    <div class="col-2">
+        <a class="btn btn-outline-dark btn-block" href="~/Usage">بازگشت</a>
+    </div>
+</div>
+

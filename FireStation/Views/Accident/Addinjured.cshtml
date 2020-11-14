@@ -1,0 +1,85 @@
+﻿@model FireStation.Models.tbl_Injured
+
+@{
+    ViewBag.Title = "Addinjured";
+    Layout = "~/Views/Shared/_LayoutPannel.cshtml";
+}
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="row">
+        <div class="col-lg-12">
+            <h4>ثبت اطلاعات مصدومین</h4>
+            <hr />
+            <form class="form-control">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @for (int i = 1; i <= ViewBag.number; i++)
+                {
+                    <div class="card">
+                        <h4 class="form-section">
+                            <i class="fa fa-hospital-o"></i>مصدوم شماره @i
+                        </h4>
+                        <div class="row justify-content-center pr-5 pl-5 mt-3 mb-3">
+                            <input type="hidden" class="form-control border-primary" value="@ViewBag.Ac" name="Acid" required>
+                            <input type="hidden" class="form-control border-primary" value="@ViewBag.mat" name="mat" required>
+                            <div class="col-lg-3">
+                                @Html.LabelFor(model => model.InjuredName, htmlAttributes: new { @class = "control-label h6" })<span class="required text-danger">*</span>
+                                <input type="text" class="form-control border-primary" name="InjuredName" required>
+                                @Html.ValidationMessageFor(model => model.InjuredName, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="col-lg-3">
+                                @Html.LabelFor(model => model.InjuredLastName, htmlAttributes: new { @class = "control-label h6" })<span class="required text-danger">*</span>
+                                <input type="text" class="form-control border-primary" name="InjuredLastName" required>
+                                @Html.ValidationMessageFor(model => model.InjuredLastName, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="col-lg-2">
+                                @Html.LabelFor(model => model.InjuredSex, htmlAttributes: new { @class = "control-label h6" })<span class="required text-danger">*</span>
+                                <select class="form-control border-primary" name="InjuredSex" required>
+                                    <option selected hidden>انتخاب جنسیت</option>
+                                    <option value="1">مرد</option>
+                                    <option value="0">زن</option>
+                                </select>
+                                @Html.ValidationMessageFor(model => model.InjuredSex, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="col-lg-2">
+                                @Html.LabelFor(model => model.InjuredType, htmlAttributes: new { @class = "control-label h6" })<span class="required text-danger">*</span>
+                                <select class="form-control border-primary" name="InjuredType" required>
+                                    <option selected hidden>انتخاب</option>
+                                    <option value="1">مأمور</option>
+                                    <option value="0">غیر مأمور</option>
+                                </select>
+                                @Html.ValidationMessageFor(model => model.InjuredType, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="col-lg-2">
+                                @Html.LabelFor(model => model.InjuredTypeinjury, htmlAttributes: new { @class = "control-label h6" })<span class="required text-danger">*</span>
+                                <select class="form-control border-primary" name="InjuredTypeinjury" required>
+                                    <option selected hidden>انتخاب</option>
+                                    <option value="1">مجروح</option>
+                                    <option value="0">متوفی</option>
+                                </select>
+                                @Html.ValidationMessageFor(model => model.InjuredTypeinjury, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="col-lg-6 mt-3 mb-3">
+                                @Html.LabelFor(model => model.InjuredDescription, htmlAttributes: new { @class = "control-label h6" })<span class="required text-danger">*</span>
+                                <input type="text" class="form-control border-primary" name="InjuredDescription" required>
+                                @Html.ValidationMessageFor(model => model.InjuredDescription, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="col-lg-6 mt-3 mb-3">
+                                @Html.LabelFor(model => model.InjuredLocation, htmlAttributes: new { @class = "control-label h6" })
+                                <input type="text" class="form-control border-primary" name="InjuredLocation">
+                                @Html.ValidationMessageFor(model => model.InjuredLocation, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                }
+                <div class="row mt-5 justify-content-center">
+                    <div class="col-2">
+                        <input class="btn btn-success btn-block" type="submit" value="ادامه" />
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+}

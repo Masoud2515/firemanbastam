@@ -1,0 +1,141 @@
+﻿@model FireStation.Models.tbl_Employee
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_LayoutPannel.cshtml";
+}
+
+<div class="card">
+    <div class="row">
+        <div class="col-lg-12 p-4">
+            <h4>جزئیات کارمندان</h4>
+            <hr />
+            <table class="table table-borderless">
+                <tr>
+                    <td>
+                        @Html.DisplayNameFor(model => model.EmployeeCode)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(model => model.EmployeeCode)
+                    </td>
+
+                    <td>
+                        @Html.DisplayNameFor(model => model.EmployeeName)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(model => model.EmployeeName)
+                    </td>
+
+                    <td>
+                        @Html.DisplayNameFor(model => model.EmployeeLastName)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(model => model.EmployeeLastName)
+                    </td>
+
+                    <td>
+                        @Html.DisplayNameFor(model => model.EmployeePhone)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(model => model.EmployeePhone)
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        @Html.DisplayNameFor(model => model.EmployeeAdress)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(model => model.EmployeeAdress)
+                    </td>
+
+                    <td>
+                        @Html.DisplayNameFor(model => model.EmployeeFName)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(model => model.EmployeeFName)
+                    </td>
+
+                    <td>
+                        @Html.DisplayNameFor(model => model.EmployeeMCode)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(model => model.EmployeeMCode)
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        @Html.DisplayNameFor(model => model.EmployeeBirthdate)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(model => model.EmployeeBirthdate)
+                    </td>
+
+                    <td>
+                        @if (Model.EmployeeSex == true)
+                        {
+                            <p>مرد</p>
+                        }
+                        else
+                        {
+                            <p>زن</p>
+                        }
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(model => model.EmployeeSex)
+                    </td>
+
+                    <td>
+                        @Html.DisplayNameFor(model => model.EmployeeWork)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(model => model.EmployeeWork)
+                    </td>
+
+                    <td>
+                        @Html.DisplayNameFor(model => model.EmployeeDateRegistered)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(model => model.EmployeeDateRegistered)
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        @Html.DisplayNameFor(model => model.tbl_State.StateName)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(model => model.tbl_State.StateName)
+                    </td>
+
+                </tr>
+            </table>
+            <div class="col-lg-2">
+                <label class="control-label">
+                    @Html.DisplayNameFor(model => model.EmployeePicUrl)
+                </label>
+                <img src="~/@Model.EmployeePicUrl" width="300" />
+            </div>
+            <div class="row mt-5 justify-content-center">
+                <div class="col-2">
+                    <a class="btn btn-outline-primary btn-block" href="~/Employee/Edit/@Model.EmployeeId">
+                        ویرایش
+                    </a>
+                </div>
+                <div class="col-2">
+                    <a class="btn btn-outline-dark btn-block" href="~/Employee">بازگشت</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

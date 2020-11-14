@@ -1,0 +1,91 @@
+﻿@model IEnumerable<FireStation.Models.tbl_ShiftRegister>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutPannel.cshtml";
+}
+
+<section id="html">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body collpase show">
+                    <div class="card-block card-dashboard table-responsive">
+                        <h5>گزارشات شیفت ها</h5>
+                        <hr />
+                        <div class="btn-group offset-1">
+                            <button class="btn btn-outline-success">@Html.ActionLink("افزودن", "Create")</button>
+                        </div>
+                        <table class="table table-striped table-bordered sourced-data text-center" cellspacing="0" style="width:100%; table-layout:fixed">
+                            <thead class="bg-dark text-light">
+                                <tr>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.ShiftRegisterDec)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.ShiftRegisterCommandor)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.ShiftRegisterTimeStart)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.ShiftRegisterTimeEnd)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.ShiftRegisterDateStart)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.ShiftRegisteridDateEnd)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.ShiftRegisterurl)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.tbl_shift.ShiftName)
+                                    </th>
+                                    <th style="width:305px">عملیات</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.ShiftRegisterDec)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.ShiftRegisterCommandor)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.ShiftRegisterTimeStart)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.ShiftRegisterTimeEnd)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.ShiftRegisterDateStart)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.ShiftRegisteridDateEnd)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.ShiftRegisterurl)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.tbl_shift.ShiftName)
+                                        </td>
+                                        <td>
+                                            @Html.ActionLink("ویرایش", "Edit", new { id = item.ShiftRegisterid }) |
+                                            @Html.ActionLink("جزئیات", "Details", new { id = item.ShiftRegisterid }) |
+                                            @Html.ActionLink("حذف", "Delete", new { id = item.ShiftRegisterid })
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

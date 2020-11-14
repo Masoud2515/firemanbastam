@@ -1,0 +1,207 @@
+﻿
+@{
+    ViewBag.Title = "پنل مدیریت";
+    Layout = "~/Views/Shared/_LayoutPannel.cshtml";
+}
+
+    <section class="content">
+        <div class="modal fade" id="overlay" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document" style="top:40%;">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">پنل مدیریت</h5>
+
+                    </div>
+                    <div class="modal-body">
+                        <h2 class="text-center">کاربر محترم</h2>
+                        <h4 class="text-center">به سیستم جامع مدیریت آتشنشانی و خدمات ایمنی خوش امدید .</h4>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="row match-height">
+            @*<div class="col-xl-6 col-lg-6 col-md-12">
+            <div class="card" style="height: 429.6px;">
+                <div class="card-header">
+                    <div class="card-title-wrap bar-success">
+                        <h4 class="card-title">تعداد حوادث در ماه</h4>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="card-block">
+                        <div id="line-chart" class="height-300 lineChart lineChartShadow">
+                            <svg xmlns:ct="http://gionkunz.github.com/chartist-js/ct" width="100%" height="100%" class="ct-chart-line" style="width: 100%; height: 100%;">
+                                <g class="ct-grids">
+                                    <line y1="265" y2="265" x1="50" x2="728.125" class="ct-grid ct-vertical"></line>
+                                    <line y1="193.57142857142856" y2="193.57142857142856" x1="50" x2="728.125" class="ct-grid ct-vertical"></line>
+                                    <line y1="122.14285714285714" y2="122.14285714285714" x1="50" x2="728.125" class="ct-grid ct-vertical"></line>
+                                    <line y1="50.71428571428572" y2="50.71428571428572" x1="50" x2="728.125" class="ct-grid ct-vertical"></line>
+                                </g>
+                                <g>
+                                    <g class="ct-series ct-series-a">
+                                        <circle cx="40" cy="265" r="10" class="ct-circle"></circle>
+                                        <circle cx="80" cy="104.28571428571428" r="10" class="ct-circle"></circle>
+                                        <circle cx="120" cy="172.14285714285714" r="10" class="ct-circle"></circle>
+                                        <circle cx="160" cy="47.14285714285714" r="10" class="ct-circle"></circle>
+                                        <circle cx="200" cy="172.14285714285714" r="10" class="ct-circle"></circle>
+                                        <circle cx="240" cy="32.85714285714286" r="10" class="ct-circle"></circle>
+                                        <circle cx="280" cy="150.71428571428572" r="10" class="ct-circle"></circle>
+                                        <circle cx="320" cy="22.14285714285714" r="10" class="ct-circle"></circle>
+                                        <circle cx="360" cy="22.14285714285714" r="10" class="ct-circle"></circle>
+                                        <circle cx="420" cy="22.14285714285714" r="10" class="ct-circle"></circle>
+                                        <circle cx="440" cy="22.14285714285714" r="10" class="ct-circle"></circle>
+                                        <circle cx="480" cy="22.14285714285714" r="10" class="ct-circle"></circle>
+                                    </g>
+                                </g>
+                                <g class="ct-labels">
+                                    <foreignObject style="overflow: visible;" x="40" y="270" width="50" height="20"><span class="ct-label ct-horizontal ct-end" xmlns="http://www.w3.org/2000/xmlns/" style="width: 50px; height: 20px;">1</span></foreignObject>
+                                    <foreignObject style="overflow: visible;" x="80" y="270" width="50" height="20"><span class="ct-label ct-horizontal ct-end" xmlns="http://www.w3.org/2000/xmlns/" style="width: 50px; height: 20px;">2</span></foreignObject>
+                                    <foreignObject style="overflow: visible;" x="120" y="270" width="50" height="20"><span class="ct-label ct-horizontal ct-end" xmlns="http://www.w3.org/2000/xmlns/" style="width: 50px; height: 20px;">3</span> </foreignObject>
+                                    <foreignObject style="overflow: visible;" x="160" y="270" width="50" height="20"><span class="ct-label ct-horizontal ct-end" xmlns="http://www.w3.org/2000/xmlns/" style="width: 50px; height: 20px;">4</span></foreignObject>
+                                    <foreignObject style="overflow: visible;" x="200" y="270" width="50" height="20"><span class="ct-label ct-horizontal ct-end" xmlns="http://www.w3.org/2000/xmlns/" style="width: 50px; height: 20px;">5</span></foreignObject>
+                                    <foreignObject style="overflow: visible;" x="240" y="270" width="50" height="20"><span class="ct-label ct-horizontal ct-end" xmlns="http://www.w3.org/2000/xmlns/" style="width: 50px; height: 20px;">6</span></foreignObject>
+                                    <foreignObject style="overflow: visible;" x="280" y="270" width="50" height="20"><span class="ct-label ct-horizontal ct-end" xmlns="http://www.w3.org/2000/xmlns/" style="width: 50px; height: 20px;">7</span></foreignObject>
+                                    <foreignObject style="overflow: visible;" x="320" y="270" width="50" height="20"><span class="ct-label ct-horizontal ct-end" xmlns="http://www.w3.org/2000/xmlns/" style="width: 50px; height: 20px;">8</span></foreignObject>
+                                    <foreignObject style="overflow: visible;" x="360" y="270" width="50" height="20"><span class="ct-label ct-horizontal ct-end" xmlns="http://www.w3.org/2000/xmlns/" style="width: 50px; height: 20px;">9</span></foreignObject>
+                                    <foreignObject style="overflow: visible;" x="400" y="270" width="50" height="20"><span class="ct-label ct-horizontal ct-end" xmlns="http://www.w3.org/2000/xmlns/" style="width: 50px; height: 20px;">10</span></foreignObject>
+                                    <foreignObject style="overflow: visible;" x="440" y="270" width="50" height="20"><span class="ct-label ct-horizontal ct-end" xmlns="http://www.w3.org/2000/xmlns/" style="width: 50px; height: 20px;">11</span></foreignObject>
+                                    <foreignObject style="overflow: visible;" x="480" y="270" width="30" height="20"><span class="ct-label ct-horizontal ct-end" xmlns="http://www.w3.org/2000/xmlns/" style="width: 50px; height: 20px;">12</span></foreignObject>
+
+
+                                    <foreignObject style="overflow: visible;" y="193.57142857142856" x="10" height="71.42857142857143" width="30"><span class="ct-label ct-vertical ct-start" xmlns="http://www.w3.org/2000/xmlns/" style="height: 71px; width: 30px;">0K</span></foreignObject>
+                                    <foreignObject style="overflow: visible;" y="122.14285714285712" x="10" height="71.42857142857143" width="30"><span class="ct-label ct-vertical ct-start" xmlns="http://www.w3.org/2000/xmlns/" style="height: 71px; width: 30px;">2K</span></foreignObject>
+                                    <foreignObject style="overflow: visible;" y="50.71428571428572" x="10" height="71.42857142857142" width="30"><span class="ct-label ct-vertical ct-start" xmlns="http://www.w3.org/2000/xmlns/" style="height: 71px; width: 30px;">4K</span></foreignObject>
+                                    <foreignObject style="overflow: visible;" y="15" x="10" height="35.71428571428572" width="30"><span class="ct-label ct-vertical ct-start" xmlns="http://www.w3.org/2000/xmlns/" style="height: 36px; width: 30px;">6K</span></foreignObject>
+                                </g>
+                                <defs><linearGradient id="linear1" x1="1" y1="0" x2="0" y2="0"><stop offset="0" stop-color="rgba(185,168,231, 1)"></stop><stop offset="1" stop-color="rgba(118,74,233, 1)"></stop></linearGradient></defs>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>*@
+            @*<div class="col-xl-6 col-lg-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title-wrap bar-primary">
+                            <h4 class="card-title">حوادث به تفکیک ایستگاه</h4>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div id="bar-chart" class="height-250 BarChartShadow BarChart">
+                        </div>
+
+                        <div class="card-block">
+                            <div class="row">
+                                <div class="col text-center">
+                                    <span class="gradient-pomegranate d-block rounded-circle mx-auto mb-2" style="width:10px; height:10px;"></span>
+                                    <span class="font-large-1 d-block mb-2">48</span>
+                                    <span>ایستگاه 22 بهمن</span>
+                                </div>
+                                <div class="col text-center">
+                                    <span class="gradient-green-tea d-block rounded-circle mx-auto mb-2" style="width:10px; height:10px;"></span>
+                                    <span class="font-large-1 d-block mb-2">9</span>
+                                    <span>ایستگاه بهارستان</span>
+                                </div>
+                                <div class="col text-center">
+                                    <span class="gradient-blackberry d-block rounded-circle mx-auto mb-2" style="width:10px; height:10px;"></span>
+                                    <span class="font-large-1 d-block mb-2">26</span>
+                                    <span>ایستگاه ولایت</span>
+                                </div>
+                                <div class="col text-center">
+                                    <span class="gradient-ibiza-sunset d-block rounded-circle mx-auto mb-2" style="width:10px; height:10px;"></span>
+                                    <span class="font-large-1 d-block mb-2">17</span>
+                                    <span>ایستگاه عدالت</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>*@
+            <div class="col-xl-6 col-lg-6 col-md-12">
+                <div class="card" style="height: 514.4px;">
+                    <div class="card-header">
+                        <div class="card-title-wrap bar-warning">
+                            <h4 class="card-title">حوادث به تفکیک نوع حادثه</h4>
+                        </div>
+                    </div>
+                    <div class="card-body">
+
+                        <p class="font-medium-2 text-muted text-center">وظایف پروژه</p>
+                        <div id="donut-dashboard-chart" class="height-250 donut donutShadow">
+                            <svg xmlns:ct="http://gionkunz.github.com/chartist-js/ct" width="100%" height="100%" class="ct-chart-donut" style="width: 100%; height: 100%;"><g ct:series-name="done" class="ct-series ct-done"><path d="M393.098,193.829A120,120,0,0,0,202.875,47.865L225.856,67.149A90,90,0,0,1,368.524,176.622Z" class="ct-slice-donut-solid" ct:value="35"></path></g><g ct:series-name="progress" class="ct-series ct-progress"><path d="M263.742,240.911A120,120,0,0,0,393.338,193.486L368.703,176.364A90,90,0,0,1,271.506,211.933Z" class="ct-slice-donut-solid" ct:value="14"></path></g><g ct:series-name="outstanding" class="ct-series ct-outstanding"><path d="M202.875,47.865A120,120,0,0,0,264.147,241.019L271.81,212.014A90,90,0,0,1,225.856,67.149Z" class="ct-slice-donut-solid" ct:value="23"></path></g><g><text dx="294.8000183105469" dy="125" text-anchor="middle" class="ct-label">72%</text></g><defs><linearGradient id="donutGradient1" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="rgba(155, 60, 183,1)"></stop><stop offset="1" stop-color="rgba(255, 57, 111, 1)"></stop></linearGradient><linearGradient id="donutGradient2" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="rgba(0, 75, 145,0.8)"></stop><stop offset="1" stop-color="rgba(120, 204, 55, 0.8)"></stop></linearGradient><linearGradient id="donutGradient3" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="rgba(132, 60, 247,1)"></stop><stop offset="1" stop-color="rgba(56, 184, 242, 1)"></stop></linearGradient></defs></svg>
+                        </div>
+
+                        <div class="card-block">
+                            <div class="row my-3">
+                                <div class="col">
+                                    <span class="mb-1 text-muted d-block">23٪ - شروع شده است</span>
+                                    <div class="progress" style="height: 8px;">
+                                        <div class="progress-bar gradient-blackberry" role="progressbar" style="width: 70%;" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <span class="mb-1 text-muted d-block">35٪ - در حال پیشرفت است</span>
+                                    <div class="progress" style="height: 8px;">
+                                        <div class="progress-bar gradient-pomegranate" role="progressbar" style="width: 80%;" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <span class="mb-1 text-muted d-block">14٪ - انجام شده است</span>
+                                    <div class="progress" style="height: 8px;">
+                                        <div class="progress-bar gradient-green-tea" role="progressbar" style="width: 60%;" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-6 col-lg-6 col-md-12">
+                <div class="card" style="height: 514.4px;">
+                    <div class="card-header">
+                        <div class="card-title-wrap bar-warning">
+                            <h4 class="card-title">حوادث به تفکیک نوع حادثه</h4>
+                        </div>
+                    </div>
+                    <div class="card-body">
+
+                        <p class="font-medium-2 text-muted text-center">وظایف پروژه</p>
+                        <div id="donut-dashboard-chart" class="height-250 donut donutShadow">
+                            <svg xmlns:ct="http://gionkunz.github.com/chartist-js/ct" width="100%" height="100%" class="ct-chart-donut" style="width: 100%; height: 100%;"><g ct:series-name="done" class="ct-series ct-done"><path d="M393.098,193.829A120,120,0,0,0,202.875,47.865L225.856,67.149A90,90,0,0,1,368.524,176.622Z" class="ct-slice-donut-solid" ct:value="35"></path></g><g ct:series-name="progress" class="ct-series ct-progress"><path d="M263.742,240.911A120,120,0,0,0,393.338,193.486L368.703,176.364A90,90,0,0,1,271.506,211.933Z" class="ct-slice-donut-solid" ct:value="14"></path></g><g ct:series-name="outstanding" class="ct-series ct-outstanding"><path d="M202.875,47.865A120,120,0,0,0,264.147,241.019L271.81,212.014A90,90,0,0,1,225.856,67.149Z" class="ct-slice-donut-solid" ct:value="23"></path></g><g><text dx="294.8000183105469" dy="125" text-anchor="middle" class="ct-label">72%</text></g><defs><linearGradient id="donutGradient1" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="rgba(155, 60, 183,1)"></stop><stop offset="1" stop-color="rgba(255, 57, 111, 1)"></stop></linearGradient><linearGradient id="donutGradient2" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="rgba(0, 75, 145,0.8)"></stop><stop offset="1" stop-color="rgba(120, 204, 55, 0.8)"></stop></linearGradient><linearGradient id="donutGradient3" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="rgba(132, 60, 247,1)"></stop><stop offset="1" stop-color="rgba(56, 184, 242, 1)"></stop></linearGradient></defs></svg>
+                        </div>
+
+                        <div class="card-block">
+                            <div class="row my-3">
+                                <div class="col">
+                                    <span class="mb-1 text-muted d-block">23٪ - شروع شده است</span>
+                                    <div class="progress" style="height: 8px;">
+                                        <div class="progress-bar gradient-blackberry" role="progressbar" style="width: 70%;" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <span class="mb-1 text-muted d-block">35٪ - در حال پیشرفت است</span>
+                                    <div class="progress" style="height: 8px;">
+                                        <div class="progress-bar gradient-pomegranate" role="progressbar" style="width: 80%;" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <span class="mb-1 text-muted d-block">14٪ - انجام شده است</span>
+                                    <div class="progress" style="height: 8px;">
+                                        <div class="progress-bar gradient-green-tea" role="progressbar" style="width: 60%;" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /.content -->
+    </section>
+<!-- /فرم اصلی-->
+
+
+
+<!-- /.content -->

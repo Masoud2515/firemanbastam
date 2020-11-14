@@ -1,0 +1,47 @@
+﻿@model FireStation.Models.tbl_Repair
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_LayoutPannel.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>tbl_Repair</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.RepairDescription)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RepairDescription)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RepairTitel)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RepairTitel)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.tbl_Material.MaterialCode)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tbl_Material.MaterialCode)
+        </dd>
+
+    </dl>
+</div>
+<div class="row mt-5 justify-content-center">
+    <div class="col-2">
+        <button class="btn btn-outline-info btn-block">@Html.ActionLink("ویرایش", "Edit", new { id = Model.RepairId })</button>
+    </div>
+    <div class="col-2">
+        <a class="btn btn-outline-dark btn-block" href="~/Repair">بازگشت</a>
+    </div>
+</div>

@@ -1,0 +1,118 @@
+﻿@model FireStation.Models.tbl_Injured
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_LayoutPannel.cshtml";
+}
+<h2>حذف مصدوم</h2>
+
+<h3>برای حذف این مورد اطمینان دارید؟</h3>
+<div class="card">
+    <div class="row">
+        <div class="col-lg-12 p-4">
+            <form class="form">
+                <div class="form-body">
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <div class="row">
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <h6>شناسه مصدوم<span class="required text-danger">*</span></h6>
+                                <p class="form-control border-primary">@Model.InjuredID</p>
+                                @Html.ValidationMessageFor(model => model.InjuredID, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <h6>نام<span class="required text-danger">*</span></h6>
+                                <p class="form-control border-primary">@Model.InjuredName</p>
+                                @Html.ValidationMessageFor(model => model.InjuredName, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <h6>نام خانوادگی<span class="required text-danger">*</span></h6>
+                                <p class="form-control border-primary">@Model.InjuredLastName</p>
+                                @Html.ValidationMessageFor(model => model.InjuredLastName, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <h6>جنسیت<span class="required text-danger">*</span></h6>
+                                <p class="form-control border-primary">
+                                    @if (Model.InjuredSex)
+                                    {
+                                        <span>مرد</span>
+                                    }
+                                    else
+                                    {
+                                        <span>زن</span>
+                                    }
+                                </p>
+                                @Html.ValidationMessageFor(model => model.InjuredSex, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <h6>مأمور/غیرمأمور<span class="required text-danger">*</span></h6>
+                                <p class="form-control border-primary">
+                                    @if (Model.InjuredType)
+                                    {
+                                        <span>مأمور</span>
+                                    }
+                                    else
+                                    {
+                                        <span>غیر مأمور</span>
+                                    }
+                                </p>
+                                @Html.ValidationMessageFor(model => model.InjuredType, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <h6>نوع مصدومیت<span class="required text-danger">*</span></h6>
+                                <p class="form-control border-primary">
+                                    @if (Model.InjuredTypeinjury)
+                                    {
+                                        <span>مجروح</span>
+                                    }
+                                    else
+                                    {
+                                        <span>متوفی</span>
+                                    }
+                                </p>
+                                @Html.ValidationMessageFor(model => model.InjuredTypeinjury, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <h6>شرح مصدومیت<span class="required text-danger">*</span></h6>
+                                <p class="form-control border-primary">@Model.InjuredDescription</p>
+                                @Html.ValidationMessageFor(model => model.InjuredDescription, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <h6>محل اعزام</h6>
+                                <p class="form-control border-primary">@Model.InjuredLocation</p>
+                                @Html.ValidationMessageFor(model => model.InjuredLocation, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row justify-content-center">
+                        <button class="btn btn-outline-info col-md-2">@Html.ActionLink("ویرایش", "Edit", new { id = Model.InjuredID })</button>
+                        <button class="btn btn-outline-dark col-md-2 mr-2">@Html.ActionLink("بازگشت", "Index")</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>

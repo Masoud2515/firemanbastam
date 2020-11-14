@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="30863f691c684db088f8b4d8c696f9df" Name="Diagram1">
+        <EntityTypeShape EntityType="FireStationModel.tbl_Accident" Width="1.5" PointX="7.5" PointY="21" IsExpanded="true" />
+        <EntityTypeShape EntityType="FireStationModel.tbl_AccidentEmplyoee" Width="1.5" PointX="9.75" PointY="22.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="FireStationModel.tbl_AccidentInjured" Width="1.5" PointX="9.75" PointY="24.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="FireStationModel.tbl_AccidentM" Width="1.5" PointX="9.75" PointY="27.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="FireStationModel.tbl_AccidentO" Width="1.5" PointX="12.75" PointY="24.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="FireStationModel.tbl_AccidentStation" Width="1.5" PointX="6" PointY="16.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="FireStationModel.tbl_AccidentType" Width="1.5" PointX="5.25" PointY="29.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="FireStationModel.tbl_Cause" Width="1.5" PointX="5.25" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="FireStationModel.tbl_Employee" Width="1.5" PointX="3" PointY="15.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="FireStationModel.tbl_Injured" Width="1.5" PointX="7.5" PointY="37.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="FireStationModel.tbl_Leave" Width="1.5" PointX="8.5" PointY="17.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="FireStationModel.tbl_Material" Width="1.5" PointX="3.75" PointY="12" IsExpanded="true" />
+        <EntityTypeShape EntityType="FireStationModel.tbl_Missives" Width="1.5" PointX="7.5" PointY="33.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="FireStationModel.tbl_Organizations" Width="1.5" PointX="10.5" PointY="30.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="FireStationModel.tbl_Repair" Width="1.5" PointX="6" PointY="13" IsExpanded="true" />
+        <EntityTypeShape EntityType="FireStationModel.tbl_shift" Width="1.5" PointX="3" PointY="25.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="FireStationModel.tbl_ShiftEmployee" Width="1.5" PointX="5.25" PointY="20.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="FireStationModel.tbl_ShiftRegister" Width="1.5" PointX="5.25" PointY="24.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="FireStationModel.tbl_State" Width="1.5" PointX="0.75" PointY="16" IsExpanded="true" />
+        <EntityTypeShape EntityType="FireStationModel.tbl_Usage" Width="1.5" PointX="5.25" PointY="37" IsExpanded="true" />
+        <EntityTypeShape EntityType="FireStationModel.tbl_weather" Width="1.5" PointX="5.25" PointY="39.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="FireStationModel.tbl_User" Width="1.5" PointX="5.25" PointY="33.625" IsExpanded="true" />
+        <AssociationConnector Association="FireStationModel.FK_tbl_Accident_tbl_AccidentType" ManuallyRouted="false" />
+        <AssociationConnector Association="FireStationModel.FK_tbl_Accident_tbl_Cause" ManuallyRouted="false" />
+        <AssociationConnector Association="FireStationModel.FK_tbl_Accident_tbl_Employee" ManuallyRouted="false" />
+        <AssociationConnector Association="FireStationModel.FK_tbl_Accident_tbl_Employee1" ManuallyRouted="false" />
+        <AssociationConnector Association="FireStationModel.FK_tbl_Accident_tbl_Usage" ManuallyRouted="false" />
+        <AssociationConnector Association="FireStationModel.FK_tbl_Accident_tbl_weather" ManuallyRouted="false" />
+        <AssociationConnector Association="FireStationModel.FK_tbl_Accident_tbl_User" ManuallyRouted="false" />
+        <AssociationConnector Association="FireStationModel.FK_tbl_AccidentEmplyoee_tbl_Accident1" ManuallyRouted="false" />
+        <AssociationConnector Association="FireStationModel.FK_tbl_AccidentInjured_tbl_Accident" ManuallyRouted="false" />
+        <AssociationConnector Association="FireStationModel.FK_tbl_AccidentM_tbl_Accident1" ManuallyRouted="false" />
+        <AssociationConnector Association="FireStationModel.FK_tbl_AccidentO_tbl_Accident1" ManuallyRouted="false" />
+        <AssociationConnector Association="FireStationModel.FK_tbl_AccidentStation_tbl_Accident" ManuallyRouted="false" />
+        <AssociationConnector Association="FireStationModel.FK_tbl_AccidentEmplyoee_tbl_Employee1" ManuallyRouted="false" />
+        <AssociationConnector Association="FireStationModel.FK_tbl_AccidentInjured_tbl_Injured" ManuallyRouted="false" />
+        <AssociationConnector Association="FireStationModel.FK_tbl_AccidentM_tbl_Material1" ManuallyRouted="false" />
+        <AssociationConnector Association="FireStationModel.FK_tbl_AccidentO_tbl_Organizations1" ManuallyRouted="false" />
+        <AssociationConnector Association="FireStationModel.FK_tbl_AccidentStation_tbl_State" ManuallyRouted="false" />
+        <AssociationConnector Association="FireStationModel.FK_tbl_Employee_tbl_State" ManuallyRouted="false" />
+        <AssociationConnector Association="FireStationModel.FK_tbl_Leave_tbl_Employee" ManuallyRouted="false" />
+        <AssociationConnector Association="FireStationModel.FK_tbl_Leave_tbl_Employee1" ManuallyRouted="false" />
+        <AssociationConnector Association="FireStationModel.FK_tbl_ShiftEmployee_tbl_Employee1" ManuallyRouted="false" />
+        <AssociationConnector Association="FireStationModel.FK_tbl_User_tbl_Employee" ManuallyRouted="false" />
+        <AssociationConnector Association="FireStationModel.FK_tbl_Leave_tbl_ShiftEmployee" ManuallyRouted="false" />
+        <AssociationConnector Association="FireStationModel.FK_tbl_Leave_tbl_ShiftRegister" ManuallyRouted="false" />
+        <AssociationConnector Association="FireStationModel.FK_tbl_Repair_tbl_Material" ManuallyRouted="false" />
+        <AssociationConnector Association="FireStationModel.FK_tbl_Missives_tbl_User" ManuallyRouted="false" />
+        <AssociationConnector Association="FireStationModel.FK_tbl_Repair_tbl_State" ManuallyRouted="false" />
+        <AssociationConnector Association="FireStationModel.FK_tbl_shift_tbl_State" ManuallyRouted="false" />
+        <AssociationConnector Association="FireStationModel.FK_tbl_ShiftEmployee_tbl_ShiftRegister1" ManuallyRouted="false" />
+        <AssociationConnector Association="FireStationModel.FK_tbl_ShiftRegister_tbl_shift" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

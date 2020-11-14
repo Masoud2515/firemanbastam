@@ -1,0 +1,212 @@
+﻿@model FireStation.Models.tbl_Accident
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Zamim2</title>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <style>
+
+        body {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            direction: rtl;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: "B Titr";
+        }
+
+        p, span {
+            font-family: "B Mitra";
+            font-size: 11pt;
+            font-weight: bold;
+        }
+
+        * {
+            box-sizing: border-box;
+            -moz-box-sizing: border-box;
+        }
+
+        .page {
+            width: 210mm;
+            min-height: 297mm;
+            background: white;
+        }
+
+        .subpage {
+            padding: 5cm 0cm 2.5cm 2cm;
+            height: 297mm;
+        }
+
+        .table > tbody > tr > td, .table > tbody > tr > th, .table > tfoot > tr > td, .table > tfoot > tr > th, .table > thead > tr > td, .table > thead > tr > th {
+            padding: 0px;
+            line-height: 1.42857143;
+            vertical-align: top;
+            border-top: none;
+        }
+
+        .khatchin {
+            border-left: 2px dashed #000;
+        }
+    </style>
+
+
+</head>
+
+<body>
+
+    <div class="book">
+        <div class="page">
+            <div class="subpage">
+                <div class="container">
+                    <div class="row text-center">
+                        <div class="col-xs-4">
+                            <p>
+                                زمان صدور گواهی:
+                                <span>@DateTime.Now.Minute : @DateTime.Now.Hour</span>
+                            </p>
+                        </div>
+                        <div class="col-xs-4">
+                            <h3>گواهی بروز حادثه</h3>
+                        </div>
+                        <div class="col-xs-4">
+                            <p>
+                                تاریخ صدور گواهی:
+                                <span>@ViewBag.dateprint</span>
+                            </p>
+                        </div>
+
+                    </div>
+                    <div class="card">
+                        <table class="table" cellspacing="0" cellpadding="0">
+                            <tbody>
+                                <tr>
+                                    <td class="col-xs-2"><h5>نوع حادثه:</h5></td>
+                                    <td class="col-xs-7" colspan="2"><p>@Html.DisplayFor(model => model.tbl_AccidentType.AccidentTypeTitel)</p></td>
+                                    <td class="col-xs-2"><h5>شماره حادثه:</h5></td>
+                                    <td class="col-xs-1"><p>@Html.DisplayFor(model => model.AccidentId)</p></td>
+                                </tr>
+                                <tr>
+                                    <td class="col-xs-2"><h6>آدرس محل حادثه:</h6></td>
+                                    <td class="col-xs-7" colspan="2"><p>@Html.DisplayFor(model => model.AccidentEventLocation)</p></td>
+                                    <td class="col-xs-2"><h6>تاریخ وقوع حادثه:</h6></td>
+                                    <td class="col-xs-1"><p>@Model.AccidentDate.Date.ToString()</p></td>
+                                </tr>
+                                <tr>
+                                    <td class="col-xs-9" colspan="3"></td>
+                                    <td class="col-xs-2"><h5>زمان اعلام:</h5></td>
+                                    <td class="col-xs-1"><p>@Html.DisplayFor(model => model.AccidentTime)</p></td>
+                                </tr>
+                                <tr>
+
+                                    <td class="col-xs-2"><h5>خسارت دیده:</h5></td>
+                                    <td class="col-xs-3"><p>نام مالک:@Html.DisplayFor(model => model.AccidentBuildingOwner)</p></td>
+                                    <td class="col-xs-4"><p>نام مستاجر:@Html.DisplayFor(model => model.AccidentBuildingTenant)</p></td>
+                                    <td class="col-xs-2"><h5>شروع عملیات:</h5></td>
+                                    <td class="col-xs-1"><p>@Html.DisplayFor(model => model.AccidentTimeStartOperation)</p></td>
+                                </tr>
+                                <tr>
+                                    <td class="col-xs-9" colspan="3"></td>
+                                    <td class="col-xs-2"><h5>اتمام عملیات:</h5></td>
+                                    <td class="col-xs-1"><p>@Html.DisplayFor(model => model.AccidentTimeEndOperation)</p></td>
+                                </tr>
+                                <tr>
+                                    <td class="col-xs-2"><h5>مورد کاربری:</h5></td>
+                                    <td class="col-xs-7" colspan="2"><p>@Html.DisplayFor(model => model.tbl_Usage.UsageTitel)</p></td>
+                                    <td class="col-xs-2"><h5>مدت عملیات:</h5></td>
+                                    <td class="col-xs-1">
+                                        <p>
+                                            @{
+                                                TimeSpan duration = Model.AccidentTimeEndOperation - Model.AccidentTimeStartOperation;
+
+                                            }
+                                            @duration
+                                        </p>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <hr style="border-top: 2px solid #000;" />
+                            <table class="table table-responsive" cellspacing="0" cellpadding="0" style="width:100%; table-layout:fixed">
+                                <tbody>
+                                    <tr>
+                                        <td class="col-xs-2"><h5>علت بروز حادثه:</h5></td>
+                                        <td class="col-xs-10" colspan="4"><textarea class="form-control border-primary col-xs-12" rows="2" disabled>@Html.DisplayFor(model => model.tbl_Cause.CauseTitel)</textarea></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="col-xs-2"><h5>اقدامات صورت گرفته:</h5></td>
+                                        <td class="col-xs-10" colspan="4"><textarea class="form-control border-primary col-xs-12" rows="3" disabled>@Html.DisplayFor(model => model.AccidentPreliminaryMeasures)</textarea></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="col-xs-2"><h5>شرح عملیات مامورین:</h5></td>
+                                        <td class="col-xs-10" colspan="4"><textarea class="form-control border-primary col-xs-12" rows="3" disabled>@Model.AccidentDescriptionOperation</textarea></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <hr style="border-top: 2px solid #000;" />
+                            <h5>ابزار و تجهیزات مورد استفاده:</h5>
+                            <div class="row">
+                                @foreach (var item in ViewBag.ACMA)
+                                {
+                                    <div class="col-xs-6">
+                                        <div class="col-xs-2"><span>@item.Vahed</span></div>
+                                        <div class="col-xs-2"><span>@item.Te</span></div>
+                                        <div class="col-xs-8"><span>@item.Name</span></div>
+                                    </div>
+                                }
+                            </div>
+                            <hr style="border-top: 2px solid #000;" />
+                            <h5>شرح خسارات وارده:</h5>
+                            <table class="table" cellspacing="0" cellpadding="0">
+                                <tbody>
+                                    <tr>
+                                        <td class="col-xs-12"><textarea class="form-control border-primary col-xs-12" rows="3" disabled>@Html.DisplayFor(model => model.AccidentDamageDescriptionO)</textarea></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <hr style="border-top: 2px solid #000;" />
+                            <table class="table">
+                                <tbody>
+                                    <tr>
+                                        <td class="col-xs-2">
+                                            <h5>فرمانده عملیات:</h5>
+                                        </td>
+                                        <td class="col-xs-10"><p>@Html.DisplayFor(model => model.tbl_Employee.EmployeeName) @Html.DisplayFor(model => model.tbl_Employee.EmployeeLastName)</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="col-xs-3">
+                                            <h5>مامورین شرکت کننده در عملیات:</h5>
+                                        </td>
+                                        @foreach (var item in ViewBag.fireman)
+                                        {
+                                            <td class="col-xs-2"><span>@item.EmployeeName @item.EmployeeLastName , </span></td>
+                                        }
+                                    </tr>
+                                    <tr>
+                                        <td class="col-xs-3">
+                                            <h5>ایستگاه های عملیات کننده:</h5>
+                                        </td>
+                                        @foreach (var item in ViewBag.station)
+                                        {
+                                            <td class="col-xs-2"><span>@item.StateName , </span></td>
+                                        }
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+            </div>
+        </div>
+    </div>
+
+
+
+
+</body>
+
+</html>

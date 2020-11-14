@@ -1,0 +1,68 @@
+﻿@model FireStation.Models.tbl_shift
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_LayoutPannel.cshtml";
+}
+
+<div class="card">
+    <div class="row">
+        <div class="col-lg-12 p-4">
+            <h4>جزئیات شیفت</h4>
+            <hr />
+            <table class="table table-borderless">
+                <tr>
+
+                    <td>
+                        @Html.DisplayNameFor(model => model.ShiftName)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(model => model.ShiftName)
+                    </td>
+
+                    <td>
+                        @Html.DisplayNameFor(model => model.tbl_State.StateName)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(model => model.tbl_State.StateName)
+                    </td>
+
+                </tr>
+            </table>
+            <div class="col-lg-12">
+                <label class="control-label h6">آتشنشان های حاضر در شیفت</label>
+                <table class="table table-bordered table-striped table-hover text-center">
+                    <thead>
+                        <tr>
+                            <th>ردیف</th>
+                            <th>نام و نام خانوادگی</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            int conterF = 0;
+                            foreach (var item in ViewBag.fireman)
+                            {
+                                conterF++;
+                                <tr>
+                                    <td>@conterF</td>
+                                    <td>@item.EmployeeName  @item.EmployeeLastName</td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <div class="row mt-5 justify-content-center">
+                <div class="col-2">
+                    <button class="btn btn-outline-info btn-block">@Html.ActionLink("ویرایش", "Edit", new { id = Model.ShiftId })</button>
+                </div>
+                <div class="col-2">
+                    <a class="btn btn-outline-dark btn-block" href="~/Shift">بازگشت</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

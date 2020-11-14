@@ -1,0 +1,88 @@
+﻿@model IEnumerable<FireStation.Models.tbl_Accident>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutPannel.cshtml";
+}
+
+<section id="html">
+    <div class="row">
+
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body collpase show">
+                    <div class="card-block card-dashboard table-responsive">
+                        <h5>حوادث</h5>
+                        <hr />
+                        <div class="btn-group offset-1">
+                            <button class="btn btn-outline-success">@Html.ActionLink("افزودن", "Create")</button>
+                        </div>
+                        <table class="table table-striped table-bordered sourced-data text-center" cellspacing="0" style="width:100%; table-layout:fixed">
+                            <thead class="bg-dark text-light">
+                                <tr>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.AccidentId)
+                                    </th>
+                                    <th width="200px">
+                                        @Html.DisplayNameFor(model => model.AccidentEventLocation)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.AccidentTime)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.AccidentDate)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.AccidentZone)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.DateAdd)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.tbl_AccidentType.AccidentTypeTitel)
+                                    </th>
+
+                                    <th style="width:305px">عملیات</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.AccidentId)
+                                        </td>
+                                        <td>
+                                            <pre style="overflow-x:scroll;">@Html.DisplayFor(modelItem => item.AccidentEventLocation)</pre>
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.AccidentTime)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.AccidentDate)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.AccidentZone)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.DateAdd)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.tbl_AccidentType.AccidentTypeTitel)
+                                        </td>
+
+                                        <td>
+                                            <button class="btn btn-outline-info">@Html.ActionLink("ویرایش", "Edit", new { id = item.AccidentId })</button>
+                                            <button class="btn btn-outline-danger">@Html.ActionLink("حذف", "Delete", new { id = item.AccidentId })</button>
+                                            <button class="btn btn-outline-black">@Html.ActionLink("گواهی حادثه", "Reporthadece", new { id = item.AccidentId }, new { target = "_blank" })</button>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

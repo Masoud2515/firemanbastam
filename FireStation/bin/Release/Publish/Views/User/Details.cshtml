@@ -1,0 +1,55 @@
+﻿@model FireStation.Models.tbl_User
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_LayoutPannel.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>tbl_User</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.UserUserName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UserUserName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UserPassword)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UserPassword)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UserRole)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UserRole)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.tbl_Employee.EmployeeCode)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tbl_Employee.EmployeeCode)
+        </dd>
+
+    </dl>
+</div>
+<div class="row mt-5 justify-content-center">
+    <div class="col-2">
+        <button class="btn btn-outline-info btn-block">@Html.ActionLink("ویرایش", "Edit", new { id = Model.UserId })</button>
+    </div>
+    <div class="col-2">
+        <a class="btn btn-outline-dark btn-block" href="~/User">بازگشت</a>
+    </div>
+</div>
