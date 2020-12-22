@@ -11,8 +11,7 @@ namespace FireStation.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-
+    
     public partial class tbl_AccidentType
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -20,9 +19,8 @@ namespace FireStation.Models
         {
             this.tbl_Accident = new HashSet<tbl_Accident>();
         }
-        [Display(Name = "‘‰«”Â ‰Ê⁄ Õ«œÀÂ")]
+    
         public int AccidentTypeId { get; set; }
-        [Display(Name = " ‰Ê⁄ Õ«œÀÂ")]
         public string AccidentTypeTitel { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

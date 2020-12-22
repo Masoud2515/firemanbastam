@@ -17,9 +17,8 @@
         // Line with Area Chart 1 Starts
         var lineArea1 = new Chartist.Line('#line-area1', {
             labels: ["1","2","3","4","5","6","7","8"],
-            series: [
-                [0,4500,2600,6100,2600,6500,3200,6800]
-            ]
+            series: [0,4500,2600,6100,2600,6500,3200,6800]
+            
         }, {
                 low: 0,
                 fullWidth: true,

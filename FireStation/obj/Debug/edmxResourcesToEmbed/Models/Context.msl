@@ -1,0 +1,270 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="FireStationModelStoreContainer" CdmEntityContainer="FireStationEntities">
+    <EntitySetMapping Name="tbl_Accident">
+      <EntityTypeMapping TypeName="FireStationModel.tbl_Accident">
+        <MappingFragment StoreEntitySet="tbl_Accident">
+          <ScalarProperty Name="AccidentId" ColumnName="AccidentId" />
+          <ScalarProperty Name="AccidentEventLocation" ColumnName="AccidentEventLocation" />
+          <ScalarProperty Name="AccidentDescrption" ColumnName="AccidentDescrption" />
+          <ScalarProperty Name="AccidentTime" ColumnName="AccidentTime" />
+          <ScalarProperty Name="AccidentDate" ColumnName="AccidentDate" />
+          <ScalarProperty Name="AccidentReportUrl" ColumnName="AccidentReportUrl" />
+          <ScalarProperty Name="AccidentWid" ColumnName="AccidentWid" />
+          <ScalarProperty Name="AccidentTypeId" ColumnName="AccidentTypeId" />
+          <ScalarProperty Name="AccidentZone" ColumnName="AccidentZone" />
+          <ScalarProperty Name="AccidentUserId" ColumnName="AccidentUserId" />
+          <ScalarProperty Name="AccidentUsageId" ColumnName="AccidentUsageId" />
+          <ScalarProperty Name="AccidentTimeStartOperation" ColumnName="AccidentTimeStartOperation" />
+          <ScalarProperty Name="AccidentTimeEndOperation" ColumnName="AccidentTimeEndOperation" />
+          <ScalarProperty Name="AccidentTimeToClear" ColumnName="AccidentTimeToClear" />
+          <ScalarProperty Name="AccidentReporter" ColumnName="AccidentReporter" />
+          <ScalarProperty Name="AccidentReportReciver" ColumnName="AccidentReportReciver" />
+          <ScalarProperty Name="AccidentReportType" ColumnName="AccidentReportType" />
+          <ScalarProperty Name="AccidentSiteFloors" ColumnName="AccidentSiteFloors" />
+          <ScalarProperty Name="AccidentBuildingType" ColumnName="AccidentBuildingType" />
+          <ScalarProperty Name="AccidentBuildingOwner" ColumnName="AccidentBuildingOwner" />
+          <ScalarProperty Name="AccidentBuildingTel" ColumnName="AccidentBuildingTel" />
+          <ScalarProperty Name="AccidentBuildingTenant" ColumnName="AccidentBuildingTenant" />
+          <ScalarProperty Name="AccidentOtherType" ColumnName="AccidentOtherType" />
+          <ScalarProperty Name="AccidentPreliminaryMeasures" ColumnName="AccidentPreliminaryMeasures" />
+          <ScalarProperty Name="AccidentDescriptionOperation" ColumnName="AccidentDescriptionOperation" />
+          <ScalarProperty Name="AccidentDamageDescriptionO" ColumnName="AccidentDamageDescriptionO" />
+          <ScalarProperty Name="AccidentDamageDescriptionL" ColumnName="AccidentDamageDescriptionL" />
+          <ScalarProperty Name="AccidentReportProducer" ColumnName="AccidentReportProducer" />
+          <ScalarProperty Name="AccidentOperationsCommander" ColumnName="AccidentOperationsCommander" />
+          <ScalarProperty Name="DateAdd" ColumnName="DateAdd" />
+          <ScalarProperty Name="AccidentOperationProblems" ColumnName="AccidentOperationProblems" />
+          <ScalarProperty Name="AccidentCause" ColumnName="AccidentCause" />
+          <ScalarProperty Name="Isdelete" ColumnName="Isdelete" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tbl_AccidentEmplyoee">
+      <EntityTypeMapping TypeName="FireStationModel.tbl_AccidentEmplyoee">
+        <MappingFragment StoreEntitySet="tbl_AccidentEmplyoee">
+          <ScalarProperty Name="AEId" ColumnName="AEId" />
+          <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+          <ScalarProperty Name="AccidentId" ColumnName="AccidentId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tbl_AccidentInjured">
+      <EntityTypeMapping TypeName="FireStationModel.tbl_AccidentInjured">
+        <MappingFragment StoreEntitySet="tbl_AccidentInjured">
+          <ScalarProperty Name="AccidentInjuredid" ColumnName="AccidentInjuredid" />
+          <ScalarProperty Name="AccidentId" ColumnName="AccidentId" />
+          <ScalarProperty Name="InjuredId" ColumnName="InjuredId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tbl_AccidentM">
+      <EntityTypeMapping TypeName="FireStationModel.tbl_AccidentM">
+        <MappingFragment StoreEntitySet="tbl_AccidentM">
+          <ScalarProperty Name="AccidentMid" ColumnName="AccidentMid" />
+          <ScalarProperty Name="AccidentId" ColumnName="AccidentId" />
+          <ScalarProperty Name="MaterialId" ColumnName="MaterialId" />
+          <ScalarProperty Name="tedad" ColumnName="tedad" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tbl_AccidentO">
+      <EntityTypeMapping TypeName="FireStationModel.tbl_AccidentO">
+        <MappingFragment StoreEntitySet="tbl_AccidentO">
+          <ScalarProperty Name="AccidentOid" ColumnName="AccidentOid" />
+          <ScalarProperty Name="AccidentId" ColumnName="AccidentId" />
+          <ScalarProperty Name="OrganizationsId" ColumnName="OrganizationsId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tbl_AccidentStation">
+      <EntityTypeMapping TypeName="FireStationModel.tbl_AccidentStation">
+        <MappingFragment StoreEntitySet="tbl_AccidentStation">
+          <ScalarProperty Name="AccidentStationId" ColumnName="AccidentStationId" />
+          <ScalarProperty Name="StationId" ColumnName="StationId" />
+          <ScalarProperty Name="AccidentId" ColumnName="AccidentId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tbl_AccidentType">
+      <EntityTypeMapping TypeName="FireStationModel.tbl_AccidentType">
+        <MappingFragment StoreEntitySet="tbl_AccidentType">
+          <ScalarProperty Name="AccidentTypeId" ColumnName="AccidentTypeId" />
+          <ScalarProperty Name="AccidentTypeTitel" ColumnName="AccidentTypeTitel" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tbl_Cause">
+      <EntityTypeMapping TypeName="FireStationModel.tbl_Cause">
+        <MappingFragment StoreEntitySet="tbl_Cause">
+          <ScalarProperty Name="CauseId" ColumnName="CauseId" />
+          <ScalarProperty Name="CauseTitel" ColumnName="CauseTitel" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tbl_Employee">
+      <EntityTypeMapping TypeName="FireStationModel.tbl_Employee">
+        <MappingFragment StoreEntitySet="tbl_Employee">
+          <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+          <ScalarProperty Name="EmployeeCode" ColumnName="EmployeeCode" />
+          <ScalarProperty Name="EmployeeName" ColumnName="EmployeeName" />
+          <ScalarProperty Name="EmployeeLastName" ColumnName="EmployeeLastName" />
+          <ScalarProperty Name="EmployeePhone" ColumnName="EmployeePhone" />
+          <ScalarProperty Name="EmployeeAdress" ColumnName="EmployeeAdress" />
+          <ScalarProperty Name="EmployeePicUrl" ColumnName="EmployeePicUrl" />
+          <ScalarProperty Name="StateId" ColumnName="StateId" />
+          <ScalarProperty Name="EmployeeFName" ColumnName="EmployeeFName" />
+          <ScalarProperty Name="EmployeeMCode" ColumnName="EmployeeMCode" />
+          <ScalarProperty Name="EmployeeBirthdate" ColumnName="EmployeeBirthdate" />
+          <ScalarProperty Name="EmployeeSex" ColumnName="EmployeeSex" />
+          <ScalarProperty Name="EmployeeWork" ColumnName="EmployeeWork" />
+          <ScalarProperty Name="EmployeeDateRegistered" ColumnName="EmployeeDateRegistered" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tbl_Injured">
+      <EntityTypeMapping TypeName="FireStationModel.tbl_Injured">
+        <MappingFragment StoreEntitySet="tbl_Injured">
+          <ScalarProperty Name="InjuredID" ColumnName="InjuredID" />
+          <ScalarProperty Name="InjuredName" ColumnName="InjuredName" />
+          <ScalarProperty Name="InjuredLastName" ColumnName="InjuredLastName" />
+          <ScalarProperty Name="InjuredSex" ColumnName="InjuredSex" />
+          <ScalarProperty Name="InjuredType" ColumnName="InjuredType" />
+          <ScalarProperty Name="InjuredTypeinjury" ColumnName="InjuredTypeinjury" />
+          <ScalarProperty Name="InjuredDescription" ColumnName="InjuredDescription" />
+          <ScalarProperty Name="InjuredLocation" ColumnName="InjuredLocation" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tbl_Leave">
+      <EntityTypeMapping TypeName="FireStationModel.tbl_Leave">
+        <MappingFragment StoreEntitySet="tbl_Leave">
+          <ScalarProperty Name="LeaveID" ColumnName="LeaveID" />
+          <ScalarProperty Name="ShiftEmployeeId" ColumnName="ShiftEmployeeId" />
+          <ScalarProperty Name="ShiftRegisterId" ColumnName="ShiftRegisterId" />
+          <ScalarProperty Name="EmployeeID1" ColumnName="EmployeeID1" />
+          <ScalarProperty Name="EmployeeID2" ColumnName="EmployeeID2" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tbl_Material">
+      <EntityTypeMapping TypeName="FireStationModel.tbl_Material">
+        <MappingFragment StoreEntitySet="tbl_Material">
+          <ScalarProperty Name="MaterialId" ColumnName="MaterialId" />
+          <ScalarProperty Name="MaterialCode" ColumnName="MaterialCode" />
+          <ScalarProperty Name="MaterialName" ColumnName="MaterialName" />
+          <ScalarProperty Name="MaterialPic" ColumnName="MaterialPic" />
+          <ScalarProperty Name="MaterialType" ColumnName="MaterialType" />
+          <ScalarProperty Name="MaterialVahed" ColumnName="MaterialVahed" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tbl_Missives">
+      <EntityTypeMapping TypeName="FireStationModel.tbl_Missives">
+        <MappingFragment StoreEntitySet="tbl_Missives">
+          <ScalarProperty Name="MissiveId" ColumnName="MissiveId" />
+          <ScalarProperty Name="MissiveTitel" ColumnName="MissiveTitel" />
+          <ScalarProperty Name="MissiveText" ColumnName="MissiveText" />
+          <ScalarProperty Name="MissiveFileUrl" ColumnName="MissiveFileUrl" />
+          <ScalarProperty Name="MissiveDate" ColumnName="MissiveDate" />
+          <ScalarProperty Name="MissiveNumber" ColumnName="MissiveNumber" />
+          <ScalarProperty Name="MissiveUserId" ColumnName="MissiveUserId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tbl_Organizations">
+      <EntityTypeMapping TypeName="FireStationModel.tbl_Organizations">
+        <MappingFragment StoreEntitySet="tbl_Organizations">
+          <ScalarProperty Name="OrId" ColumnName="OrId" />
+          <ScalarProperty Name="OrTel" ColumnName="OrTel" />
+          <ScalarProperty Name="OrTitel" ColumnName="OrTitel" />
+          <ScalarProperty Name="OrAdress" ColumnName="OrAdress" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tbl_Repair">
+      <EntityTypeMapping TypeName="FireStationModel.tbl_Repair">
+        <MappingFragment StoreEntitySet="tbl_Repair">
+          <ScalarProperty Name="RepairId" ColumnName="RepairId" />
+          <ScalarProperty Name="RepairDescription" ColumnName="RepairDescription" />
+          <ScalarProperty Name="RepairDate" ColumnName="RepairDate" />
+          <ScalarProperty Name="RepairTitel" ColumnName="RepairTitel" />
+          <ScalarProperty Name="MaterialId" ColumnName="MaterialId" />
+          <ScalarProperty Name="StateId" ColumnName="StateId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tbl_shift">
+      <EntityTypeMapping TypeName="FireStationModel.tbl_shift">
+        <MappingFragment StoreEntitySet="tbl_shift">
+          <ScalarProperty Name="ShiftId" ColumnName="ShiftId" />
+          <ScalarProperty Name="ShiftName" ColumnName="ShiftName" />
+          <ScalarProperty Name="StateId" ColumnName="StateId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tbl_ShiftEmployee">
+      <EntityTypeMapping TypeName="FireStationModel.tbl_ShiftEmployee">
+        <MappingFragment StoreEntitySet="tbl_ShiftEmployee">
+          <ScalarProperty Name="ShiftEmployeeId" ColumnName="ShiftEmployeeId" />
+          <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+          <ScalarProperty Name="Shiftid" ColumnName="Shiftid" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tbl_ShiftRegister">
+      <EntityTypeMapping TypeName="FireStationModel.tbl_ShiftRegister">
+        <MappingFragment StoreEntitySet="tbl_ShiftRegister">
+          <ScalarProperty Name="ShiftRegisterid" ColumnName="ShiftRegisterid" />
+          <ScalarProperty Name="ShiftRegisterDec" ColumnName="ShiftRegisterDec" />
+          <ScalarProperty Name="ShiftRegisterCommandor" ColumnName="ShiftRegisterCommandor" />
+          <ScalarProperty Name="ShiftRegisterTimeStart" ColumnName="ShiftRegisterTimeStart" />
+          <ScalarProperty Name="ShiftRegisterTimeEnd" ColumnName="ShiftRegisterTimeEnd" />
+          <ScalarProperty Name="ShiftRegisterDateStart" ColumnName="ShiftRegisterDateStart" />
+          <ScalarProperty Name="ShiftRegisteridDateEnd" ColumnName="ShiftRegisteridDateEnd" />
+          <ScalarProperty Name="ShiftRegisterurl" ColumnName="ShiftRegisterurl" />
+          <ScalarProperty Name="ShiftRegisterShifId" ColumnName="ShiftRegisterShifId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tbl_State">
+      <EntityTypeMapping TypeName="FireStationModel.tbl_State">
+        <MappingFragment StoreEntitySet="tbl_State">
+          <ScalarProperty Name="StateId" ColumnName="StateId" />
+          <ScalarProperty Name="StateName" ColumnName="StateName" />
+          <ScalarProperty Name="StateAdress" ColumnName="StateAdress" />
+          <ScalarProperty Name="StateTel" ColumnName="StateTel" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tbl_Usage">
+      <EntityTypeMapping TypeName="FireStationModel.tbl_Usage">
+        <MappingFragment StoreEntitySet="tbl_Usage">
+          <ScalarProperty Name="UsageId" ColumnName="UsageId" />
+          <ScalarProperty Name="UsageTitel" ColumnName="UsageTitel" />
+          <ScalarProperty Name="UsageDescription" ColumnName="UsageDescription" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tbl_weather">
+      <EntityTypeMapping TypeName="FireStationModel.tbl_weather">
+        <MappingFragment StoreEntitySet="tbl_weather">
+          <ScalarProperty Name="WeatherId" ColumnName="WeatherId" />
+          <ScalarProperty Name="WeatherTitel" ColumnName="WeatherTitel" />
+          <ScalarProperty Name="WeatherDec" ColumnName="WeatherDec" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tbl_User">
+      <EntityTypeMapping TypeName="FireStationModel.tbl_User">
+        <MappingFragment StoreEntitySet="tbl-User">
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="UserUserName" ColumnName="UserUserName" />
+          <ScalarProperty Name="UserPassword" ColumnName="UserPassword" />
+          <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+          <ScalarProperty Name="UserRole" ColumnName="UserRole" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

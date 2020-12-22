@@ -1,4 +1,4 @@
-﻿// T4 code generation is enabled for model 'C:\Users\Masoud\Desktop\FireStation\FireStation\FireStation\Models\Context.edmx'. 
+﻿// T4 code generation is enabled for model 'C:\Users\SURFACE\source\repos\Masoud2515\firemanbastam\FireStation\Models\Context.edmx'. 
 // To enable legacy code generation, change the value of the 'Code Generation Strategy' designer
 // property to 'Legacy ObjectContext'. This property is available in the Properties Window when the model
 // is open in the designer.

@@ -11,8 +11,7 @@ namespace FireStation.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-
+    
     public partial class tbl_Organizations
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -20,13 +19,10 @@ namespace FireStation.Models
         {
             this.tbl_AccidentO = new HashSet<tbl_AccidentO>();
         }
-        [Display(Name = "‘‰«”Â")]
+    
         public int OrId { get; set; }
-        [Display(Name = " ·›‰")]
         public string OrTel { get; set; }
-        [Display(Name = "‰«„ «—ê«‰")]
         public string OrTitel { get; set; }
-        [Display(Name = "¬œ—”")]
         public string OrAdress { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

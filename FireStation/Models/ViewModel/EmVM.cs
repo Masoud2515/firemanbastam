@@ -11,4 +11,11 @@ namespace FireStation.Models.ViewModel
 
         public string Id { get; set; }
     }
+    public class MaterialViewModel
+    {
+        public int Id { get; set; }
+
+        public string name { get; set; }
+        public string code { get; set; }
+    }
 }

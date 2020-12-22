@@ -9,7 +9,7 @@ using System.Web;
 using System.Web.Mvc;
 using FireStation.Models;
 using FireStation.Models.ViewModel;
-
+using Newtonsoft.Json;
 
 namespace FireStation.Controllers
 {
@@ -127,7 +127,8 @@ namespace FireStation.Controllers
                 return RedirectToAction("Login", "Account");
             }
         }
-        public ActionResult Addinjured(int? id, int? Acid, int? mat)
+        // GET: Accident/Create
+        public ActionResult Create()
         {
             if (Session["OnlineUser"] != null)
             {
@@ -135,9 +136,36 @@ namespace FireStation.Controllers
                 {
                     ViewBag.OnlineUser = Session["UserName"].ToString();
                     ViewBag.OnlineUserRole = Session["UserRole"].ToString();
-                    ViewBag.number = id / 9763;
-                    ViewBag.Ac = Acid / 25438;
-                    ViewBag.mat = mat;
+                    ViewBag.AccidentTypeId = db.tbl_AccidentType.ToList();
+                    ViewBag.AccidentUsageId = db.tbl_Usage.ToList();
+                    ViewBag.AccidentWid = db.tbl_weather.ToList();
+                    ViewBag.AccidentUserId = db.tbl_User.ToList();
+                    ViewBag.OpState = db.tbl_State.ToList();
+                    ViewBag.Organization = db.tbl_Organizations.ToList();
+                    ViewBag.Emp = db.tbl_Employee.ToList();
+                    List<MaterialViewModel> materials = new List<MaterialViewModel>();
+                    foreach (var item in db.tbl_Material.ToList())
+                    {
+                        MaterialViewModel mat = new MaterialViewModel();
+                        mat.Id = item.MaterialId;
+                        mat.name = item.MaterialName;
+                        mat.code = item.MaterialCode;
+                        materials.Add(mat);
+                    }
+                    ViewBag.material = JsonConvert.SerializeObject(materials);
+                    ViewBag.Cause = db.tbl_Cause.ToList();
+                    #region id genrator
+                    int dateint;
+                    System.Globalization.PersianCalendar pc = new System.Globalization.PersianCalendar();
+                    dateint = Convert.ToInt32(pc.GetYear(DateTime.Now));
+                    int accident = db.tbl_Accident.Where(x => x.AccidentId.ToString().Substring(0, 4).Equals(dateint.ToString())).Count();
+                    int ra = Convert.ToInt32(string.Format("{0}{1}", dateint, accident + 1));
+                    while (db.tbl_Accident.FirstOrDefault(f => f.AccidentId == ra) != null)
+                    {
+                        ra++;
+                    }
+                    ViewBag.number = ra;
+                    #endregion id genrator
                     return View();
                 }
                 else
@@ -150,22 +178,93 @@ namespace FireStation.Controllers
                 return RedirectToAction("Login", "Account");
             }
         }
+        // POST: Accident/Create
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Addinjured(string[] InjuredName, string[] InjuredLastName, int[] InjuredSex, int[] InjuredType, int[] InjuredTypeinjury, string[] InjuredDescription, string[] InjuredLocation, int Acid, int mat)
+        public ActionResult Create([Bind(Include = "AccidentId,AccidentEventLocation,AccidentDescrption,AccidentTime,AccidentDate,AccidentReportUrl,AccidentWid,AccidentTypeId,AccidentZone,AccidentUserId,AccidentUsageId,AccidentTimeStartOperation,AccidentTimeEndOperation,AccidentTimeToClear,AccidentReporter,AccidentReportReciver,AccidentReportType,AccidentSiteFloors,AccidentBuildingType,AccidentBuildingOwner,AccidentBuildingTel,AccidentBuildingTenant,AccidentOtherType,AccidentPreliminaryMeasures,AccidentDescriptionOperation,AccidentDamageDescriptionO,AccidentDamageDescriptionL,AccidentReportProducer,AccidentOperationsCommander,DateAdd,AccidentOperationProblems,AccidentCause")] tbl_Accident tbl_Accident, HttpPostedFileBase pic, List<int> OperatingStation, List<int> Employee, List<int> Organisation, string[] InjuredName, string[] InjuredLastName, int[] InjuredSex, int[] InjuredType, int[] InjuredTypeinjury, string[] InjuredDescription, string[] InjuredLocation, int[] MaterialId, int[] tedad)
         {
-            if (Session["OnlineUser"] != null)
+            Random rand = new Random();
+            int te, dateint;
+            if (ModelState.IsValid)
             {
-                if (Session["UserRole"].Equals("SUPERADMIN") || Session["UserRole"].Equals("ADMIN") || Session["UserRole"].Equals("SUBADMIN"))
+                if (Session["OnlineUser"] != null)
                 {
-                    ViewBag.OnlineUser = Session["UserName"].ToString();
-                    ViewBag.OnlineUserRole = Session["UserRole"].ToString();
-                    if (InjuredName != null)
+                    if (Session["UserRole"].Equals("SUPERADMIN") || Session["UserRole"].Equals("ADMIN") || Session["UserRole"].Equals("SUBADMIN"))
                     {
+
+                        System.Globalization.PersianCalendar pc = new System.Globalization.PersianCalendar();
+                        dateint = Convert.ToInt32(pc.GetYear(DateTime.Now));
+                        int accident = db.tbl_Accident.Where(x => x.AccidentId.ToString().Substring(0, 4).Equals(dateint.ToString())).Count();
+                        te = Convert.ToInt32(string.Format("{0}{1}", dateint, accident + 1));
+                        while (db.tbl_Accident.FirstOrDefault(f => f.AccidentId == te) != null)
+                        {
+                            te = Convert.ToInt32(string.Format("{0}{1}", dateint, accident + 1));
+                        }
+                        if (pic != null)
+                        {
+                            var Fi1 = Path.GetExtension(pic.FileName);
+                            var Ri1 = Path.Combine(Server.MapPath("~/Documents/Doc/"), string.Format("{0}{1}", te.ToString(), Fi1));
+                            pic.SaveAs(Ri1);
+                            tbl_Accident.AccidentReportUrl = string.Format("Documents/Doc/{0}{1}", te.ToString(), Fi1);
+                        }
+                        tbl_Accident.AccidentId = te;
+                        tbl_Accident.AccidentUserId = Convert.ToInt32(Session["OnlineUser"].ToString());
+                        tbl_Accident.DateAdd = DateTime.Now;
+                        tbl_Accident.Isdelete = false;
+                        ViewBag.OnlineUser = Session["UserName"].ToString();
+                        ViewBag.OnlineUserRole = Session["UserRole"].ToString();
+                        db.tbl_Accident.Add(tbl_Accident);
+                        db.SaveChanges();
+                        int rs, re, rf;
+                        foreach (int item in OperatingStation)
+                        {
+                            tbl_AccidentStation oState = new tbl_AccidentStation();
+                            rs = rand.Next(111111, 999999);
+                            while (db.tbl_AccidentStation.FirstOrDefault(f => f.AccidentStationId == rs) != null)
+                            {
+                                rs = rand.Next(111111, 999999);
+                            }
+                            oState.AccidentStationId = rs;
+                            oState.StationId = item;
+                            oState.AccidentId = te;
+                            db.tbl_AccidentStation.Add(oState);
+                            db.SaveChanges();
+                        }
+                        foreach (int item in Employee)
+                        {
+                            tbl_AccidentEmplyoee oEmployee = new tbl_AccidentEmplyoee();
+                            re = rand.Next(111111, 999999);
+                            while (db.tbl_AccidentEmplyoee.FirstOrDefault(f => f.AEId == re) != null)
+                            {
+                                re = rand.Next(111111, 999999);
+                            }
+                            oEmployee.AEId = re;
+                            oEmployee.EmployeeId = item;
+                            oEmployee.AccidentId = te;
+                            db.tbl_AccidentEmplyoee.Add(oEmployee);
+                            db.SaveChanges();
+                        }
+                        foreach (int item in Organisation)
+                        {
+                            tbl_AccidentO dll = new tbl_AccidentO();
+                            rf = rand.Next(111111, 999999);
+                            while (db.tbl_AccidentO.FirstOrDefault(f => f.AccidentOid == rf) != null)
+                            {
+                                rf = rand.Next(111111, 999999);
+                            }
+                            dll.AccidentOid = rf;
+                            dll.OrganizationsId = item;
+                            dll.AccidentId = te;
+                            db.tbl_AccidentO.Add(dll);
+                            db.SaveChanges();
+                        }
+
                         for (int i = 0; i < InjuredName.Count(); i++)
                         {
                             tbl_Injured tbl_Injured = new tbl_Injured();
-                            Random rand = new Random();
+                            Random rand2 = new Random();
                             int random = 0;
                             random = rand.Next(11111111, 99999999);
                             while (db.tbl_Injured.FirstOrDefault(x => x.InjuredID == random) != null)
@@ -214,242 +313,31 @@ namespace FireStation.Controllers
                                 random1 = rand.Next(11111111, 99999999);
                             }
                             tbl_AccidentInjured.AccidentInjuredid = random1;
-                            tbl_AccidentInjured.AccidentId = Acid;
+                            tbl_AccidentInjured.AccidentId = te;
                             tbl_AccidentInjured.InjuredId = random;
                             db.tbl_AccidentInjured.Add(tbl_AccidentInjured);
                             db.SaveChanges();
-                            return RedirectToAction("Addmaterial", new { id = mat * 3220, Acid = Acid * 3221 });
                         }
-                    }
-                    else
-                    {
-                        return RedirectToAction("Addmaterial", new { id = mat * 3220, Acid = Acid * 3221 });
-                    }
-
-                    return View();
-                }
-                else
-                {
-                    return RedirectToAction("Accessdenied", "Home");
-                }
-            }
-            else
-            {
-                return RedirectToAction("Login", "Account");
-            }
-        }
-        // GET: Accident/Create
-        public ActionResult Addmaterial(int? id, int? Acid)
-        {
-            if (Session["OnlineUser"] != null)
-            {
-                if (Session["UserRole"].Equals("SUPERADMIN") || Session["UserRole"].Equals("ADMIN") || Session["UserRole"].Equals("SUBADMIN"))
-                {
-                    ViewBag.OnlineUser = Session["UserName"].ToString();
-                    ViewBag.OnlineUserRole = Session["UserRole"].ToString();
-                    ViewBag.number = id / 3220;
-                    ViewBag.Ac = Acid / 3221;
-                    ViewBag.material = db.tbl_Material.ToList();
-                    return View();
-                }
-                else
-                {
-                    return RedirectToAction("Accessdenied", "Home");
-                }
-            }
-            else
-            {
-                return RedirectToAction("Login", "Account");
-            }
-        }
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Addmaterial(int[] MaterialId, int[] tedad, int Acid)
-        {
-            Random rand = new Random();
-            if (Session["OnlineUser"] != null)
-            {
-                if (Session["UserRole"].Equals("SUPERADMIN") || Session["UserRole"].Equals("ADMIN") || Session["UserRole"].Equals("SUBADMIN"))
-                {
-                    ViewBag.OnlineUser = Session["UserName"].ToString();
-                    ViewBag.OnlineUserRole = Session["UserRole"].ToString();
-                    ViewBag.material = db.tbl_Material.ToList();
-                    if (MaterialId != null)
-                    {
-                        for (int i = 0; i < MaterialId.Count(); i++)
+                        if (MaterialId != null)
                         {
-                            tbl_AccidentM tbl_AccidentM = new tbl_AccidentM();
-                            Random rand1 = new Random();
-                            int random1 = 0;
-                            random1 = rand.Next(11111111, 99999999);
-                            while (db.tbl_AccidentM.FirstOrDefault(x => x.AccidentMid == random1) != null)
+                            for (int i = 0; i < MaterialId.Count(); i++)
                             {
+                                tbl_AccidentM tbl_AccidentM = new tbl_AccidentM();
+                                Random rand1 = new Random();
+                                int random1 = 0;
                                 random1 = rand.Next(11111111, 99999999);
+                                while (db.tbl_AccidentM.FirstOrDefault(x => x.AccidentMid == random1) != null)
+                                {
+                                    random1 = rand.Next(11111111, 99999999);
+                                }
+                                tbl_AccidentM.AccidentMid = random1;
+                                tbl_AccidentM.AccidentId = te;
+                                tbl_AccidentM.MaterialId = MaterialId[i];
+                                tbl_AccidentM.tedad = tedad[i];
+                                db.tbl_AccidentM.Add(tbl_AccidentM);
+                                db.SaveChanges();
                             }
-                            tbl_AccidentM.AccidentMid = random1;
-                            tbl_AccidentM.AccidentId = Acid;
-                            tbl_AccidentM.MaterialId = MaterialId[i];
-                            tbl_AccidentM.tedad = tedad[i];
-                            db.tbl_AccidentM.Add(tbl_AccidentM);
-                            db.SaveChanges();
-                        }
-                        return RedirectToAction("Index");
-                    }
-                    else
-                    {
-                        return RedirectToAction("Index");
-                    }
-                }
-
-                else
-                {
-                    return RedirectToAction("Accessdenied", "Home");
-                }
-            }
-            else
-            {
-                return RedirectToAction("Login", "Account");
-            }
-        }
-        // GET: Accident/Create
-        public ActionResult Create()
-        {
-            if (Session["OnlineUser"] != null)
-            {
-                if (Session["UserRole"].Equals("SUPERADMIN") || Session["UserRole"].Equals("ADMIN") || Session["UserRole"].Equals("SUBADMIN"))
-                {
-                    ViewBag.OnlineUser = Session["UserName"].ToString();
-                    ViewBag.OnlineUserRole = Session["UserRole"].ToString();
-                    ViewBag.AccidentTypeId = db.tbl_AccidentType.ToList();
-                    ViewBag.AccidentUsageId = db.tbl_Usage.ToList();
-                    ViewBag.AccidentWid = db.tbl_weather.ToList();
-                    ViewBag.AccidentUserId = db.tbl_User.ToList();
-                    ViewBag.OpState = db.tbl_State.ToList();
-                    ViewBag.Organization = db.tbl_Organizations.ToList();
-                    ViewBag.Emp = db.tbl_Employee.ToList();
-                    ViewBag.material = db.tbl_Material.ToList();
-                    ViewBag.Cause = db.tbl_Cause.ToList();
-                    //id genrator
-                    int ra, te, dateint;
-                    System.Globalization.PersianCalendar pc = new System.Globalization.PersianCalendar();
-                    dateint = Convert.ToInt32(pc.GetYear(DateTime.Now));
-                    te = db.tbl_Accident.Where(x => x.AccidentId.Equals(dateint)).Count();
-                    if (te == 0)
-                    {
-                        te++;
-                    }
-                    ra = Convert.ToInt32(string.Format("{0}{1}", dateint, te));
-                    while (db.tbl_Accident.FirstOrDefault(f => f.AccidentId == ra) != null)
-                    {
-                        ra++;
-                    }
-                    //End id genrator
-                    ViewBag.number = ra;
-                    return View();
-                }
-                else
-                {
-                    return RedirectToAction("Accessdenied", "Home");
-                }
-            }
-            else
-            {
-                return RedirectToAction("Login", "Account");
-            }
-        }
-
-        // POST: Accident/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "AccidentId,AccidentEventLocation,AccidentDescrption,AccidentTime,AccidentDate,AccidentReportUrl,AccidentWid,AccidentTypeId,AccidentZone,AccidentUserId,AccidentUsageId,AccidentTimeStartOperation,AccidentTimeEndOperation,AccidentTimeToClear,AccidentReporter,AccidentReportReciver,AccidentReportType,AccidentSiteFloors,AccidentBuildingType,AccidentBuildingOwner,AccidentBuildingTel,AccidentBuildingTenant,AccidentOtherType,AccidentPreliminaryMeasures,AccidentDescriptionOperation,AccidentDamageDescriptionO,AccidentDamageDescriptionL,AccidentReportProducer,AccidentOperationsCommander,DateAdd,AccidentOperationProblems,AccidentCause")] tbl_Accident tbl_Accident, HttpPostedFileBase pic, List<int> OperatingStation, List<int> Employee, List<int> Organisation, int injured, int materialnumber)
-        {
-            Random rand = new Random();
-            int ra, te, dateint;
-            if (ModelState.IsValid)
-            {
-                if (Session["OnlineUser"] != null)
-                {
-                    if (Session["UserRole"].Equals("SUPERADMIN") || Session["UserRole"].Equals("ADMIN") || Session["UserRole"].Equals("SUBADMIN"))
-                    {
-                        System.Globalization.PersianCalendar pc = new System.Globalization.PersianCalendar();
-                        dateint = Convert.ToInt32(pc.GetYear(DateTime.Now));
-                        te = db.tbl_Accident.Where(x => x.AccidentId.Equals(dateint)).Count();
-                        if (te == 0)
-                        {
-                            te++;
-                        }
-                        ra = Convert.ToInt32(string.Format("{0}{1}", dateint, te));
-                        while (db.tbl_Accident.FirstOrDefault(f => f.AccidentId == ra) != null)
-                        {
-                            ra++;
-                        }
-                        if (pic != null)
-                        {
-                            var Fi1 = Path.GetExtension(pic.FileName);
-                            var Ri1 = Path.Combine(Server.MapPath("~/Documents/Doc/"), string.Format("{0}{1}", ra.ToString(), Fi1));
-                            pic.SaveAs(Ri1);
-                            tbl_Accident.AccidentReportUrl = string.Format("Documents/Doc/{0}{1}", ra.ToString(), Fi1);
-                        }
-                        tbl_Accident.AccidentId = ra;
-                        tbl_Accident.AccidentUserId = Convert.ToInt32(Session["OnlineUser"].ToString());
-                        tbl_Accident.DateAdd = DateTime.Now;
-                        tbl_Accident.Isdelete = false;
-                        ViewBag.OnlineUser = Session["UserName"].ToString();
-                        ViewBag.OnlineUserRole = Session["UserRole"].ToString();
-                        db.tbl_Accident.Add(tbl_Accident);
-                        db.SaveChanges();
-                        int rs, re, rf;
-                        foreach (int item in OperatingStation)
-                        {
-                            tbl_AccidentStation oState = new tbl_AccidentStation();
-                            rs = rand.Next(111111, 999999);
-                            while (db.tbl_AccidentStation.FirstOrDefault(f => f.AccidentStationId == rs) != null)
-                            {
-                                rs = rand.Next(111111, 999999);
-                            }
-                            oState.AccidentStationId = rs;
-                            oState.StationId = item;
-                            oState.AccidentId = ra;
-                            db.tbl_AccidentStation.Add(oState);
-                            db.SaveChanges();
-                        }
-                        foreach (int item in Employee)
-                        {
-                            tbl_AccidentEmplyoee oEmployee = new tbl_AccidentEmplyoee();
-                            re = rand.Next(111111, 999999);
-                            while (db.tbl_AccidentEmplyoee.FirstOrDefault(f => f.AEId == re) != null)
-                            {
-                                re = rand.Next(111111, 999999);
-                            }
-                            oEmployee.AEId = re;
-                            oEmployee.EmployeeId = item;
-                            oEmployee.AccidentId = ra;
-                            db.tbl_AccidentEmplyoee.Add(oEmployee);
-                            db.SaveChanges();
-                        }
-                        foreach (int item in Organisation)
-                        {
-                            tbl_AccidentO dll = new tbl_AccidentO();
-                            rf = rand.Next(111111, 999999);
-                            while (db.tbl_AccidentO.FirstOrDefault(f => f.AccidentOid == rf) != null)
-                            {
-                                rf = rand.Next(111111, 999999);
-                            }
-                            dll.AccidentOid = rf;
-                            dll.OrganizationsId = item;
-                            dll.AccidentId = ra;
-                            db.tbl_AccidentO.Add(dll);
-                            db.SaveChanges();
-                        }
-                        if (injured > 0)
-                        {
-                            return RedirectToAction("Addinjured", new { id = injured * 9763, Acid = ra * 25438, mat = materialnumber });
-                        }
-                        else if (materialnumber > 0)
-                        {
-                            return RedirectToAction("Addmaterial", new { id = materialnumber * 3220, Acid = ra * 3221 });
+                            return RedirectToAction("Index");
                         }
                         else
                         {
@@ -477,7 +365,6 @@ namespace FireStation.Controllers
             ViewBag.Cause = db.tbl_Cause.ToList();
             return View(tbl_Accident);
         }
-
         // GET: Accident/Edit/5
         public ActionResult Edit(int? id)
         {
@@ -521,11 +408,11 @@ namespace FireStation.Controllers
                                        orderby a.AccidentId
                                        select i).ToList();
                     ViewBag.Organization = (from i in db.tbl_Organizations
-                                       join ai in db.tbl_AccidentO on i.OrId equals ai.OrganizationsId
-                                       join a in db.tbl_Accident on ai.AccidentId equals a.AccidentId
-                                       where ai.AccidentId == id
-                                       orderby a.AccidentId
-                                       select i).ToList();
+                                            join ai in db.tbl_AccidentO on i.OrId equals ai.OrganizationsId
+                                            join a in db.tbl_Accident on ai.AccidentId equals a.AccidentId
+                                            where ai.AccidentId == id
+                                            orderby a.AccidentId
+                                            select i).ToList();
                     ViewBag.AccidentTypeId = db.tbl_AccidentType.ToList();
                     ViewBag.AccidentUsageId = db.tbl_Usage.ToList();
                     ViewBag.AccidentWid = db.tbl_weather.ToList();

@@ -107,7 +107,6 @@
                                     <h6>آدرس محل حادثه<span class="required text-danger">*</span></h6>
                                     <textarea id="userinput8" rows="2" class="form-control border-primary" name="AccidentEventLocation" required></textarea>
                                     @Html.ValidationMessageFor(model => model.AccidentEventLocation, "", new { @class = "text-danger" })
-
                                 </div>
                             </div>
                             <div class="col-md-3">
@@ -115,7 +114,6 @@
                                     <h6>خبردهنده<span class="required text-danger">*</span></h6>
                                     <input type="text" id="userinput2" class="form-control border-primary" name="AccidentReporter" required>
                                     @Html.ValidationMessageFor(model => model.AccidentReporter, "", new { @class = "text-danger" })
-
                                 </div>
                             </div>
                             <div class="col-md-3">
@@ -249,26 +247,24 @@
 
                                 </div>
                             </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <h6>تجهیزات<span class="required text-danger">*</span></h6>
-                                    <div id="hiddenMaterial">
-                                        <select class="form-control border-primary selectpicker" data-live-search="true" name="MaterialId" required>
-                                            @foreach (var item in ViewBag.material)
-                                            {
-                                                <option value="@item.MaterialId">@item.MaterialCode (@item.MaterialName) </option>
-                                            }
-                                        </select>
+                            @*<div class="col-md-3">
+                                    <div class="form-group">
+                                        <h6>تجهیزات<span class="required text-danger">*</span></h6>
+                                        <div id="hiddenMaterial">
+                                            <select class="form-control border-primary selectpicker" onchange="" data-live-search="true" name="MaterialId" required>
+                                                @foreach (var item in ViewBag.material)
+                                                {
+                                                    <option value="@item.MaterialId">@item.MaterialCode (@item.MaterialName) </option>
+                                                }
+                                            </select>
+                                        </div>
                                     </div>
-                                </div>
-                            </div>
+                                </div>*@
                         </div>
                         <h4 class="form-section">
                             <i class="ft-users"></i> مشارکت کنندگان
                         </h4>
                         <div class="row">
-
-
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <h6> ایستگاه های شرکت کننده<span class="required text-danger">*</span></h6>
@@ -382,7 +378,6 @@
                                         }
                                     </select>
                                     @Html.ValidationMessageFor(model => model.AccidentOperationsCommander, "", new { @class = "text-danger" })
-
                                 </div>
                             </div>
                             <div class="col-md-3">
@@ -537,8 +532,6 @@
                 "                                                <i class=\"fa fa-user-plus\"></i>مصدوم شماره\n" + count + "  " + deletes +
                 "                                            </h4>\n" +
                 "                                            <div class=\"row justify-content-center pr-5 pl-5 mt-3 mb-3\">\n" +
-                "                                                <input type=\"hidden\" class=\"form-control border-primary\" value=\"\" name=\"Acid\" required>\n" +
-                "                                                <input type=\"hidden\" class=\"form-control border-primary\" value=\"\" name=\"mat\" required>\n" +
                 "                                                <div class=\"col-lg-3\">\n" +
                 "                                                    <h6>نام<span class=\"required text-danger\">*</span></h6>\n" +
                 "                                                    <input type=\"text\" class=\"form-control border-primary\" name=\"InjuredName\" required>\n" +
@@ -597,51 +590,33 @@
         var count = 0;
         $(".add-row2").click(function () {
             count += 1;
-            var color = $(this).attr("data-hex");
-            var name = $(this).attr("data-title");
-
-
-            let selectElement = document.createElement('select');
-            let hiddenSelectMaterial = document.getElementById('hiddenMaterial');
-
-            // Load data list from hidden element
-            for (var child = 0; child < hiddenSelectMaterial.length; child++) {
-                const hiddenChild = hiddenSelectMaterial[child];
-                const option = document.createElement('option');
-                // set data from the element of hidden list
-                option.innerText = hiddenChild.innerText;
-                option.setAttribute('value', hiddenChild.getAttribute('value'));
-                selectElement.append(option);
-            }
-
-            let hiddenClone = $('#hiddenMaterial').children().clone();
-            console.log(hiddenClone)
-
+            var ListM =@Html.Raw(ViewBag.material) ;
 
             var deletes = "<button type=\"button\" class=\"remove with-fit btn btn-danger text-white mt-2\"><strong><i class=\"fa fa-close\"></i> حذف تجهیزات " + count + " </strong></button>";
             var markup = "<div class=\"card\">\n" +
-                "                                            <h4 class=\"form-section\">\n" +
-                "                                                <i class=\"fa fa-user-plus\"></i>تجهیزات شماره\n" + count + "  " + deletes +
-                "                                            </h4>\n" +
-                "                                            <div class=\"row justify-content-center pr-5 pl-5 mt-3 mb-3\">\n" +
-                "                                                <input type=\"hidden\" class=\"form-control border-primary\" value=\"\" name=\"Acid\" required>\n" +
-                "                                                <input type=\"hidden\" class=\"form-control border-primary\" value=\"\" name=\"mat\" required>\n" +
+                "             <h4 class=\"form-section\">\n" +
+                "               <i class=\"fa fa-user-plus\"></i>تجهیزات شماره\n" + count + "  " + deletes +
+                "             </h4>\n" +
+                "           <div class=\"row justify-content-center pr-5 pl-5 mt-3 mb-3\">\n" +
+                "                <div class=\"col-lg-3\">\n" +
+                "                  <h6>نوع<span class=\"required text-danger\">*</span></h6>\n";
 
-                "                                                <div class=\"col-lg-2\">\n" +
-                "                                                    <h6>نوع<span class=\"required text-danger\">*</span></h6>\n" +
-                "                                                    <div id='toolsBox" + number_tools + "'></div>" +
-                //hiddenClone.html() +
-                "                                                    \n" +
-                "                                                </div>\n" +
-                "                                                <div class=\"col-lg-2\">\n" +
-                "                                                    <h6>تعداد<span class=\"required text-danger\">*</span></h6>\n" +
-                "                                                    <input type=\"number\" value=\"0\" class=\"form-control border-primary\" name=\"tedad\" min=\"0\" required>\n" +
-                "                                                    \n" +
-                "                                                </div>\n" +
-                "                                            </div>\n" +
-                "                                        </div>";
+            var OptionRow = " <select class=\"form-control border-primary\" name=\"MaterialId\" required>\n";
+            ListM.forEach(Material);
+            function Material(item) {
+                OptionRow = OptionRow + " <option value=" + item.Id + ">" + item.code + " (" + item.name + ") </option>\n";
+            }
+            OptionRow = OptionRow + "</select >\n";
+            markup = markup + OptionRow;
+            markup = markup+
+                "                </div>\n" +
+                "              <div class=\"col-lg-2\">\n" +
+                "                 <h6>تعداد<span class=\"required text-danger\">*</span></h6>\n" +
+                "                 <input type=\"number\" value=\"0\" class=\"form-control border-primary\" name=\"tedad\" min=\"0\" required>\n" +
+                "              </div>\n" +
+                "           </div>\n" +
+                "         </div>";
             $('.card2').append(markup);
-            $('#toolsBox' + number_tools).append(hiddenClone);
             number_tools++;
 
         });
