@@ -21,8 +21,6 @@ namespace FireStation.Controllers
             {
                 if (Session["UserRole"].Equals("SUPERADMIN"))
                 {
-                    ViewBag.OnlineUser = Session["UserName"].ToString();
-                    ViewBag.OnlineUserRole = Session["UserRole"].ToString();
                     return View(db.tbl_AccidentType.ToList());
                 }
                 else
@@ -42,8 +40,6 @@ namespace FireStation.Controllers
             {
                 if (Session["UserRole"].Equals("SUPERADMIN"))
                 {
-                    ViewBag.OnlineUser = Session["UserName"].ToString();
-                    ViewBag.OnlineUserRole = Session["UserRole"].ToString();
                     return View();
                 }
                 else
@@ -98,8 +94,6 @@ namespace FireStation.Controllers
             {
                 if (Session["UserRole"].Equals("SUPERADMIN"))
                 {
-                    ViewBag.OnlineUser = Session["UserName"].ToString();
-                    ViewBag.OnlineUserRole = Session["UserRole"].ToString();
                     if (id == null)
                     {
                         return RedirectToAction("Err", "Home", new { code = "E-3022", text = "هیچ حادثه ای انتخاب نشده است", url = Request.Url.Scheme });
@@ -129,8 +123,6 @@ namespace FireStation.Controllers
             {
                 if (Session["UserRole"].Equals("SUPERADMIN"))
                 {
-                    ViewBag.OnlineUser = Session["UserName"].ToString();
-                    ViewBag.OnlineUserRole = Session["UserRole"].ToString();
                     if (id == null)
                     {
                         return RedirectToAction("Err", "Home", new { code = "E-1133", text = "هیچ نوع داده ای انتخاب نشده است", url = string.Format("{0}/", RouteData.Values["controller"].ToString()) });
@@ -191,8 +183,6 @@ namespace FireStation.Controllers
             {
                 if (Session["UserRole"].Equals("SUPERADMIN"))
                 {
-                    ViewBag.OnlineUser = Session["UserName"].ToString();
-                    ViewBag.OnlineUserRole = Session["UserRole"].ToString();
                     if (id == null)
                     {
                         return RedirectToAction("Err", "Home", new { code = "E-1133", text = "هیچ نوع حادثه ای انتخاب نشده است", url = string.Format("{0}/", RouteData.Values["controller"].ToString()) });

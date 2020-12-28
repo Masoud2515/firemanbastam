@@ -13,17 +13,13 @@ namespace FireStation.Controllers
     public class AccidentMController : Controller
     {
         private FireStationEntities db = new FireStationEntities();
-
-
-        // GET: AccidentM/Edit/5
+        // GET: 
         public ActionResult Edit(int? id, int? acid)
         {
             if (Session["OnlineUser"] != null)
             {
                 if (Session["UserRole"].Equals("SUPERADMIN") || Session["UserRole"].Equals("ADMIN") || Session["UserRole"].Equals("SUBADMIN") || Session["UserRole"].Equals("OPRATOR"))
                 {
-                    ViewBag.OnlineUser = Session["UserName"].ToString();
-                    ViewBag.OnlineUserRole = Session["UserRole"].ToString();
                     if (id == null)
                     {
                         return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -59,8 +55,6 @@ namespace FireStation.Controllers
             {
                 if (Session["UserRole"].Equals("SUPERADMIN") || Session["UserRole"].Equals("ADMIN") || Session["UserRole"].Equals("SUBADMIN") || Session["UserRole"].Equals("OPRATOR"))
                 {
-                    ViewBag.OnlineUser = Session["UserName"].ToString();
-                    ViewBag.OnlineUserRole = Session["UserRole"].ToString();
                     if (ModelState.IsValid)
                     {
                         db.Entry(tbl_AccidentM).State = EntityState.Modified;
@@ -89,8 +83,6 @@ namespace FireStation.Controllers
             {
                 if (Session["UserRole"].Equals("SUPERADMIN") || Session["UserRole"].Equals("ADMIN") || Session["UserRole"].Equals("SUBADMIN") || Session["UserRole"].Equals("OPRATOR"))
                 {
-                    ViewBag.OnlineUser = Session["UserName"].ToString();
-                    ViewBag.OnlineUserRole = Session["UserRole"].ToString();
                     if (id == null)
                     {
                         return new HttpStatusCodeResult(HttpStatusCode.BadRequest);

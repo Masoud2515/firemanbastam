@@ -24,8 +24,6 @@ namespace FireStation.Controllers
             {
                 if (Session["UserRole"].Equals("SUPERADMIN") || Session["UserRole"].Equals("ADMIN") || Session["UserRole"].Equals("SUBADMIN") || Session["UserRole"].Equals("OPRATOR"))
                 {
-                    ViewBag.OnlineUser = Session["UserName"].ToString();
-                    ViewBag.OnlineUserRole = Session["UserRole"].ToString();
                     var tbl_Accident = db.tbl_Accident.Include(t => t.tbl_AccidentType).Include(t => t.tbl_Usage).Include(t => t.tbl_weather).Include(t => t.tbl_User);
                     return View(tbl_Accident.Where(x => x.Isdelete == false).ToList());
                 }
@@ -45,8 +43,6 @@ namespace FireStation.Controllers
             {
                 if (Session["UserRole"].Equals("SUPERADMIN") || Session["UserRole"].Equals("ADMIN") || Session["UserRole"].Equals("SUBADMIN") || Session["UserRole"].Equals("OPRATOR"))
                 {
-                    ViewBag.OnlineUser = Session["UserName"].ToString();
-                    ViewBag.OnlineUserRole = Session["UserRole"].ToString();
                     System.Globalization.PersianCalendar pc = new System.Globalization.PersianCalendar();
                     string dateprint = string.Format("{0}/{1}/{2}", pc.GetYear(DateTime.Now), pc.GetMonth(DateTime.Now), pc.GetDayOfMonth(DateTime.Now));
                     ViewBag.dateprint = dateprint;
@@ -104,8 +100,6 @@ namespace FireStation.Controllers
             {
                 if (Session["UserRole"].Equals("SUPERADMIN") || Session["UserRole"].Equals("ADMIN") || Session["UserRole"].Equals("SUBADMIN") || Session["UserRole"].Equals("OPRATOR"))
                 {
-                    ViewBag.OnlineUser = Session["UserName"].ToString();
-                    ViewBag.OnlineUserRole = Session["UserRole"].ToString();
                     if (id == null)
                     {
                         return RedirectToAction("Err", "Home", new { code = "E-3022", text = "هیچ حادثه ای انتخاب نشده است", url = Request.Url.Scheme });
@@ -134,8 +128,6 @@ namespace FireStation.Controllers
             {
                 if (Session["UserRole"].Equals("SUPERADMIN") || Session["UserRole"].Equals("ADMIN") || Session["UserRole"].Equals("SUBADMIN"))
                 {
-                    ViewBag.OnlineUser = Session["UserName"].ToString();
-                    ViewBag.OnlineUserRole = Session["UserRole"].ToString();
                     ViewBag.AccidentTypeId = db.tbl_AccidentType.ToList();
                     ViewBag.AccidentUsageId = db.tbl_Usage.ToList();
                     ViewBag.AccidentWid = db.tbl_weather.ToList();
@@ -213,8 +205,6 @@ namespace FireStation.Controllers
                         tbl_Accident.AccidentUserId = Convert.ToInt32(Session["OnlineUser"].ToString());
                         tbl_Accident.DateAdd = DateTime.Now;
                         tbl_Accident.Isdelete = false;
-                        ViewBag.OnlineUser = Session["UserName"].ToString();
-                        ViewBag.OnlineUserRole = Session["UserRole"].ToString();
                         db.tbl_Accident.Add(tbl_Accident);
                         db.SaveChanges();
                         int rs, re, rf;
@@ -354,15 +344,6 @@ namespace FireStation.Controllers
                     return RedirectToAction("Login", "Account");
                 }
             }
-            ViewBag.AccidentTypeId = db.tbl_AccidentType.ToList();
-            ViewBag.AccidentUsageId = db.tbl_Usage.ToList();
-            ViewBag.AccidentWid = db.tbl_weather.ToList();
-            ViewBag.AccidentUserId = db.tbl_User.ToList();
-            ViewBag.OpState = db.tbl_State.ToList();
-            ViewBag.Organization = db.tbl_Organizations.ToList();
-            ViewBag.Emp = db.tbl_Employee.ToList();
-            ViewBag.material = db.tbl_Material.ToList();
-            ViewBag.Cause = db.tbl_Cause.ToList();
             return View(tbl_Accident);
         }
         // GET: Accident/Edit/5
@@ -372,8 +353,6 @@ namespace FireStation.Controllers
             {
                 if (Session["UserRole"].Equals("SUPERADMIN") || Session["UserRole"].Equals("ADMIN") || Session["UserRole"].Equals("SUBADMIN"))
                 {
-                    ViewBag.OnlineUser = Session["UserName"].ToString();
-                    ViewBag.OnlineUserRole = Session["UserRole"].ToString();
                     if (id == null)
                     {
                         return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -448,8 +427,6 @@ namespace FireStation.Controllers
                 {
                     if (Session["UserRole"].Equals("SUPERADMIN") || Session["UserRole"].Equals("ADMIN") || Session["UserRole"].Equals("SUBADMIN"))
                     {
-                        ViewBag.OnlineUser = Session["UserName"].ToString();
-                        ViewBag.OnlineUserRole = Session["UserRole"].ToString();
                         db.Entry(tbl_Accident).State = EntityState.Modified;
                         db.SaveChanges();
                         return RedirectToAction("Index");

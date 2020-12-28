@@ -48,6 +48,18 @@
     <div class="card">
         <div class="row">
             <div class="col-lg-12 p-4">
+                <h4 class="warning">
+                    <i class="fa fa-warning"></i> لطفا هنگام وارد کردن تمام موارد نهایت دقت را لحاظ فرمایید
+                </h4>
+                <h4 class="warning">
+                    <i class="fa fa-warning"></i> لطفا موارد ستاره دار را تکمیل فرمایید
+                </h4>
+            </div>
+        </div>
+    </div>
+    <div class="card">
+        <div class="row">
+            <div class="col-lg-12 p-4">
                 <form class="form">
                     <div class="form-body">
                         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
@@ -55,7 +67,11 @@
                         <h4 class="form-section">
                             <i class="ft-clock"></i> تاریخ و زمان حادثه
                         </h4>
-                        <p>@ViewBag.number</p>
+
+                        <h5 class="black">
+                            شماره حادثه : @ViewBag.number
+                        </h5>
+
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="form-group">
@@ -170,22 +186,6 @@
 
                                 </div>
                             </div>
-                            <div class="col-md-3">
-                                <h6>علت حادثه<span class="required text-danger">*</span></h6>
-                                <select class="form-control border-primary selectpicker" data-live-search="true" name="AccidentCause" required>
-                                    <option selected disabled hidden>انتخاب</option>
-                                    @foreach (var item in ViewBag.Cause)
-                                    {
-                                        <option value="@item.CauseId">@item.CauseTitel</option>
-                                    }
-                                </select>
-                            </div>
-                            <div id="OtherReason" class="collapse col-md-12 mb-3">
-                                <div class="col-md-12">
-                                    <h6>نوع حادثه</h6>
-                                    <input type="text" class="form-control border-primary" name="AccidentOtherType" />
-                                </div>
-                            </div>
                             <div class="col-md-1">
                                 <div class="form-group">
                                     <h6>تعداد طبقات</h6>
@@ -201,6 +201,13 @@
                                     @Html.ValidationMessageFor(model => model.AccidentBuildingType, "", new { @class = "text-danger" })
                                 </div>
                             </div>
+                            <div id="OtherReason" class="collapse col-md-12 mb-3">
+                                <div class="col-md-12">
+                                    <h6>نوع حادثه</h6>
+                                    <input type="text" class="form-control border-primary" name="AccidentOtherType" />
+                                </div>
+                            </div>
+
 
                             <div class="col-md-3">
                                 <div class="form-group">
@@ -225,7 +232,17 @@
                                     @Html.ValidationMessageFor(model => model.AccidentBuildingTel, "", new { @class = "text-danger" })
                                 </div>
                             </div>
-                            <div class="col-md-5">
+                            <div class="col-md-3">
+                                <h6>علت حادثه<span class="required text-danger">*</span></h6>
+                                <select class="form-control border-primary selectpicker" data-live-search="true" name="AccidentCause" required>
+                                    <option selected disabled hidden>انتخاب</option>
+                                    @foreach (var item in ViewBag.Cause)
+                                    {
+                                        <option value="@item.CauseId">@item.CauseTitel</option>
+                                    }
+                                </select>
+                            </div>
+                            <div class="col-md-9">
                                 <div class="form-group">
                                     <h6>توضیح علت<span class="required text-danger">*</span></h6>
                                     <textarea id="userinput8" rows="3" class="form-control border-primary" name="AccidentDescrption" required></textarea>
@@ -247,19 +264,6 @@
 
                                 </div>
                             </div>
-                            @*<div class="col-md-3">
-                                    <div class="form-group">
-                                        <h6>تجهیزات<span class="required text-danger">*</span></h6>
-                                        <div id="hiddenMaterial">
-                                            <select class="form-control border-primary selectpicker" onchange="" data-live-search="true" name="MaterialId" required>
-                                                @foreach (var item in ViewBag.material)
-                                                {
-                                                    <option value="@item.MaterialId">@item.MaterialCode (@item.MaterialName) </option>
-                                                }
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>*@
                         </div>
                         <h4 class="form-section">
                             <i class="ft-users"></i> مشارکت کنندگان
@@ -500,13 +504,22 @@
                                 </h6>
                             </div>
                         </div>
-                        <div class="col-md-6">
-                            <input class="btn btn-success btn-block" type="submit" value="ثبت و ادامه" />
+                        <br />
+                        <div class="col-md-4">
+                            <input class="btn btn-large btn-success" type="submit" value="ثبت اطلاعات" />
                         </div>
                     </div>
                 </form>
             </div>
-
+        </div>
+    </div>
+    <div class="card">
+        <div class="row">
+            <div class="col-lg-12 p-4">
+                <h4 class="cyan">
+                    <i class="fa fa-warning"></i>  لطفا صحت تمامی موارد وارد شده را قبل از فشردن دکمه ثبت بررسی کنید
+                </h4>
+            </div>
         </div>
     </div>
 }
