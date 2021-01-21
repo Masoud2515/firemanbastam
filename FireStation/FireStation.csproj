@@ -567,9 +567,11 @@
     <Compile Include="Models\tbl_weather.cs">
       <DependentUpon>Context.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ViewModel\ChengePaswordViewModel.cs" />
     <Compile Include="Models\ViewModel\EmVM.cs" />
     <Compile Include="Models\ViewModel\LoginViewModel.cs" />
     <Compile Include="Models\ViewModel\TaVM.cs" />
+    <Compile Include="Models\ViewModel\UserViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -677,6 +679,7 @@
     <Content Include="Views\ShiftRegister\Details.cshtml" />
     <Content Include="Views\ShiftRegister\Edit.cshtml" />
     <Content Include="Views\ShiftRegister\Index.cshtml" />
+    <Content Include="Views\Account\Detail.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

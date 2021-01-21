@@ -61,10 +61,7 @@ namespace FireStation.Controllers
             {
                 if (Session["UserRole"].Equals("SUPERADMIN") || Session["UserRole"].Equals("ADMIN"))
                 {
-                    ViewBag.OnlineUser = Session["UserName"].ToString();
-                    ViewBag.OnlineUserRole = Session["UserRole"].ToString();
                     ViewBag.back = db.tbl_Accident.ToList();
-
                     return View();
                 }
                 else
@@ -82,6 +79,33 @@ namespace FireStation.Controllers
         {
             Session.RemoveAll();
             return RedirectToAction("Login");
+        }
+        public ActionResult Detail()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult Detail(UserViewModel user)
+        {
+            return View();
+        }
+        public ActionResult Chengepasword()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult Chengepasword(UserViewModel user)
+        {
+            return View();
+        }
+        public ActionResult Message()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult Message(UserViewModel user)
+        {
+            return View();
         }
     }
 }
