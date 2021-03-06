@@ -37,7 +37,7 @@
                         </div>
                         <div class="col-lg-2">
                             @Html.LabelFor(model => model.EmployeePhone, htmlAttributes: new { @class = "control-label h6" })<span class="required text-danger">*</span>
-                            @Html.EditorFor(model => model.EmployeePhone, new { htmlAttributes = new { @class = "form-control border-primary" } })
+                            @Html.EditorFor(model => model.EmployeePhone, new { htmlAttributes = new { @class = "form-control border-primary", @maxlength = "11" } })
                             @Html.ValidationMessageFor(model => model.EmployeePhone, "", new { @class = "text-danger" })
                         </div>
                         <div class="col-lg-2">
@@ -57,7 +57,7 @@
                         <div class="col-lg-2">
                             @Html.LabelFor(model => model.EmployeeSex, htmlAttributes: new { @class = "control-label" })<span class="required text-danger">*</span>
                             <div class="checkbox">
-                                <select class="form-control border-primary selectpicker" data-live-search="true" name="EmployeeSex" required>
+                                <select class="form-control border-primary selectpicker" name="EmployeeSex" required>
                                     <option selected hidden value="@Model.EmployeeSex">
                                         @if (Model.EmployeeSex == true)
                                         {
@@ -89,7 +89,7 @@
 
                         <div class="col-lg-2">
                             @Html.LabelFor(model => model.EmployeeMCode, htmlAttributes: new { @class = "control-label h6" })<span class="required text-danger">*</span>
-                            @Html.EditorFor(model => model.EmployeeMCode, new { htmlAttributes = new { @class = "form-control border-primary" } })
+                            @Html.EditorFor(model => model.EmployeeMCode, new { htmlAttributes = new { @class = "form-control border-primary", @maxlength = "10" } })
                             @Html.ValidationMessageFor(model => model.EmployeeMCode, "", new { @class = "text-danger" })
                         </div>
 
