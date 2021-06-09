@@ -42,7 +42,7 @@ namespace FireStation.Controllers
         {
             List<tbl_shift> objshift = new List<tbl_shift>();
             objshift = db.tbl_shift.Where(m => m.StateId == Eid).ToList();
-            SelectList obg = new SelectList(objshift, "ShiftId", "ShiftName", 0);
+            SelectList obg = new SelectList(objshift, "ShiftId", "ShiftName",0);
             return Json(obg);
         }
         [HttpPost]
@@ -60,7 +60,7 @@ namespace FireStation.Controllers
                 }
             }
 
-     
+
             return Json(emvmlist);
         }
         // GET: ShiftRegister/Details/5k

@@ -58,16 +58,18 @@
                             @Html.LabelFor(model => model.EmployeeSex, htmlAttributes: new { @class = "control-label" })<span class="required text-danger">*</span>
                             <div class="checkbox">
                                 <select class="form-control border-primary selectpicker" name="EmployeeSex" required>
-                                    <option selected hidden value="@Model.EmployeeSex">
-                                        @if (Model.EmployeeSex == true)
-                                        {
-                                            <p>مرد</p>
-                                        }
-                                        else
-                                        {
-                                            <p>زن</p>
-                                        }
-                                    </option>
+                                    @{string type = Model.EmployeeSex ? "True" : "False";
+                                        <option selected hidden value="@type">
+                                            @if (Model.EmployeeSex == true)
+                                            {
+                                                <p>مرد</p>
+                                            }
+                                            else
+                                            {
+                                                <p>زن</p>
+                                            }
+                                        </option>
+                                    }
                                     <option value="True">مرد</option>
                                     <option value="False">زن</option>
                                 </select>

@@ -185,46 +185,59 @@ namespace FireStation.Controllers
         {
             Random rand = new Random();
             int ra;
-            if (ModelState.IsValid)
+            try
             {
-                if (Session["OnlineUser"] != null)
+                if (ModelState.IsValid)
                 {
-                    if (Session["UserRole"].Equals("SUPERADMIN") || Session["UserRole"].Equals("ADMIN"))
+                    if (Session["OnlineUser"] != null)
                     {
+                        if (Session["UserRole"].Equals("SUPERADMIN") || Session["UserRole"].Equals("ADMIN"))
+                        {
+                            try
+                            {
+                                ViewBag.OnlineUser = Session["UserName"].ToString();
+                                ViewBag.OnlineUserRole = Session["UserRole"].ToString();
+                                ra = rand.Next(111111, 999999);
+                                while (db.tbl_Material.FirstOrDefault(f => f.MaterialId == ra) != null)
+                                {
+                                    ra = rand.Next(111111, 999999);
+                                }
+                                if (Fdoc != null)
+                                {
+                                    var Fi1 = Path.GetExtension(Fdoc.FileName);
+                                    var Ri1 = Path.Combine(Server.MapPath("~/Documents/Pic/"), string.Format("{0}{1}", ra.ToString(), Fi1));
+                                    Fdoc.SaveAs(Ri1);
+                                    tbl_Material.MaterialPic = string.Format("Documents/Pic/{0}{1}", ra.ToString(), Fi1);
+                                }
+                                db.Entry(tbl_Material).State = EntityState.Modified;
+                                db.SaveChanges();
+                                return RedirectToAction("Index");
+                            }
+                            catch (Exception ex) 
+                            {
+                                ViewBag.error = ex.Message;
+                                return View(tbl_Material);
+                            }
 
-                        ViewBag.OnlineUser = Session["UserName"].ToString();
-                        ViewBag.OnlineUserRole = Session["UserRole"].ToString();
-                        ra = rand.Next(111111, 999999);
-                        while (db.tbl_Material.FirstOrDefault(f => f.MaterialId == ra) != null)
-                        {
-                            ra = rand.Next(111111, 999999);
-                        }
-                        if (Fdoc != null)
-                        {
-                            var Fi1 = Path.GetExtension(Fdoc.FileName);
-                            var Ri1 = Path.Combine(Server.MapPath("~/Documents/Pic/"), string.Format("{0}{1}", ra.ToString(), Fi1));
-                            Fdoc.SaveAs(Ri1);
-                            tbl_Material.MaterialPic = string.Format("Documents/Pic/{0}{1}", ra.ToString(), Fi1);
                         }
                         else
                         {
-                            tbl_Material.MaterialPic = "No Image Yet";
+                            return RedirectToAction("Accessdenied", "Home");
                         }
-                        db.Entry(tbl_Material).State = EntityState.Modified;
-                        db.SaveChanges();
-                        return RedirectToAction("Index");
                     }
                     else
                     {
-                        return RedirectToAction("Accessdenied", "Home");
+                        return RedirectToAction("Login", "Account");
                     }
                 }
-                else
-                {
-                    return RedirectToAction("Login", "Account");
-                }
+                return View(tbl_Material);
             }
-            return View(tbl_Material);
+            catch (Exception ex)
+            {
+                ViewBag.error = ex.Message;
+                return View(tbl_Material);
+            }
+
         }
 
         // GET: Material/Delete/5
