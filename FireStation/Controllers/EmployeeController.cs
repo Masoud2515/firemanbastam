@@ -206,10 +206,6 @@ namespace FireStation.Controllers
                             pic.SaveAs(Ri1);
                             tbl_Employee.EmployeePicUrl = string.Format("Documents/Pic/{0}{1}", ra.ToString(), Fi1);
                         }
-                        else
-                        {
-                            tbl_Employee.EmployeePicUrl = "no image yet";
-                        }
                         db.Entry(tbl_Employee).State = EntityState.Modified;
                         db.SaveChanges();
                         return RedirectToAction("Index");
