@@ -255,11 +255,11 @@
             cache: false,
             type: "POST",
             success: function (data) {
-                var markup = "<tr>";
+                var markup = "";
+                var conter = 1;
                 for (var x = 0; x < data.length; x++) {
-                    markup += "<td>" + data[x].Text + "</td>";
+                    markup += "<tr>" + "<td>" + conter++ + "</td>" + "<td>" + data[x].Name + "</td>" + "<td>" + data[x].Id + "</td>" + "<td>" + data[x].Status + "</td>" + "</tr>";
                 }
-                markup += "</tr>";
                 $("#Emp725").html(markup).show();
             },
             error: function (reponse) {

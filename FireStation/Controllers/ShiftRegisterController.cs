@@ -42,20 +42,26 @@ namespace FireStation.Controllers
         {
             List<tbl_shift> objshift = new List<tbl_shift>();
             objshift = db.tbl_shift.Where(m => m.StateId == Eid).ToList();
-            SelectList obg = new SelectList(objshift, "ShiftId", "ShiftName",0);
+            SelectList obg = new SelectList(objshift, "ShiftId", "ShiftName", 0);
             return Json(obg);
         }
         [HttpPost]
         public ActionResult GetshiftEmployee(int Eid)
         {
+            EmVM emvmobj = new EmVM();
+            List<EmVM> emvmlist = new List<EmVM>();
+            foreach (var item in db.tbl_ShiftEmployee.Where(y => y.Shiftid.Equals(Eid)))
+            {
+                foreach (var item1 in db.tbl_Employee.Where(x => x.EmployeeId.Equals(item.EmployeeId)))
+                {
 
-           var objshift = (from i in db.tbl_Employee
-                            join ai in db.tbl_ShiftEmployee on i.EmployeeId equals ai.Shiftid
-                            join a in db.tbl_shift on ai.Shiftid equals a.ShiftId
-                            where ai.Shiftid == Eid
-                            orderby a.ShiftName
-                            select new EmVM() { Name = string.Format("{0}{1}",i.EmployeeLastName,i.EmployeeFName),Id=i.EmployeeMCode }).ToList();
-            return Json(objshift ,JsonRequestBehavior.AllowGet);
+                    emvmobj = new EmVM() { Name = string.Format("{0}{1}", item1.EmployeeName, item1.EmployeeLastName), Id = item1.EmployeeMCode, Status = "test" };
+                    emvmlist.Add(emvmobj);
+                }
+            }
+
+     
+            return Json(emvmlist);
         }
         // GET: ShiftRegister/Details/5k
         public ActionResult Details(int? id)
