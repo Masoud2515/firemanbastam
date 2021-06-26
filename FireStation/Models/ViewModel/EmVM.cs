@@ -8,7 +8,7 @@ namespace FireStation.Models.ViewModel
     public class EmVM
     {
         public string Name { get; set; }
-        public string Status { get; set; }
+
         public string Id { get; set; }
     }
     public class MaterialViewModel
