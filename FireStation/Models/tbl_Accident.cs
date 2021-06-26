@@ -1,4 +1,4 @@
-namespace FireStation.Models
+﻿namespace FireStation.Models
 {
     using System;
     using System.Collections.Generic;
@@ -19,13 +19,16 @@ namespace FireStation.Models
         }
 
         [Key]
+        [Display(Name = "شماره حادثه")]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int AccidentId { get; set; }
 
         [Required]
+        [Display(Name = "محل حادثه")]
         public string AccidentEventLocation { get; set; }
 
         [Required]
+        [Display(Name = "توضیحات")]
         public string AccidentDescrption { get; set; }
 
         public TimeSpan AccidentTime { get; set; }

@@ -469,6 +469,11 @@
     </Compile>
     <Compile Include="Helpers\HtmlHelpers\HtmlHelpers.cs" />
     <Compile Include="Helpers\HtmlHelpers\UploadHelper.cs" />
+    <Compile Include="Migrations\202106260332121_sajjad.cs" />
+    <Compile Include="Migrations\202106260332121_sajjad.designer.cs">
+      <DependentUpon>202106260332121_sajjad.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Context.cs" />
     <Compile Include="Models\tbl_Accident.cs" />
     <Compile Include="Models\tbl_AccidentEmplyoee.cs" />
@@ -611,6 +616,11 @@
     <None Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\202106260332121_sajjad.resx">
+      <DependentUpon>202106260332121_sajjad.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
