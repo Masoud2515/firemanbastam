@@ -12,7 +12,7 @@ namespace FireStation.Controllers
 {
     public class RepairController : Controller
     {
-        private FireStationEntities db = new FireStationEntities();
+        private Context db = new Context();
 
         // GET: Repair
         public ActionResult Index()

@@ -13,7 +13,7 @@ namespace FireStation.Controllers
 {
     public class ShiftRegisterController : Controller
     {
-        private FireStationEntities db = new FireStationEntities();
+        private Context db = new Context();
 
         // GET: ShiftRegister
         public ActionResult Index()
@@ -50,9 +50,9 @@ namespace FireStation.Controllers
         {
             EmVM emvmobj = new EmVM();
             List<EmVM> emvmlist = new List<EmVM>();
-            foreach (var item in db.tbl_ShiftEmployee.Where(y => y.Shiftid.Equals(Eid)))
+            foreach (var item in db.tbl_ShiftRegisterEmployee.Where(y => y.ShiftRegisterID.Equals(Eid)))
             {
-                foreach (var item1 in db.tbl_Employee.Where(x => x.EmployeeId.Equals(item.EmployeeId)))
+                foreach (var item1 in db.tbl_Employee.Where(x => x.EmployeeId.Equals(item.EmployeeID)))
                 {
 
                     emvmobj = new EmVM() { Name = string.Format("{0}{1}", item1.EmployeeName, item1.EmployeeLastName), Id = item1.EmployeeMCode, Status = "test" };

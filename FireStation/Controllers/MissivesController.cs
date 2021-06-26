@@ -13,7 +13,7 @@ namespace FireStation.Controllers
 {
     public class MissivesController : Controller
     {
-        private FireStationEntities db = new FireStationEntities();
+        private Context db = new Context();
 
         // GET: Missives
         public ActionResult Index()

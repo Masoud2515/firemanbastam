@@ -12,7 +12,7 @@ namespace FireStation.Controllers
 {
     public class weatherController : Controller
     {
-        private FireStationEntities db = new FireStationEntities();
+        private Context db = new Context();
 
         // GET: weather
         public ActionResult Index()

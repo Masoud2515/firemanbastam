@@ -11,7 +11,7 @@ namespace FireStation.Controllers
 {
     public class AccountController : Controller
     {
-        private FireStationEntities db = new FireStationEntities();
+        private Context db = new Context();
 
         public ActionResult Login()
         {
@@ -23,7 +23,7 @@ namespace FireStation.Controllers
         {
             if (ModelState.IsValid)
             {
-                FireStationEntities _context = new FireStationEntities();
+                Context _context = new Context();
                 List<tbl_User> _user = _context.tbl_User.ToList();
                 foreach (var item in _user)
                 {

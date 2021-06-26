@@ -17,7 +17,7 @@
     <AssemblyName>FireStation</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <UseIISExpress>true</UseIISExpress>
-    <Use64BitIISExpress />
+    <Use64BitIISExpress>true</Use64BitIISExpress>
     <IISExpressSSLPort>44308</IISExpressSSLPort>
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
@@ -430,24 +430,7 @@
     <Content Include="Content\vendors\css\raty\fonts\raty.ttf" />
     <Content Include="Content\vendors\css\raty\fonts\raty.woff" />
     <Content Include="Content\vendors\css\raty\fonts\ratyd41d.eot" />
-    <EntityDeploy Include="Models\Context.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>Context.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="Models\Context.edmx.diagram">
-      <DependentUpon>Context.edmx</DependentUpon>
-    </Content>
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
-    <Content Include="Models\Context.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Context.edmx</DependentUpon>
-      <LastGenOutput>Context.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="Models\Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Context.edmx</DependentUpon>
-      <LastGenOutput>Context.cs</LastGenOutput>
-    </Content>
     <Content Include="Views\AccidentType\Create.cshtml" />
     <Content Include="Views\AccidentType\Delete.cshtml" />
     <Content Include="Views\AccidentType\Details.cshtml" />
@@ -486,87 +469,29 @@
     </Compile>
     <Compile Include="Helpers\HtmlHelpers\HtmlHelpers.cs" />
     <Compile Include="Helpers\HtmlHelpers\UploadHelper.cs" />
-    <Compile Include="Models\Context.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Context.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Context.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Context.edmx</DependentUpon>
-    </Compile>
-    <Compile Include="Models\tbl_Accident.cs">
-      <DependentUpon>Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\tbl_AccidentEmplyoee.cs">
-      <DependentUpon>Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\tbl_AccidentInjured.cs">
-      <DependentUpon>Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\tbl_AccidentM.cs">
-      <DependentUpon>Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\tbl_AccidentO.cs">
-      <DependentUpon>Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\tbl_AccidentStation.cs">
-      <DependentUpon>Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\tbl_AccidentType.cs">
-      <DependentUpon>Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\tbl_Cause.cs">
-      <DependentUpon>Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\tbl_Employee.cs">
-      <DependentUpon>Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\tbl_Injured.cs">
-      <DependentUpon>Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\tbl_Leave.cs">
-      <DependentUpon>Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\tbl_Material.cs">
-      <DependentUpon>Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\tbl_Missives.cs">
-      <DependentUpon>Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\tbl_Organizations.cs">
-      <DependentUpon>Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\tbl_Repair.cs">
-      <DependentUpon>Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\tbl_shift.cs">
-      <DependentUpon>Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\tbl_ShiftEmployee.cs">
-      <DependentUpon>Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\tbl_ShiftRegister.cs">
-      <DependentUpon>Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\tbl_State.cs">
-      <DependentUpon>Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\tbl_Usage.cs">
-      <DependentUpon>Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\tbl_User.cs">
-      <DependentUpon>Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\tbl_weather.cs">
-      <DependentUpon>Context.tt</DependentUpon>
-    </Compile>
+    <Compile Include="Models\Context.cs" />
+    <Compile Include="Models\tbl_Accident.cs" />
+    <Compile Include="Models\tbl_AccidentEmplyoee.cs" />
+    <Compile Include="Models\tbl_AccidentInjured.cs" />
+    <Compile Include="Models\tbl_AccidentM.cs" />
+    <Compile Include="Models\tbl_AccidentO.cs" />
+    <Compile Include="Models\tbl_AccidentStation.cs" />
+    <Compile Include="Models\tbl_AccidentType.cs" />
+    <Compile Include="Models\tbl_Cause.cs" />
+    <Compile Include="Models\tbl_Employee.cs" />
+    <Compile Include="Models\tbl_Injured.cs" />
+    <Compile Include="Models\tbl_Leave.cs" />
+    <Compile Include="Models\tbl_Material.cs" />
+    <Compile Include="Models\tbl_Missives.cs" />
+    <Compile Include="Models\tbl_Organizations.cs" />
+    <Compile Include="Models\tbl_Repair.cs" />
+    <Compile Include="Models\tbl_shift.cs" />
+    <Compile Include="Models\tbl_ShiftRegister.cs" />
+    <Compile Include="Models\tbl_ShiftRegisterEmployee.cs" />
+    <Compile Include="Models\tbl_State.cs" />
+    <Compile Include="Models\tbl_Usage.cs" />
+    <Compile Include="Models\tbl_User.cs" />
+    <Compile Include="Models\tbl_weather.cs" />
     <Compile Include="Models\ViewModel\ChengePaswordViewModel.cs" />
     <Compile Include="Models\ViewModel\EmVM.cs" />
     <Compile Include="Models\ViewModel\LoginViewModel.cs" />
@@ -704,6 +629,8 @@
           <DevelopmentServerPort>54275</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>https://localhost:44700/</IISUrl>
+          <OverrideIISAppRootUrl>True</OverrideIISAppRootUrl>
+          <IISAppRootUrl>https://localhost:44700/</IISAppRootUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

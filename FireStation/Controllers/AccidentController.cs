@@ -15,7 +15,7 @@ namespace FireStation.Controllers
 {
     public class AccidentController : Controller
     {
-        private FireStationEntities db = new FireStationEntities();
+        private Context db = new Context();
 
         // GET: Accident
         public ActionResult Index()
@@ -490,7 +490,7 @@ namespace FireStation.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            using (FireStationEntities db = new FireStationEntities())
+            using (Context db = new Context())
             {
                 tbl_Accident tbl = db.tbl_Accident.Where(x => x.AccidentId == id).FirstOrDefault();
                 tbl.Isdelete = true;

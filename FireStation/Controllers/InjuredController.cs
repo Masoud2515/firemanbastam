@@ -12,7 +12,7 @@ namespace FireStation.Controllers
 {
     public class InjuredController : Controller
     {
-        private FireStationEntities db = new FireStationEntities();
+        private Context db = new Context();
 
         // GET: Injured
         public ActionResult Index()

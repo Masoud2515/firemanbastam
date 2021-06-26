@@ -12,7 +12,7 @@ namespace FireStation.Controllers
 {
     public class OrganizationsController : Controller
     {
-        private FireStationEntities db = new FireStationEntities();
+        private Context db = new Context();
 
         // GET: Organizations
         public ActionResult Index()

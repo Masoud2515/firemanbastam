@@ -12,7 +12,7 @@ namespace FireStation.Controllers
 {
     public class AccidentTypeController : Controller
     {
-        private FireStationEntities db = new FireStationEntities();
+        private Context db = new Context();
 
         // GET: AccidentType
         public ActionResult Index()

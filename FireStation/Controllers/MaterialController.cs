@@ -13,7 +13,7 @@ namespace FireStation.Controllers
 {
     public class MaterialController : Controller
     {
-        private FireStationEntities db = new FireStationEntities();
+        private Context db = new Context();
 
         // GET: Material
         public ActionResult Index()

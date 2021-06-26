@@ -12,7 +12,7 @@ namespace FireStation.Controllers
 {
     public class shiftController : Controller
     {
-        private FireStationEntities db = new FireStationEntities();
+        private Context db = new Context();
 
         // GET: shift
         public ActionResult Index()
@@ -56,9 +56,9 @@ namespace FireStation.Controllers
                         return HttpNotFound();
                     }
                     ViewBag.fireman = (from i in db.tbl_Employee
-                                       join ai in db.tbl_ShiftEmployee on i.EmployeeId equals ai.EmployeeId
-                                       join a in db.tbl_shift on ai.Shiftid equals a.ShiftId
-                                       where ai.Shiftid == id
+                                       join ai in db.tbl_ShiftRegisterEmployee on i.EmployeeId equals ai.EmployeeID
+                                       join a in db.tbl_shift on ai.ShiftRegisterID equals a.ShiftId
+                                       where ai.ShiftRegisterID == id
                                        orderby a.ShiftId
                                        select i).ToList();
                     return View(tbl_shift);
@@ -126,16 +126,16 @@ namespace FireStation.Controllers
                         db.SaveChanges();
                         foreach (int item in Employee)
                         {
-                            tbl_ShiftEmployee oEmployee = new tbl_ShiftEmployee();
+                            tbl_ShiftRegisterEmployee oEmployee = new tbl_ShiftRegisterEmployee();
                             int re = rand.Next(111111, 999999);
-                            while (db.tbl_ShiftEmployee.FirstOrDefault(f => f.ShiftEmployeeId == re) != null)
+                            while (db.tbl_ShiftRegisterEmployee.FirstOrDefault(f => f.ID == re) != null)
                             {
                                 re = rand.Next(111111, 999999);
                             }
-                            oEmployee.ShiftEmployeeId = re;
-                            oEmployee.EmployeeId = item;
-                            oEmployee.Shiftid = ra;
-                            db.tbl_ShiftEmployee.Add(oEmployee);
+                            oEmployee.ShiftRegisterID = re;
+                            oEmployee.EmployeeID = item;
+
+                            db.tbl_ShiftRegisterEmployee.Add(oEmployee);
                             db.SaveChanges();
                         }
                         return RedirectToAction("Index");
@@ -238,9 +238,9 @@ namespace FireStation.Controllers
                         return HttpNotFound();
                     }
                     ViewBag.fireman = (from i in db.tbl_Employee
-                                       join ai in db.tbl_ShiftEmployee on i.EmployeeId equals ai.EmployeeId
-                                       join a in db.tbl_shift on ai.Shiftid equals a.ShiftId
-                                       where ai.Shiftid == id
+                                       join ai in db.tbl_ShiftRegisterEmployee on i.EmployeeId equals ai.EmployeeID
+                                       join a in db.tbl_shift on ai.ShiftRegisterID equals a.ShiftId
+                                       where ai.ShiftRegisterID == id
                                        orderby a.ShiftId
                                        select i).ToList();
                     return View(tbl_shift);
@@ -260,11 +260,11 @@ namespace FireStation.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            var em = db.tbl_ShiftEmployee.Where(x => x.Shiftid == id).ToList();
+            var em = db.tbl_ShiftRegisterEmployee.Where(x => x.ShiftRegisterID == id).ToList();
             foreach (var item in em)
             {
-                tbl_ShiftEmployee tbl_ShiftEmployee = db.tbl_ShiftEmployee.Find(item.ShiftEmployeeId);
-                db.tbl_ShiftEmployee.Remove(tbl_ShiftEmployee);
+                tbl_ShiftRegisterEmployee tbl_ShiftEmployee = db.tbl_ShiftRegisterEmployee.Find(item.EmployeeID);
+                db.tbl_ShiftRegisterEmployee.Remove(tbl_ShiftEmployee);
                 db.SaveChanges();
             }
             tbl_shift tbl_shift = db.tbl_shift.Find(id);

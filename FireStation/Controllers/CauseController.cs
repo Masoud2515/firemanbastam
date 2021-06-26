@@ -12,7 +12,7 @@ namespace FireStation.Controllers
 {
     public class CauseController : Controller
     {
-        private FireStationEntities db = new FireStationEntities();
+        private Context db = new Context();
 
         // GET: Cause
         public ActionResult Index()

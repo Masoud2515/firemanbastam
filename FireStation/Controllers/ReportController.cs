@@ -9,7 +9,7 @@ namespace FireStation.Controllers
 {
     public class ReportController : Controller
     {
-        private FireStationEntities db = new FireStationEntities();
+        private Context db = new Context();
         
         public ActionResult ReportHadese()
         {
