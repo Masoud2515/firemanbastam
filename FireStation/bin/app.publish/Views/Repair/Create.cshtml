@@ -1,0 +1,94 @@
+﻿@model FireStation.Models.tbl_Repair
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_LayoutPannel.cshtml";
+}
+
+<h2>افزودن</h2>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="card">
+        <div class="row">
+            <div class="col-lg-12 p-4">
+                <form class="form-control">
+                    <div class="row justify-content-center">
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        <div class="col-lg-2">
+                            <label class="h6">عنوان فعالیت انجام شده: </label><span class="required text-danger">*</span>
+                            @Html.EditorFor(model => model.RepairTitel, new { htmlAttributes = new { @class = "form-control border-primary" } })
+                            @Html.ValidationMessageFor(model => model.RepairTitel, "", new { @class = "text-danger" })
+                        </div>
+                        @*<div class="col-lg-2">
+                @Html.LabelFor(model => model.RepairId, htmlAttributes: new { @class = "h5" })
+                @Html.EditorFor(model => model.RepairId, new { htmlAttributes = new { @class = "form-control border-primary" } })
+                @Html.ValidationMessageFor(model => model.RepairId, "", new { @class = "text-danger" })
+            </div>*@
+                        <div class="col-lg-2">
+                            <label class="h6"> تا تاریخ:</label><span class="required text-danger">*</span>
+                            <div class="form-group">
+                                <div class="input-group datepiker">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text" data-MdDateTimePicker="true" data-TargetSelector="#inlineFormInputGroup" data-EnableTimePicker="false" data-Placement="left" data-Trigger="click"><img src="~/Content/calendar-512.png" alt="cal" width="20" height="20" /></div>
+                                    </div>
+                                    <input type="text" class="form-control border-primary" name="date" id="inlineFormInputGroup" data-MdDateTimePicker="true" data-TargetSelector="#inlineFormInputGroup" data-EnableTimePicker="false" data-Placement="left" data-Trigger="click" placeholder="تاریخ" dir="ltr">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-2">
+                            <label class="h6">ایستگاه ها: </label><span class="required text-danger">*</span>
+                            <select class="form-control border-primary" name="StateId">
+                                @foreach (var item in ViewBag.StationName)
+                                {
+                                    <option value="@item.StateId">@item.StateName</option>
+                                }
+
+
+                            </select>
+                        </div>
+
+                        <div class="col-lg-2">
+                            <label class="h6">انتخاب تجهیزات: </label><span class="required text-danger">*</span>
+                            <select class="form-control border-primary selectpicker" data-live-search="true" name="MaterialId">
+                                @foreach (var item in ViewBag.MaterialId)
+                                {
+                                    <option value="@item.MaterialId">@item.MaterialName</option>
+                                }
+                            </select>
+                            @Html.ValidationMessageFor(model => model.MaterialId, "", new { @class = "text-danger" })
+                        </div>
+                        @*<div class="col-lg-8">
+                @Html.LabelFor(model => model.RepairDescription, htmlAttributes: new { @class = "h5" })
+                @Html.EditorFor(model => model.RepairDescription, new { htmlAttributes = new { @class = "form-control border-primary" } })
+                @Html.ValidationMessageFor(model => model.RepairDescription, "", new { @class = "text-danger" })
+            </div>*@
+                        <div class="col-md-8">
+                            <div class="form-group">
+                                <label class="h6">شرح فعالیت انجام شده</label>
+                                <textarea id="userinput8" rows="5" class="form-control border-primary" name="RepairDescription"></textarea>
+                            </div>
+                        </div>
+                        @*<div class="col-lg-2">
+                @Html.LabelFor(model => model.RepairPrice, htmlAttributes: new { @class = "h5" })
+                @Html.EditorFor(model => model.RepairPrice, new { htmlAttributes = new { @class = "form-control border-primary" } })
+                @Html.ValidationMessageFor(model => model.RepairPrice, "", new { @class = "text-danger" })
+            </div>*@
+                    </div>
+
+                    <div class="row mt-5 justify-content-center">
+                        <div class="col-2">
+                            <input class="btn btn-success btn-block" type="submit" value="ثبت" />
+                        </div>
+                        <div class="col-2">
+                            <a class="btn btn-outline-dark btn-block" href="~/Repair">بازگشت</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+}

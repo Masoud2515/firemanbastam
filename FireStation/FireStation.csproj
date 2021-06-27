@@ -100,9 +100,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\156439.jpg" />
     <Content Include="Content\avatar.png" />
-    <Content Include="Content\bg.jpg" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\calendar-512.png" />
     <Content Include="Content\css\app.css" />
@@ -430,7 +428,6 @@
     <Content Include="Content\vendors\css\raty\fonts\raty.ttf" />
     <Content Include="Content\vendors\css\raty\fonts\raty.woff" />
     <Content Include="Content\vendors\css\raty\fonts\ratyd41d.eot" />
-    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <Content Include="Views\AccidentType\Create.cshtml" />
     <Content Include="Views\AccidentType\Delete.cshtml" />
     <Content Include="Views\AccidentType\Details.cshtml" />
@@ -512,6 +509,7 @@
     <Folder Include="App_Data\" />
     <Folder Include="Documents\Doc\" />
     <Folder Include="Documents\Pic\" />
+    <Folder Include="Properties\PublishProfiles\" />
     <Folder Include="Scripts\" />
   </ItemGroup>
   <ItemGroup>

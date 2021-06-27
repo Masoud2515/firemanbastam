@@ -50,12 +50,18 @@ namespace FireStation.Controllers
                     {
                         return RedirectToAction("Err", "Home", new { code = "E-1133", text = " شناسه تجهیزات  وارد نشده است", url = string.Format("{0}/", RouteData.Values["controller"].ToString()) });
                     }
-                    tbl_Material tbl_Material = db.tbl_Material.Find(id);
-                    if (tbl_Material == null)
+                    else
                     {
-                        return RedirectToAction("Err", "Home", new { code = "E-1133", text = "هیچ یک از تجهیزات با شناسه وارد شده ثبت نشده اند", url = string.Format("{0}/", RouteData.Values["controller"].ToString()) });
+                        tbl_Material tbl_Material = db.tbl_Material.Find(id);
+                        if (tbl_Material == null)
+                        {
+                            return RedirectToAction("Err", "Home", new { code = "E-1133", text = "هیچ یک از تجهیزات با شناسه وارد شده ثبت نشده اند", url = string.Format("{0}/", RouteData.Values["controller"].ToString()) });
+                        }
+                        else
+                        {
+                            return View(tbl_Material);
+                        }
                     }
-                    return View(tbl_Material);
                 }
                 else
                 {
@@ -78,7 +84,6 @@ namespace FireStation.Controllers
                     ViewBag.OnlineUser = Session["UserName"].ToString();
                     ViewBag.OnlineUserRole = Session["UserRole"].ToString();
                     ViewBag.OpState = db.tbl_State.ToList();
-
                     return View();
                 }
                 else
@@ -213,12 +218,11 @@ namespace FireStation.Controllers
                                 db.SaveChanges();
                                 return RedirectToAction("Index");
                             }
-                            catch (Exception ex) 
+                            catch (Exception ex)
                             {
                                 ViewBag.error = ex.Message;
                                 return View(tbl_Material);
                             }
-
                         }
                         else
                         {
@@ -237,7 +241,6 @@ namespace FireStation.Controllers
                 ViewBag.error = ex.Message;
                 return View(tbl_Material);
             }
-
         }
 
         // GET: Material/Delete/5

@@ -1,0 +1,67 @@
+﻿@model FireStation.Models.tbl_User
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_LayoutPannel.cshtml";
+}
+
+
+<div class="card">
+    <div class="row">
+        <div class="col-lg-12 p-4">
+            <h3>آیا مطمئن هستید که میخواهید این مورد را حذف کنید؟</h3>
+            <h4>حذف کاربر</h4>
+            <hr />
+            <table class="table table-borderless">
+                <tr>
+                    <td>
+                        @Html.DisplayNameFor(model => model.UserUserName)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(model => model.UserUserName)
+                    </td>
+
+                    <td>
+                        @Html.DisplayNameFor(model => model.UserPassword)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(model => model.UserPassword)
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        @Html.DisplayNameFor(model => model.UserRole)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(model => model.UserRole)
+                    </td>
+
+                    <td>
+                        @Html.DisplayNameFor(model => model.tbl_Employee.EmployeeCode)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(model => model.tbl_Employee.EmployeeCode)
+                    </td>
+
+                </tr>
+            </table>
+
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+                <div class="row mt-5 justify-content-center">
+                    <div class="col-2">
+                        <input class="btn btn-danger btn-block" type="submit" value="حذف" />
+                    </div>
+                    <div class="col-2">
+                        <a class="btn btn-outline-dark btn-block" href="~/User">بازگشت</a>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>

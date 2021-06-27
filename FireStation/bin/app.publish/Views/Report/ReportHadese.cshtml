@@ -1,0 +1,70 @@
+﻿
+@{
+    ViewBag.Title = "ReportHadese";
+    Layout = "~/Views/Shared/_LayoutPannel.cshtml";
+}
+@using (Html.BeginForm("ReportHadese", "Report", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <div class="card">
+        <div class="row">
+            <div class="col-lg-12 p-4">
+                <h5>گزارش حادثه</h5>
+                <hr />
+                <form class="form-control">
+                    <div class="row justify-content-center">
+                        <div class="col-lg-3">
+                            <label class="h6"> نوع حادثه:</label>
+                            <select id="projectinput6" name="AccidentTypeId" class="form-control border-primary selectpicker" data-live-search="true" required>
+                                <option selected hidden>انتخاب</option>
+                                @foreach (var item in ViewBag.AccidentTypeId)
+                                {
+                                    <option value="@item.AccidentTypeId">@item.AccidentTypeTitel</option>
+                                }
+                            </select>
+                        </div>
+                        <div class="col-lg-2">
+                            <label class="control-label h6"> از تاریخ:</label>
+                            <div class="form-group">
+                                <div class="input-group datepiker">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text" data-MdDateTimePicker="true" data-TargetSelector="#inlineFormInputGroup" data-EnableTimePicker="false" data-Placement="left" data-Trigger="click"><img src="~/Content/calendar-512.png" alt="cal" width="20" height="20" /></div>
+                                    </div>
+                                    <input type="text" class="form-control border-primary" name="date" id="inlineFormInputGroup" data-MdDateTimePicker="true" data-TargetSelector="#inlineFormInputGroup" data-EnableTimePicker="false" data-Placement="left" data-Trigger="click" placeholder="تاریخ" dir="ltr">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-2">
+                            <label class="control-label h6"> تا تاریخ:</label>
+                            <div class="form-group">
+                                <div class="input-group datepiker">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text" data-MdDateTimePicker="true" data-TargetSelector="#inlineFormInputGroup1" data-EnableTimePicker="false" data-Placement="left" data-Trigger="click"><img src="~/Content/calendar-512.png" alt="cal" width="20" height="20" /></div>
+                                    </div>
+                                    <input type="text" class="form-control border-primary" name="date" id="inlineFormInputGroup1" data-MdDateTimePicker="true" data-TargetSelector="#inlineFormInputGroup1" data-EnableTimePicker="false" data-Placement="left" data-Trigger="click" placeholder="تاریخ" dir="ltr">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-2">
+                            <div class="form-group">
+                                <label class="control-label h6" for="AccidentZone">منطقه:</label>
+                                <select id="AccidentZone" name="AccidentZone" class="form-control border-primary" onfocus='this.size=7;' onblur='this.size=1;' onchange='this.size=1; this.blur();'>
+                                    <option selected hidden>انتخاب</option>
+                                    @for (int i = 1; i <= 16; i++)
+                                    {
+                                        <option value="@i">@i</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-5 justify-content-center">
+                        <div class="col-2">
+                            <button class="btn btn-primary btn-block">گزارش حادثه</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+}

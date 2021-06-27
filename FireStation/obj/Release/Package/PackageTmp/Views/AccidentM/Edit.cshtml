@@ -1,0 +1,55 @@
+﻿@model FireStation.Models.tbl_AccidentM
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_LayoutPannel.cshtml";
+}
+
+<div class="card">
+    <div class="row">
+        <div class="col-lg-12 p-4">
+            <h4>ویرایش تجهیزات حادثه</h4>
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+
+                <form class="form-control">
+                    <div class="row justify-content-center">
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        @Html.HiddenFor(model => model.AccidentMid)
+                        @Html.HiddenFor(model => model.MaterialId)
+                        @Html.HiddenFor(model => model.AccidentId)
+                        <div class="col-md-3">
+                            @Html.LabelFor(model => model.AccidentId, "AccidentId", htmlAttributes: new { @class = "control-label h6" })
+                            <p class="form-control border-primary">
+                                @Model.AccidentId
+                            </p>
+                            @Html.ValidationMessageFor(model => model.AccidentId, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="col-md-3">
+                            @Html.LabelFor(model => model.tbl_Material.MaterialName, "MaterialName", htmlAttributes: new { @class = "control-label h6" })
+                            <p class="form-control border-primary">@Model.tbl_Material.MaterialName</p>
+                            @Html.ValidationMessageFor(model => model.MaterialId, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="col-md-3">
+                            @Html.LabelFor(model => model.tedad, htmlAttributes: new { @class = "control-label h6" })
+                            @Html.EditorFor(model => model.tedad, new { htmlAttributes = new { @class = "form-control border-primary" } })
+                            @Html.ValidationMessageFor(model => model.tedad, "", new { @class = "text-danger" })
+                        </div>
+
+                    </div>
+                    <div class="row mt-5 justify-content-center">
+                        <div class="col-2">
+                            <input class="btn btn-success btn-block" type="submit" value="ثبت" />
+                        </div>
+                        <div class="col-2">
+                            <button class="btn btn-block btn-outline-dark">@Html.ActionLink("بازگشت", "Edit", "Accident", new { id = Model.AccidentId }, null)</button>
+                        </div>
+                    </div>
+                </form>
+            }
+        </div>
+    </div>
+</div>
