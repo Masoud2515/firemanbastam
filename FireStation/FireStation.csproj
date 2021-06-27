@@ -473,6 +473,10 @@
     <Compile Include="Migrations\202106260332121_sajjad.designer.cs">
       <DependentUpon>202106260332121_sajjad.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202106270453220_sajjad1.cs" />
+    <Compile Include="Migrations\202106270453220_sajjad1.designer.cs">
+      <DependentUpon>202106270453220_sajjad1.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Context.cs" />
     <Compile Include="Models\tbl_Accident.cs" />
@@ -620,6 +624,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202106260332121_sajjad.resx">
       <DependentUpon>202106260332121_sajjad.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202106270453220_sajjad1.resx">
+      <DependentUpon>202106270453220_sajjad1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
