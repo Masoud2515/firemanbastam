@@ -4,6 +4,8 @@
     ViewBag.Title = "ثبت حادثه جدید";
     Layout = "~/Views/Shared/_LayoutPannel.cshtml";
 }
+<link rel="stylesheet" href="~/Content/css/image-uploader.min.css" />
+<script type="text/javascript" src="~/Content/js/image-uploader.min.js"></script>
 <style>
 
     .align-self-center {
@@ -60,7 +62,7 @@
     <div class="card">
         <div class="row">
             <div class="col-lg-12 p-4">
-                <form class="form">
+                <form class="form" method="post" enctype="multipart/form-data">
                     <div class="form-body">
                         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
@@ -474,23 +476,12 @@
 
                     <div class="row justify-content-center mt-3">
                         <div class="col-md-6 m-auto">
+                            <h6>آپلود فایل اسکن شده گزارش</h6>
+                            <div class="input-images">
+
+                            </div>
                             <div class="align-self-center halfway-fab text-center">
-                                <h6>آپلود فایل اسکن شده گزارش</h6>
-                                <div class="image-uploader">
-                                    <input type="file"
-                                           accept="image/*"
-                                           id="file-input"
-                                           name="pic"
-                                           class="form-control"
-                                           value="Select"
-                                           placeholder="Select">
-                                    <div class="uploaded">
-                                        <img src=""
-                                             alt=""
-                                             id="image-previewer"
-                                             class="img-fluid radius12">
-                                    </div>
-                                </div>
+
                             </div>
                         </div>
 
@@ -523,7 +514,9 @@
         </div>
     </div>
 }
-
+<script>
+    $('.input-images').imageUploader();
+</script>
 <script>
     $(document).ready(function () {
         $(function () {

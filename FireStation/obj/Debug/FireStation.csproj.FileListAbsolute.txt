@@ -228,3 +228,6 @@ C:\Users\SURFACE\source\repos\Masoud2515\firemanbastam\FireStation\obj\Debug\Fir
 C:\Users\SURFACE\source\repos\Masoud2515\firemanbastam\FireStation\obj\Debug\FireStation.dll
 C:\Users\SURFACE\source\repos\Masoud2515\firemanbastam\FireStation\obj\Debug\FireStation.pdb
 C:\Users\SURFACE\source\repos\Masoud2515\firemanbastam\FireStation\obj\Debug\FireStation.csprojAssemblyReference.cache
+C:\Users\masoud\source\repos\firemanbastam\FireStation\obj\Debug\FireStation.Migrations.sajjad.resources
+C:\Users\masoud\source\repos\firemanbastam\FireStation\obj\Debug\FireStation.Migrations.sajjad1.resources
+C:\Users\masoud\source\repos\firemanbastam\FireStation\obj\Debug\FireStation.csproj.GenerateResource.cache

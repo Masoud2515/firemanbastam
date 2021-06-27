@@ -106,6 +106,7 @@
     <Content Include="Content\css\app.css" />
     <Content Include="Content\css\bootstrap-multiselect.css" />
     <Content Include="Content\css\bootstrap-select.min.css" />
+    <Content Include="Content\css\image-uploader.min.css" />
     <Content Include="Content\css\jquery.Bootstrap-PersianDateTimePicker.css" />
     <Content Include="Content\css\js-persian-cal.css" />
     <Content Include="Content\css\style-rtl.alpha6.min.css" />
@@ -243,6 +244,7 @@
     <Content Include="Content\js\form-validation.js" />
     <Content Include="Content\js\fullcalendar.js" />
     <Content Include="Content\js\horizontal-timeline.min.js" />
+    <Content Include="Content\js\image-uploader.min.js" />
     <Content Include="Content\js\imoViewer-min.js" />
     <Content Include="Content\js\maps.js" />
     <Content Include="Content\js\notification-sidebar.js" />
