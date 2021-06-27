@@ -1,4 +1,4 @@
-namespace FireStation.Models
+﻿namespace FireStation.Models
 {
     using System;
     using System.Collections.Generic;
@@ -10,19 +10,25 @@ namespace FireStation.Models
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        [Display(Name = "شناسه تعمیر")]
         public int RepairId { get; set; }
 
+        [Display(Name = "شرح تعمیرات")]
         public string RepairDescription { get; set; }
 
         [Column(TypeName = "date")]
+        [Display(Name = "تاریخ تعمیر")]
         public DateTime RepairDate { get; set; }
 
         [Required]
         [StringLength(50)]
+        [Display(Name = "عنوان")]
         public string RepairTitel { get; set; }
 
+        [Display(Name = "شناسه تجهیزات")]
         public int MaterialId { get; set; }
 
+        [Display(Name = "شناسه ایستگاه")]
         public int StateId { get; set; }
 
         public virtual tbl_Material tbl_Material { get; set; }

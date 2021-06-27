@@ -1,4 +1,4 @@
-namespace FireStation.Models
+﻿namespace FireStation.Models
 {
     using System;
     using System.Collections.Generic;
@@ -16,25 +16,34 @@ namespace FireStation.Models
 
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        [Display(Name = "شناسه ثبت شیفت")]
         public int ShiftRegisterid { get; set; }
 
         [Required]
+        [Display(Name = "توضیحات شیفت")]
         public string ShiftRegisterDec { get; set; }
 
+        [Display(Name = "فرمانده شیفت")]
         public int ShiftRegisterCommandor { get; set; }
 
+        [Display(Name = "زمان شروع")]
         public TimeSpan ShiftRegisterTimeStart { get; set; }
 
+        [Display(Name = "زمان اتمام")]
         public TimeSpan ShiftRegisterTimeEnd { get; set; }
 
         [Column(TypeName = "date")]
+        [Display(Name = "تاریخ شروع")]
         public DateTime ShiftRegisterDateStart { get; set; }
 
         [Column(TypeName = "date")]
+        [Display(Name = "تاریخ اتمام")]
         public DateTime ShiftRegisteridDateEnd { get; set; }
 
+        [Display(Name = "آدرس فایل")]
         public string ShiftRegisterurl { get; set; }
 
+        [Display(Name = "شناسه شیفت")]
         public int ShiftRegisterShifId { get; set; }
 
         public virtual tbl_shift tbl_shift { get; set; }

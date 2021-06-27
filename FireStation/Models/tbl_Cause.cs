@@ -1,4 +1,4 @@
-namespace FireStation.Models
+﻿namespace FireStation.Models
 {
     using System;
     using System.Collections.Generic;
@@ -16,9 +16,11 @@ namespace FireStation.Models
 
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        [Display(Name = "شناسه علت")]
         public int CauseId { get; set; }
 
         [Required]
+        [Display(Name = "عنوان علت")]
         [StringLength(50)]
         public string CauseTitel { get; set; }
 

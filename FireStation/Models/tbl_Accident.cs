@@ -24,77 +24,105 @@
         public int AccidentId { get; set; }
 
         [Required]
-        [Display(Name = "محل حادثه")]
+        [Display(Name = "آدرس محل حادثه")]
         public string AccidentEventLocation { get; set; }
 
         [Required]
-        [Display(Name = "توضیحات")]
+        [Display(Name = "توضیح علت")]
         public string AccidentDescrption { get; set; }
 
+        [Display(Name = "زمان اعلام")]
         public TimeSpan AccidentTime { get; set; }
 
         [Column(TypeName = "date")]
+        [Display(Name = "تاریخ حادثه")]
         public DateTime AccidentDate { get; set; }
 
+        [Display(Name = "فایل اسکن شده گزارش")]
         public string AccidentReportUrl { get; set; }
 
+        [Display(Name = "شرایط جوی")]
         public int AccidentWid { get; set; }
 
+        [Display(Name = "نوع حادثه")]
         public int AccidentTypeId { get; set; }
 
+        [Display(Name = "منطقه حادثه")]
         public int AccidentZone { get; set; }
 
+        [Display(Name = "کاربر ثبت کننده حادثه")]
         public int AccidentUserId { get; set; }
 
+        [Display(Name = "مورد کاربری")]
         public int AccidentUsageId { get; set; }
 
+        [Display(Name = "زمان شروع حادثه")]
         public TimeSpan AccidentTimeStartOperation { get; set; }
 
+        [Display(Name = "زمان اتمام حادثه")]
         public TimeSpan AccidentTimeEndOperation { get; set; }
 
+        [Display(Name = "زمان پاکسازی")]
         public TimeSpan? AccidentTimeToClear { get; set; }
 
         [Required]
         [StringLength(50)]
+        [Display(Name = "خبر دهنده")]
         public string AccidentReporter { get; set; }
 
+        [Display(Name = "گیرنده خبر")]
         public int AccidentReportReciver { get; set; }
 
+        [Display(Name = "روش خبررسانی")]
         public int AccidentReportType { get; set; }
 
+        [Display(Name = "تعداد طبقات")]
         public int? AccidentSiteFloors { get; set; }
 
         [StringLength(50)]
+        [Display(Name = "نوع ساختمان")]
         public string AccidentBuildingType { get; set; }
 
         [Required]
         [StringLength(50)]
+        [Display(Name = "مالک")]
         public string AccidentBuildingOwner { get; set; }
 
         [StringLength(15)]
+        [Display(Name = "شماره تلفن")]
         public string AccidentBuildingTel { get; set; }
 
         [StringLength(50)]
+        [Display(Name = "مستاجر")]
         public string AccidentBuildingTenant { get; set; }
 
+        [Display(Name = "نوع سایر حادثه")]
         public string AccidentOtherType { get; set; }
 
+        [Display(Name = "اقدامات اولیه")]
         public string AccidentPreliminaryMeasures { get; set; }
 
+        [Display(Name = "شرح عملیات")]
         public string AccidentDescriptionOperation { get; set; }
 
+        [Display(Name = "خسارات وارده به محل حادثه")]
         public string AccidentDamageDescriptionO { get; set; }
 
+        [Display(Name = "خسارت وارده به تجهیزات")]
         public string AccidentDamageDescriptionL { get; set; }
 
+        [Display(Name = "تهیه کننده گزارش")]
         public int AccidentReportProducer { get; set; }
 
+        [Display(Name = "فرمانده عملیات")]
         public int AccidentOperationsCommander { get; set; }
 
         public DateTime DateAdd { get; set; }
 
+        [Display(Name = "شرح مشکلات")]
         public string AccidentOperationProblems { get; set; }
 
+        [Display(Name = "علت حادثه")]
         public int AccidentCause { get; set; }
 
         public bool Isdelete { get; set; }

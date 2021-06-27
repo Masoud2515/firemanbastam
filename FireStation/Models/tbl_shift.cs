@@ -1,4 +1,4 @@
-namespace FireStation.Models
+﻿namespace FireStation.Models
 {
     using System;
     using System.Collections.Generic;
@@ -16,12 +16,15 @@ namespace FireStation.Models
 
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        [Display(Name = "شناسه شیفت")]
         public int ShiftId { get; set; }
 
         [Required]
         [StringLength(50)]
+        [Display(Name = "نام شیفت")]
         public string ShiftName { get; set; }
 
+        [Display(Name = "شناسه ایستگاه")]
         public int StateId { get; set; }
 
         public virtual tbl_State tbl_State { get; set; }
