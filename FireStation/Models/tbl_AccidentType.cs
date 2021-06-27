@@ -1,4 +1,4 @@
-namespace FireStation.Models
+﻿namespace FireStation.Models
 {
     using System;
     using System.Collections.Generic;
@@ -16,9 +16,11 @@ namespace FireStation.Models
 
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        [Display(Name = "شناسه نوع حادثه")]
         public int AccidentTypeId { get; set; }
 
         [StringLength(50)]
+        [Display(Name = "عنوان نوع حادثه")]
         public string AccidentTypeTitel { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

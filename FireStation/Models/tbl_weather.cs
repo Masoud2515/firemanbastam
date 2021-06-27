@@ -1,4 +1,4 @@
-namespace FireStation.Models
+﻿namespace FireStation.Models
 {
     using System;
     using System.Collections.Generic;
@@ -16,12 +16,15 @@ namespace FireStation.Models
 
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        [Display(Name = "شناسه آب و هوا")]
         public int WeatherId { get; set; }
 
         [StringLength(50)]
+        [Display(Name = "عنوان")]
         public string WeatherTitel { get; set; }
 
         [StringLength(50)]
+        [Display(Name = "توضیحات")]
         public string WeatherDec { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

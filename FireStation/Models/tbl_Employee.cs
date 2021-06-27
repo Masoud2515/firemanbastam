@@ -1,4 +1,4 @@
-namespace FireStation.Models
+﻿namespace FireStation.Models
 {
     using System;
     using System.Collections.Generic;
@@ -22,48 +22,62 @@ namespace FireStation.Models
 
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        [Display(Name = "شناسه کارمندی")]
         public int EmployeeId { get; set; }
 
         [Required]
         [StringLength(50)]
+        [Display(Name = "کد پرسنلی")]
         public string EmployeeCode { get; set; }
 
         [Required]
         [StringLength(30)]
+        [Display(Name = "نام")]
         public string EmployeeName { get; set; }
 
         [Required]
         [StringLength(30)]
+        [Display(Name = "نام خانوادگی")]
         public string EmployeeLastName { get; set; }
 
         [Required]
         [StringLength(15)]
+        [Display(Name = "تلفن")]
         public string EmployeePhone { get; set; }
 
         [StringLength(50)]
+        [Display(Name = "آدرس")]
         public string EmployeeAdress { get; set; }
 
+        [Display(Name = "عکس پروفایل")]
         public string EmployeePicUrl { get; set; }
 
+        [Display(Name = "شناسه ایستگاه")]
         public int StateId { get; set; }
 
         [StringLength(50)]
+        [Display(Name = "نام پدر")]
         public string EmployeeFName { get; set; }
 
         [Required]
         [StringLength(50)]
+        [Display(Name = "کد ملی")]
         public string EmployeeMCode { get; set; }
 
         [Column(TypeName = "date")]
+        [Display(Name = "تاریخ تولد")]
         public DateTime EmployeeBirthdate { get; set; }
 
+        [Display(Name = "جنسیت")]
         public bool EmployeeSex { get; set; }
 
         [Required]
         [StringLength(50)]
+        [Display(Name = "رده کاری")]
         public string EmployeeWork { get; set; }
 
         [Column(TypeName = "date")]
+        [Display(Name = "تاریخ استخدام")]
         public DateTime EmployeeDateRegistered { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

@@ -1,4 +1,4 @@
-namespace FireStation.Models
+﻿namespace FireStation.Models
 {
     using System;
     using System.Collections.Generic;
@@ -16,12 +16,15 @@ namespace FireStation.Models
 
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        [Display(Name = "شناسه کاربری")]
         public int UsageId { get; set; }
 
         [Required]
         [StringLength(50)]
+        [Display(Name = "عنوان کاربری")]
         public string UsageTitel { get; set; }
 
+        [Display(Name = "توضیحات")]
         public string UsageDescription { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

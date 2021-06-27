@@ -1,4 +1,4 @@
-namespace FireStation.Models
+﻿namespace FireStation.Models
 {
     using System;
     using System.Collections.Generic;
@@ -10,10 +10,13 @@ namespace FireStation.Models
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        [Display(Name = "شناسه ایستگاه شرکت کننده در ایستگاه")]
         public int AccidentStationId { get; set; }
 
+        [Display(Name = "شناسه ایستگاه")]
         public int StationId { get; set; }
 
+        [Display(Name = "شناسه حادثه")]
         public int AccidentId { get; set; }
 
         public virtual tbl_Accident tbl_Accident { get; set; }

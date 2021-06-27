@@ -1,4 +1,4 @@
-namespace FireStation.Models
+﻿namespace FireStation.Models
 {
     using System;
     using System.Collections.Generic;
@@ -16,16 +16,20 @@ namespace FireStation.Models
 
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        [Display(Name = "شناسه سازمان")]
         public int OrId { get; set; }
 
         [Required]
         [StringLength(50)]
+        [Display(Name = "شماره تماس")]
         public string OrTel { get; set; }
 
         [Required]
         [StringLength(50)]
+        [Display(Name = "عنوان")]
         public string OrTitel { get; set; }
 
+        [Display(Name = "آدرس")]
         public string OrAdress { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
