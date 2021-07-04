@@ -20,155 +20,191 @@ namespace FireStation.Controllers
         // GET: Accident
         public ActionResult Index()
         {
-            if (Session["OnlineUser"] != null)
+            try
             {
-                if (Session["UserRole"].Equals("SUPERADMIN") || Session["UserRole"].Equals("ADMIN") || Session["UserRole"].Equals("SUBADMIN") || Session["UserRole"].Equals("OPRATOR"))
+                if (Session["OnlineUser"] != null)
                 {
-                    var tbl_Accident = db.tbl_Accident.Include(t => t.tbl_AccidentType).Include(t => t.tbl_Usage).Include(t => t.tbl_weather).Include(t => t.tbl_User);
-                    return View(tbl_Accident.Where(x => x.Isdelete == false).ToList());
+                    if (Session["UserRole"].Equals("SUPERADMIN") || Session["UserRole"].Equals("ADMIN") || Session["UserRole"].Equals("SUBADMIN") || Session["UserRole"].Equals("OPRATOR"))
+                    {
+                        var tbl_Accident = db.tbl_Accident.Include(t => t.tbl_AccidentType).Include(t => t.tbl_Usage).Include(t => t.tbl_weather).Include(t => t.tbl_User);
+                        return View(tbl_Accident.Where(x => x.Isdelete == false).ToList());
+                    }
+                    else
+                    {
+                        return RedirectToAction("Accessdenied", "Home");
+                    }
                 }
                 else
                 {
-                    return RedirectToAction("Accessdenied", "Home");
+                    return RedirectToAction("Login", "Account");
                 }
             }
-            else
+            catch (Exception ex)
             {
-                return RedirectToAction("Login", "Account");
+                ModelState.AddModelError(ex.Message, ex.InnerException.ToString());
+                return View();
             }
+
         }
         public ActionResult Reporthadece(int? id)
         {
-            if (Session["OnlineUser"] != null)
+            try
             {
-                if (Session["UserRole"].Equals("SUPERADMIN") || Session["UserRole"].Equals("ADMIN") || Session["UserRole"].Equals("SUBADMIN") || Session["UserRole"].Equals("OPRATOR"))
+                if (Session["OnlineUser"] != null)
                 {
-                    System.Globalization.PersianCalendar pc = new System.Globalization.PersianCalendar();
-                    string dateprint = string.Format("{0}/{1}/{2}", pc.GetYear(DateTime.Now), pc.GetMonth(DateTime.Now), pc.GetDayOfMonth(DateTime.Now));
-                    ViewBag.dateprint = dateprint;
-                    ViewBag.ACMA = (from i in db.tbl_AccidentM
-                                    where i.AccidentId == id
-                                    join ai in db.tbl_Accident on i.AccidentId equals ai.AccidentId
-                                    join f in db.tbl_Material on i.MaterialId equals f.MaterialId
-                                    orderby f.MaterialId
-                                    select new TaVM() { Name = f.MaterialName, Vahed = f.MaterialVahed, Te = i.tedad, Id = f.MaterialCode }).ToList();
-                    ViewBag.fireman = (from i in db.tbl_Employee
-                                       join ai in db.tbl_AccidentEmplyoee on i.EmployeeId equals ai.EmployeeId
-                                       join a in db.tbl_Accident on ai.AccidentId equals a.AccidentId
-                                       where ai.AccidentId == id
-                                       orderby a.AccidentId
-                                       select i).ToList();
-                    ViewBag.station = (from i in db.tbl_State
-                                       join ai in db.tbl_AccidentStation on i.StateId equals ai.StationId
-                                       join a in db.tbl_Accident on ai.AccidentId equals a.AccidentId
-                                       where ai.AccidentId == id
-                                       orderby a.AccidentId
-                                       select i).ToList();
+                    if (Session["UserRole"].Equals("SUPERADMIN") || Session["UserRole"].Equals("ADMIN") || Session["UserRole"].Equals("SUBADMIN") || Session["UserRole"].Equals("OPRATOR"))
+                    {
+                        System.Globalization.PersianCalendar pc = new System.Globalization.PersianCalendar();
+                        string dateprint = string.Format("{0}/{1}/{2}", pc.GetYear(DateTime.Now), pc.GetMonth(DateTime.Now), pc.GetDayOfMonth(DateTime.Now));
+                        ViewBag.dateprint = dateprint;
+                        ViewBag.ACMA = (from i in db.tbl_AccidentM
+                                        where i.AccidentId == id
+                                        join ai in db.tbl_Accident on i.AccidentId equals ai.AccidentId
+                                        join f in db.tbl_Material on i.MaterialId equals f.MaterialId
+                                        orderby f.MaterialId
+                                        select new TaVM() { Name = f.MaterialName, Vahed = f.MaterialVahed, Te = i.tedad, Id = f.MaterialCode }).ToList();
+                        ViewBag.fireman = (from i in db.tbl_Employee
+                                           join ai in db.tbl_AccidentEmplyoee on i.EmployeeId equals ai.EmployeeId
+                                           join a in db.tbl_Accident on ai.AccidentId equals a.AccidentId
+                                           where ai.AccidentId == id
+                                           orderby a.AccidentId
+                                           select i).ToList();
+                        ViewBag.station = (from i in db.tbl_State
+                                           join ai in db.tbl_AccidentStation on i.StateId equals ai.StationId
+                                           join a in db.tbl_Accident on ai.AccidentId equals a.AccidentId
+                                           where ai.AccidentId == id
+                                           orderby a.AccidentId
+                                           select i).ToList();
 
-                    var Ostate = db.tbl_AccidentStation.Where(x => x.AccidentId == id);
-                    foreach (var item in Ostate)
-                    {
-                        ViewBag.State = db.tbl_State.Where(x => x.StateId == item.StationId);
-                    }
+                        var Ostate = db.tbl_AccidentStation.Where(x => x.AccidentId == id);
+                        foreach (var item in Ostate)
+                        {
+                            ViewBag.State = db.tbl_State.Where(x => x.StateId == item.StationId);
+                        }
 
-                    if (id == null)
-                    {
-                        return RedirectToAction("Err", "Home", new { code = "E-3022", text = "هیچ حادثه ای انتخاب نشده است", url = Request.Url.Scheme });
+                        if (id == null)
+                        {
+                            return RedirectToAction("Err", "Home", new { code = "E-3022", text = "هیچ حادثه ای انتخاب نشده است", url = Request.Url.Scheme });
+                        }
+                        tbl_Accident tbl_Accident = db.tbl_Accident.Find(id);
+                        if (tbl_Accident == null)
+                        {
+                            return RedirectToAction("Err", "Home", new { code = "E-3022", text = "شناسه حادثه وارد شده معتبر نیست انتخاب نشده است", url = Request.Url.Scheme });
+                        }
+                        return View(tbl_Accident);
                     }
-                    tbl_Accident tbl_Accident = db.tbl_Accident.Find(id);
-                    if (tbl_Accident == null)
+                    else
                     {
-                        return RedirectToAction("Err", "Home", new { code = "E-3022", text = "شناسه حادثه وارد شده معتبر نیست انتخاب نشده است", url = Request.Url.Scheme });
+                        return RedirectToAction("Accessdenied", "Home");
                     }
-                    return View(tbl_Accident);
                 }
                 else
                 {
-                    return RedirectToAction("Accessdenied", "Home");
+                    return RedirectToAction("Login", "Account");
                 }
             }
-            else
+            catch (Exception ex)
             {
-                return RedirectToAction("Login", "Account");
+                ModelState.AddModelError(ex.Message, ex.InnerException.ToString());
+                return View();
             }
+
         }
 
         // GET: Accident/Details/5
         public ActionResult Details(int? id)
         {
-            if (Session["OnlineUser"] != null)
+            try
             {
-                if (Session["UserRole"].Equals("SUPERADMIN") || Session["UserRole"].Equals("ADMIN") || Session["UserRole"].Equals("SUBADMIN") || Session["UserRole"].Equals("OPRATOR"))
+                if (Session["OnlineUser"] != null)
                 {
-                    if (id == null)
+                    if (Session["UserRole"].Equals("SUPERADMIN") || Session["UserRole"].Equals("ADMIN") || Session["UserRole"].Equals("SUBADMIN") || Session["UserRole"].Equals("OPRATOR"))
                     {
-                        return RedirectToAction("Err", "Home", new { code = "E-3022", text = "هیچ حادثه ای انتخاب نشده است", url = Request.Url.Scheme });
+                        if (id == null)
+                        {
+                            return RedirectToAction("Err", "Home", new { code = "E-3022", text = "هیچ حادثه ای انتخاب نشده است", url = Request.Url.Scheme });
+                        }
+                        tbl_Accident tbl_Accident = db.tbl_Accident.Find(id);
+                        if (tbl_Accident == null)
+                        {
+                            return RedirectToAction("Err", "Home", new { code = "E-3022", text = "شناسه حادثه وارد شده معتبر نیست انتخاب نشده است", url = Request.Url.Scheme });
+                        }
+                        return View(tbl_Accident);
                     }
-                    tbl_Accident tbl_Accident = db.tbl_Accident.Find(id);
-                    if (tbl_Accident == null)
+                    else
                     {
-                        return RedirectToAction("Err", "Home", new { code = "E-3022", text = "شناسه حادثه وارد شده معتبر نیست انتخاب نشده است", url = Request.Url.Scheme });
+                        return RedirectToAction("Accessdenied", "Home");
                     }
-                    return View(tbl_Accident);
                 }
                 else
                 {
-                    return RedirectToAction("Accessdenied", "Home");
+                    return RedirectToAction("Login", "Account");
                 }
             }
-            else
+            catch (Exception ex)
             {
-                return RedirectToAction("Login", "Account");
+                ModelState.AddModelError(ex.Message, ex.InnerException.ToString());
+                return View();
             }
+
         }
         // GET: Accident/Create
         public ActionResult Create()
         {
-            if (Session["OnlineUser"] != null)
+            try
             {
-                if (Session["UserRole"].Equals("SUPERADMIN") || Session["UserRole"].Equals("ADMIN") || Session["UserRole"].Equals("SUBADMIN"))
+                if (Session["OnlineUser"] != null)
                 {
-                    ViewBag.AccidentTypeId = db.tbl_AccidentType.ToList();
-                    ViewBag.AccidentUsageId = db.tbl_Usage.ToList();
-                    ViewBag.AccidentWid = db.tbl_weather.ToList();
-                    ViewBag.AccidentUserId = db.tbl_User.ToList();
-                    ViewBag.OpState = db.tbl_State.ToList();
-                    ViewBag.Organization = db.tbl_Organizations.ToList();
-                    ViewBag.Emp = db.tbl_Employee.ToList();
-                    List<MaterialViewModel> materials = new List<MaterialViewModel>();
-                    foreach (var item in db.tbl_Material.ToList())
+                    if (Session["UserRole"].Equals("SUPERADMIN") || Session["UserRole"].Equals("ADMIN") || Session["UserRole"].Equals("SUBADMIN"))
                     {
-                        MaterialViewModel mat = new MaterialViewModel();
-                        mat.Id = item.MaterialId;
-                        mat.name = item.MaterialName;
-                        mat.code = item.MaterialCode;
-                        materials.Add(mat);
+                        ViewBag.AccidentTypeId = db.tbl_AccidentType.ToList();
+                        ViewBag.AccidentUsageId = db.tbl_Usage.ToList();
+                        ViewBag.AccidentWid = db.tbl_weather.ToList();
+                        ViewBag.AccidentUserId = db.tbl_User.ToList();
+                        ViewBag.OpState = db.tbl_State.ToList();
+                        ViewBag.Organization = db.tbl_Organizations.ToList();
+                        ViewBag.Emp = db.tbl_Employee.ToList();
+                        List<MaterialViewModel> materials = new List<MaterialViewModel>();
+                        foreach (var item in db.tbl_Material.ToList())
+                        {
+                            MaterialViewModel mat = new MaterialViewModel();
+                            mat.Id = item.MaterialId;
+                            mat.name = item.MaterialName;
+                            mat.code = item.MaterialCode;
+                            materials.Add(mat);
+                        }
+                        ViewBag.material = JsonConvert.SerializeObject(materials);
+                        ViewBag.Cause = db.tbl_Cause.ToList();
+                        #region id genrator
+                        int dateint;
+                        System.Globalization.PersianCalendar pc = new System.Globalization.PersianCalendar();
+                        dateint = Convert.ToInt32(pc.GetYear(DateTime.Now));
+                        int accident = db.tbl_Accident.Where(x => x.AccidentId.ToString().Substring(0, 4).Equals(dateint.ToString())).Count();
+                        int ra = Convert.ToInt32(string.Format("{0}{1}", dateint, accident + 1));
+                        while (db.tbl_Accident.FirstOrDefault(f => f.AccidentId == ra) != null)
+                        {
+                            ra++;
+                        }
+                        ViewBag.number = ra;
+                        #endregion id genrator
+                        return View();
                     }
-                    ViewBag.material = JsonConvert.SerializeObject(materials);
-                    ViewBag.Cause = db.tbl_Cause.ToList();
-                    #region id genrator
-                    int dateint;
-                    System.Globalization.PersianCalendar pc = new System.Globalization.PersianCalendar();
-                    dateint = Convert.ToInt32(pc.GetYear(DateTime.Now));
-                    int accident = db.tbl_Accident.Where(x => x.AccidentId.ToString().Substring(0, 4).Equals(dateint.ToString())).Count();
-                    int ra = Convert.ToInt32(string.Format("{0}{1}", dateint, accident + 1));
-                    while (db.tbl_Accident.FirstOrDefault(f => f.AccidentId == ra) != null)
+                    else
                     {
-                        ra++;
+                        return RedirectToAction("Accessdenied", "Home");
                     }
-                    ViewBag.number = ra;
-                    #endregion id genrator
-                    return View();
                 }
                 else
                 {
-                    return RedirectToAction("Accessdenied", "Home");
+                    return RedirectToAction("Login", "Account");
                 }
             }
-            else
+            catch (Exception ex)
             {
-                return RedirectToAction("Login", "Account");
+                ModelState.AddModelError(ex.Message, ex.InnerException.ToString());
+                return View();
             }
+
         }
         // POST: Accident/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
@@ -177,162 +213,245 @@ namespace FireStation.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "AccidentId,AccidentEventLocation,AccidentDescrption,AccidentTime,AccidentDate,AccidentReportUrl,AccidentWid,AccidentTypeId,AccidentZone,AccidentUserId,AccidentUsageId,AccidentTimeStartOperation,AccidentTimeEndOperation,AccidentTimeToClear,AccidentReporter,AccidentReportReciver,AccidentReportType,AccidentSiteFloors,AccidentBuildingType,AccidentBuildingOwner,AccidentBuildingTel,AccidentBuildingTenant,AccidentOtherType,AccidentPreliminaryMeasures,AccidentDescriptionOperation,AccidentDamageDescriptionO,AccidentDamageDescriptionL,AccidentReportProducer,AccidentOperationsCommander,DateAdd,AccidentOperationProblems,AccidentCause")] tbl_Accident tbl_Accident, HttpPostedFileBase[] pic, List<int> OperatingStation, List<int> Employee, List<int> Organisation, string[] InjuredName, string[] InjuredLastName, int[] InjuredSex, int[] InjuredType, int[] InjuredTypeinjury, string[] InjuredDescription, string[] InjuredLocation, int[] MaterialId, int[] tedad)
         {
-            Random rand = new Random();
-            int te, dateint;
-            if (ModelState.IsValid)
+            try
+            {
+                Random rand = new Random();
+                int te, dateint;
+                if (ModelState.IsValid)
+                {
+                    if (Session["OnlineUser"] != null)
+                    {
+                        if (Session["UserRole"].Equals("SUPERADMIN") || Session["UserRole"].Equals("ADMIN") || Session["UserRole"].Equals("SUBADMIN"))
+                        {
+
+                            System.Globalization.PersianCalendar pc = new System.Globalization.PersianCalendar();
+                            dateint = Convert.ToInt32(pc.GetYear(DateTime.Now));
+                            int accident = db.tbl_Accident.Where(x => x.AccidentId.ToString().Substring(0, 4).Equals(dateint.ToString())).Count();
+                            te = Convert.ToInt32(string.Format("{0}{1}", dateint, accident + 1));
+                            while (db.tbl_Accident.FirstOrDefault(f => f.AccidentId == te) != null)
+                            {
+                                te = Convert.ToInt32(string.Format("{0}{1}", dateint, accident + 1));
+                            }
+                            if (pic != null)
+                            {
+                                foreach (var item in pic)
+                                {
+                                    var Fi1 = Path.GetExtension(item.FileName);
+                                    var Ri1 = Path.Combine(Server.MapPath("~/Documents/Doc/"), string.Format("{0}{1}", te.ToString(), Fi1));
+                                    item.SaveAs(Ri1);
+                                    tbl_Accident.AccidentReportUrl = string.Format("Documents/Doc/{0}{1}", te.ToString(), Fi1);
+                                }
+                            }
+                            tbl_Accident.AccidentId = te;
+                            tbl_Accident.AccidentUserId = Convert.ToInt32(Session["OnlineUser"].ToString());
+                            tbl_Accident.DateAdd = DateTime.Now;
+                            tbl_Accident.Isdelete = false;
+                            db.tbl_Accident.Add(tbl_Accident);
+                            db.SaveChanges();
+                            int rs, re, rf;
+                            foreach (int item in OperatingStation)
+                            {
+                                tbl_AccidentStation oState = new tbl_AccidentStation();
+                                rs = rand.Next(111111, 999999);
+                                while (db.tbl_AccidentStation.FirstOrDefault(f => f.AccidentStationId == rs) != null)
+                                {
+                                    rs = rand.Next(111111, 999999);
+                                }
+                                oState.AccidentStationId = rs;
+                                oState.StationId = item;
+                                oState.AccidentId = te;
+                                db.tbl_AccidentStation.Add(oState);
+                                db.SaveChanges();
+                            }
+                            foreach (int item in Employee)
+                            {
+                                tbl_AccidentEmplyoee oEmployee = new tbl_AccidentEmplyoee();
+                                re = rand.Next(111111, 999999);
+                                while (db.tbl_AccidentEmplyoee.FirstOrDefault(f => f.AEId == re) != null)
+                                {
+                                    re = rand.Next(111111, 999999);
+                                }
+                                oEmployee.AEId = re;
+                                oEmployee.EmployeeId = item;
+                                oEmployee.AccidentId = te;
+                                db.tbl_AccidentEmplyoee.Add(oEmployee);
+                                db.SaveChanges();
+                            }
+                            foreach (int item in Organisation)
+                            {
+                                tbl_AccidentO dll = new tbl_AccidentO();
+                                rf = rand.Next(111111, 999999);
+                                while (db.tbl_AccidentO.FirstOrDefault(f => f.AccidentOid == rf) != null)
+                                {
+                                    rf = rand.Next(111111, 999999);
+                                }
+                                dll.AccidentOid = rf;
+                                dll.OrganizationsId = item;
+                                dll.AccidentId = te;
+                                db.tbl_AccidentO.Add(dll);
+                                db.SaveChanges();
+                            }
+
+                            for (int i = 0; i < InjuredName.Count(); i++)
+                            {
+                                tbl_Injured tbl_Injured = new tbl_Injured();
+                                Random rand2 = new Random();
+                                int random = 0;
+                                random = rand.Next(11111111, 99999999);
+                                while (db.tbl_Injured.FirstOrDefault(x => x.InjuredID == random) != null)
+                                {
+                                    random = rand.Next(11111111, 99999999);
+                                }
+                                tbl_Injured.InjuredID = random;
+                                tbl_Injured.InjuredName = InjuredName[i];
+                                tbl_Injured.InjuredLastName = InjuredLastName[i];
+                                tbl_Injured.InjuredDescription = InjuredDescription[i];
+                                tbl_Injured.InjuredLocation = InjuredLocation[i];
+                                //sex
+                                if (InjuredSex[i] == 1)
+                                {
+                                    tbl_Injured.InjuredSex = true;
+                                }
+                                else if (InjuredSex[i] == 0)
+                                {
+                                    tbl_Injured.InjuredSex = false;
+                                }
+                                //type
+                                if (InjuredType[i] == 1)
+                                {
+                                    tbl_Injured.InjuredType = true;
+                                }
+                                else if (InjuredType[i] == 0)
+                                {
+                                    tbl_Injured.InjuredType = false;
+                                }
+                                //masdoumiat
+                                if (InjuredTypeinjury[i] == 1)
+                                {
+                                    tbl_Injured.InjuredTypeinjury = true;
+                                }
+                                else if (InjuredTypeinjury[i] == 0)
+                                {
+                                    tbl_Injured.InjuredTypeinjury = false;
+                                }
+                                db.tbl_Injured.Add(tbl_Injured);
+                                tbl_AccidentInjured tbl_AccidentInjured = new tbl_AccidentInjured();
+                                Random rand1 = new Random();
+                                int random1 = 0;
+                                random1 = rand.Next(11111111, 99999999);
+                                while (db.tbl_AccidentInjured.FirstOrDefault(x => x.AccidentInjuredid == random1) != null)
+                                {
+                                    random1 = rand.Next(11111111, 99999999);
+                                }
+                                tbl_AccidentInjured.AccidentInjuredid = random1;
+                                tbl_AccidentInjured.AccidentId = te;
+                                tbl_AccidentInjured.InjuredId = random;
+                                db.tbl_AccidentInjured.Add(tbl_AccidentInjured);
+                                db.SaveChanges();
+                            }
+                            if (MaterialId != null)
+                            {
+                                for (int i = 0; i < MaterialId.Count(); i++)
+                                {
+                                    tbl_AccidentM tbl_AccidentM = new tbl_AccidentM();
+                                    Random rand1 = new Random();
+                                    int random1 = 0;
+                                    random1 = rand.Next(11111111, 99999999);
+                                    while (db.tbl_AccidentM.FirstOrDefault(x => x.AccidentMid == random1) != null)
+                                    {
+                                        random1 = rand.Next(11111111, 99999999);
+                                    }
+                                    tbl_AccidentM.AccidentMid = random1;
+                                    tbl_AccidentM.AccidentId = te;
+                                    tbl_AccidentM.MaterialId = MaterialId[i];
+                                    tbl_AccidentM.tedad = tedad[i];
+                                    db.tbl_AccidentM.Add(tbl_AccidentM);
+                                    db.SaveChanges();
+                                }
+                                return RedirectToAction("Index");
+                            }
+                            else
+                            {
+                                return RedirectToAction("Index");
+                            }
+                        }
+                        else
+                        {
+                            return RedirectToAction("Accessdenied", "Home");
+                        }
+                    }
+                    else
+                    {
+                        return RedirectToAction("Login", "Account");
+                    }
+                }
+                return View(tbl_Accident);
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError(ex.Message, ex.InnerException.ToString());
+                return View();
+            }
+
+        }
+        // GET: Accident/Edit/5
+        public ActionResult Edit(int? id)
+        {
+            try
             {
                 if (Session["OnlineUser"] != null)
                 {
                     if (Session["UserRole"].Equals("SUPERADMIN") || Session["UserRole"].Equals("ADMIN") || Session["UserRole"].Equals("SUBADMIN"))
                     {
-
-                        System.Globalization.PersianCalendar pc = new System.Globalization.PersianCalendar();
-                        dateint = Convert.ToInt32(pc.GetYear(DateTime.Now));
-                        int accident = db.tbl_Accident.Where(x => x.AccidentId.ToString().Substring(0, 4).Equals(dateint.ToString())).Count();
-                        te = Convert.ToInt32(string.Format("{0}{1}", dateint, accident + 1));
-                        while (db.tbl_Accident.FirstOrDefault(f => f.AccidentId == te) != null)
+                        if (id == null)
                         {
-                            te = Convert.ToInt32(string.Format("{0}{1}", dateint, accident + 1));
+                            return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                         }
-                        if (pic != null)
+                        tbl_Accident tbl_Accident = db.tbl_Accident.Find(id);
+                        if (tbl_Accident == null)
                         {
-                            var Fi1 = Path.GetExtension(pic.FileName);
-                            var Ri1 = Path.Combine(Server.MapPath("~/Documents/Doc/"), string.Format("{0}{1}", te.ToString(), Fi1));
-                            pic.SaveAs(Ri1);
-                            tbl_Accident.AccidentReportUrl = string.Format("Documents/Doc/{0}{1}", te.ToString(), Fi1);
+                            return HttpNotFound();
                         }
-                        tbl_Accident.AccidentId = te;
-                        tbl_Accident.AccidentUserId = Convert.ToInt32(Session["OnlineUser"].ToString());
-                        tbl_Accident.DateAdd = DateTime.Now;
-                        tbl_Accident.Isdelete = false;
-                        db.tbl_Accident.Add(tbl_Accident);
-                        db.SaveChanges();
-                        int rs, re, rf;
-                        foreach (int item in OperatingStation)
-                        {
-                            tbl_AccidentStation oState = new tbl_AccidentStation();
-                            rs = rand.Next(111111, 999999);
-                            while (db.tbl_AccidentStation.FirstOrDefault(f => f.AccidentStationId == rs) != null)
-                            {
-                                rs = rand.Next(111111, 999999);
-                            }
-                            oState.AccidentStationId = rs;
-                            oState.StationId = item;
-                            oState.AccidentId = te;
-                            db.tbl_AccidentStation.Add(oState);
-                            db.SaveChanges();
-                        }
-                        foreach (int item in Employee)
-                        {
-                            tbl_AccidentEmplyoee oEmployee = new tbl_AccidentEmplyoee();
-                            re = rand.Next(111111, 999999);
-                            while (db.tbl_AccidentEmplyoee.FirstOrDefault(f => f.AEId == re) != null)
-                            {
-                                re = rand.Next(111111, 999999);
-                            }
-                            oEmployee.AEId = re;
-                            oEmployee.EmployeeId = item;
-                            oEmployee.AccidentId = te;
-                            db.tbl_AccidentEmplyoee.Add(oEmployee);
-                            db.SaveChanges();
-                        }
-                        foreach (int item in Organisation)
-                        {
-                            tbl_AccidentO dll = new tbl_AccidentO();
-                            rf = rand.Next(111111, 999999);
-                            while (db.tbl_AccidentO.FirstOrDefault(f => f.AccidentOid == rf) != null)
-                            {
-                                rf = rand.Next(111111, 999999);
-                            }
-                            dll.AccidentOid = rf;
-                            dll.OrganizationsId = item;
-                            dll.AccidentId = te;
-                            db.tbl_AccidentO.Add(dll);
-                            db.SaveChanges();
-                        }
-
-                        for (int i = 0; i < InjuredName.Count(); i++)
-                        {
-                            tbl_Injured tbl_Injured = new tbl_Injured();
-                            Random rand2 = new Random();
-                            int random = 0;
-                            random = rand.Next(11111111, 99999999);
-                            while (db.tbl_Injured.FirstOrDefault(x => x.InjuredID == random) != null)
-                            {
-                                random = rand.Next(11111111, 99999999);
-                            }
-                            tbl_Injured.InjuredID = random;
-                            tbl_Injured.InjuredName = InjuredName[i];
-                            tbl_Injured.InjuredLastName = InjuredLastName[i];
-                            tbl_Injured.InjuredDescription = InjuredDescription[i];
-                            tbl_Injured.InjuredLocation = InjuredLocation[i];
-                            //sex
-                            if (InjuredSex[i] == 1)
-                            {
-                                tbl_Injured.InjuredSex = true;
-                            }
-                            else if (InjuredSex[i] == 0)
-                            {
-                                tbl_Injured.InjuredSex = false;
-                            }
-                            //type
-                            if (InjuredType[i] == 1)
-                            {
-                                tbl_Injured.InjuredType = true;
-                            }
-                            else if (InjuredType[i] == 0)
-                            {
-                                tbl_Injured.InjuredType = false;
-                            }
-                            //masdoumiat
-                            if (InjuredTypeinjury[i] == 1)
-                            {
-                                tbl_Injured.InjuredTypeinjury = true;
-                            }
-                            else if (InjuredTypeinjury[i] == 0)
-                            {
-                                tbl_Injured.InjuredTypeinjury = false;
-                            }
-                            db.tbl_Injured.Add(tbl_Injured);
-                            tbl_AccidentInjured tbl_AccidentInjured = new tbl_AccidentInjured();
-                            Random rand1 = new Random();
-                            int random1 = 0;
-                            random1 = rand.Next(11111111, 99999999);
-                            while (db.tbl_AccidentInjured.FirstOrDefault(x => x.AccidentInjuredid == random1) != null)
-                            {
-                                random1 = rand.Next(11111111, 99999999);
-                            }
-                            tbl_AccidentInjured.AccidentInjuredid = random1;
-                            tbl_AccidentInjured.AccidentId = te;
-                            tbl_AccidentInjured.InjuredId = random;
-                            db.tbl_AccidentInjured.Add(tbl_AccidentInjured);
-                            db.SaveChanges();
-                        }
-                        if (MaterialId != null)
-                        {
-                            for (int i = 0; i < MaterialId.Count(); i++)
-                            {
-                                tbl_AccidentM tbl_AccidentM = new tbl_AccidentM();
-                                Random rand1 = new Random();
-                                int random1 = 0;
-                                random1 = rand.Next(11111111, 99999999);
-                                while (db.tbl_AccidentM.FirstOrDefault(x => x.AccidentMid == random1) != null)
-                                {
-                                    random1 = rand.Next(11111111, 99999999);
-                                }
-                                tbl_AccidentM.AccidentMid = random1;
-                                tbl_AccidentM.AccidentId = te;
-                                tbl_AccidentM.MaterialId = MaterialId[i];
-                                tbl_AccidentM.tedad = tedad[i];
-                                db.tbl_AccidentM.Add(tbl_AccidentM);
-                                db.SaveChanges();
-                            }
-                            return RedirectToAction("Index");
-                        }
-                        else
-                        {
-                            return RedirectToAction("Index");
-                        }
+                        ViewBag.ACIN = (from i in db.tbl_Injured
+                                        join ai in db.tbl_AccidentInjured on i.InjuredID equals ai.InjuredId
+                                        join a in db.tbl_Accident on ai.AccidentId equals a.AccidentId
+                                        where ai.AccidentId == id
+                                        orderby a.AccidentId
+                                        select i).ToList();
+                        ViewBag.ACMA = (from i in db.tbl_Material
+                                        join ai in db.tbl_AccidentM on i.MaterialId equals ai.MaterialId
+                                        join a in db.tbl_Accident on ai.AccidentId equals a.AccidentId
+                                        where ai.AccidentId == id
+                                        orderby a.AccidentId
+                                        select i).ToList();
+                        ViewBag.fireman = (from i in db.tbl_Employee
+                                           join ai in db.tbl_AccidentEmplyoee on i.EmployeeId equals ai.EmployeeId
+                                           join a in db.tbl_Accident on ai.AccidentId equals a.AccidentId
+                                           where ai.AccidentId == id
+                                           orderby a.AccidentId
+                                           select i).ToList();
+                        ViewBag.station = (from i in db.tbl_State
+                                           join ai in db.tbl_AccidentStation on i.StateId equals ai.StationId
+                                           join a in db.tbl_Accident on ai.AccidentId equals a.AccidentId
+                                           where ai.AccidentId == id
+                                           orderby a.AccidentId
+                                           select i).ToList();
+                        ViewBag.Organization = (from i in db.tbl_Organizations
+                                                join ai in db.tbl_AccidentO on i.OrId equals ai.OrganizationsId
+                                                join a in db.tbl_Accident on ai.AccidentId equals a.AccidentId
+                                                where ai.AccidentId == id
+                                                orderby a.AccidentId
+                                                select i).ToList();
+                        ViewBag.AccidentTypeId = db.tbl_AccidentType.ToList();
+                        ViewBag.AccidentUsageId = db.tbl_Usage.ToList();
+                        ViewBag.AccidentWid = db.tbl_weather.ToList();
+                        ViewBag.AccidentUserId = db.tbl_User.ToList();
+                        ViewBag.OpState = db.tbl_State.ToList();
+                        ViewBag.Organization = db.tbl_Organizations.ToList();
+                        ViewBag.Emp = db.tbl_Employee.ToList();
+                        ViewBag.material = db.tbl_Material.ToList();
+                        ViewBag.Cause = db.tbl_Cause.ToList();
+                        return View(tbl_Accident);
                     }
                     else
                     {
@@ -344,74 +463,12 @@ namespace FireStation.Controllers
                     return RedirectToAction("Login", "Account");
                 }
             }
-            return View(tbl_Accident);
-        }
-        // GET: Accident/Edit/5
-        public ActionResult Edit(int? id)
-        {
-            if (Session["OnlineUser"] != null)
+            catch (Exception ex)
             {
-                if (Session["UserRole"].Equals("SUPERADMIN") || Session["UserRole"].Equals("ADMIN") || Session["UserRole"].Equals("SUBADMIN"))
-                {
-                    if (id == null)
-                    {
-                        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-                    }
-                    tbl_Accident tbl_Accident = db.tbl_Accident.Find(id);
-                    if (tbl_Accident == null)
-                    {
-                        return HttpNotFound();
-                    }
-                    ViewBag.ACIN = (from i in db.tbl_Injured
-                                    join ai in db.tbl_AccidentInjured on i.InjuredID equals ai.InjuredId
-                                    join a in db.tbl_Accident on ai.AccidentId equals a.AccidentId
-                                    where ai.AccidentId == id
-                                    orderby a.AccidentId
-                                    select i).ToList();
-                    ViewBag.ACMA = (from i in db.tbl_Material
-                                    join ai in db.tbl_AccidentM on i.MaterialId equals ai.MaterialId
-                                    join a in db.tbl_Accident on ai.AccidentId equals a.AccidentId
-                                    where ai.AccidentId == id
-                                    orderby a.AccidentId
-                                    select i).ToList();
-                    ViewBag.fireman = (from i in db.tbl_Employee
-                                       join ai in db.tbl_AccidentEmplyoee on i.EmployeeId equals ai.EmployeeId
-                                       join a in db.tbl_Accident on ai.AccidentId equals a.AccidentId
-                                       where ai.AccidentId == id
-                                       orderby a.AccidentId
-                                       select i).ToList();
-                    ViewBag.station = (from i in db.tbl_State
-                                       join ai in db.tbl_AccidentStation on i.StateId equals ai.StationId
-                                       join a in db.tbl_Accident on ai.AccidentId equals a.AccidentId
-                                       where ai.AccidentId == id
-                                       orderby a.AccidentId
-                                       select i).ToList();
-                    ViewBag.Organization = (from i in db.tbl_Organizations
-                                            join ai in db.tbl_AccidentO on i.OrId equals ai.OrganizationsId
-                                            join a in db.tbl_Accident on ai.AccidentId equals a.AccidentId
-                                            where ai.AccidentId == id
-                                            orderby a.AccidentId
-                                            select i).ToList();
-                    ViewBag.AccidentTypeId = db.tbl_AccidentType.ToList();
-                    ViewBag.AccidentUsageId = db.tbl_Usage.ToList();
-                    ViewBag.AccidentWid = db.tbl_weather.ToList();
-                    ViewBag.AccidentUserId = db.tbl_User.ToList();
-                    ViewBag.OpState = db.tbl_State.ToList();
-                    ViewBag.Organization = db.tbl_Organizations.ToList();
-                    ViewBag.Emp = db.tbl_Employee.ToList();
-                    ViewBag.material = db.tbl_Material.ToList();
-                    ViewBag.Cause = db.tbl_Cause.ToList();
-                    return View(tbl_Accident);
-                }
-                else
-                {
-                    return RedirectToAction("Accessdenied", "Home");
-                }
+                ModelState.AddModelError(ex.Message, ex.InnerException.ToString());
+                return View();
             }
-            else
-            {
-                return RedirectToAction("Login", "Account");
-            }
+
         }
 
         // POST: Accident/Edit/5
@@ -419,39 +476,48 @@ namespace FireStation.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "AccidentId,AccidentEventLocation,AccidentDescrption,AccidentTime,AccidentDate,AccidentReportUrl,AccidentWid,AccidentTypeId,AccidentZone,AccidentUserId,AccidentUsageId,AccidentTimeStartOperation,AccidentTimeEndOperation,AccidentTimeToClear,AccidentReporter,AccidentReportReciver,AccidentReportType,AccidentSiteFloors,AccidentBuildingType,AccidentBuildingOwner,AccidentBuildingTel,AccidentBuildingTenant,AccidentOtherType,AccidentPreliminaryMeasures,AccidentDescriptionOperation,AccidentDamageDescriptionO,AccidentDamageDescriptionL,AccidentReportProducer,AccidentOperationsCommander,DateAdd,AccidentOperationProblems,AccidentCause")] tbl_Accident tbl_Accident, HttpPostedFileBase pic, int[] OperatingStation, int injured)
+        public ActionResult Edit([Bind(Include = "AccidentId,AccidentEventLocation,AccidentDescrption,AccidentTime,AccidentDate,AccidentReportUrl,AccidentWid,AccidentTypeId,AccidentZone,AccidentUserId,AccidentUsageId,AccidentTimeStartOperation,AccidentTimeEndOperation,AccidentTimeToClear,AccidentReporter,AccidentReportReciver,AccidentReportType,AccidentSiteFloors,AccidentBuildingType,AccidentBuildingOwner,AccidentBuildingTel,AccidentBuildingTenant,AccidentOtherType,AccidentPreliminaryMeasures,AccidentDescriptionOperation,AccidentDamageDescriptionO,AccidentDamageDescriptionL,AccidentReportProducer,AccidentOperationsCommander,DateAdd,AccidentOperationProblems,AccidentCause")] tbl_Accident tbl_Accident, HttpPostedFileBase pic, int[] OperatingStation)
         {
-            if (ModelState.IsValid)
+            try
             {
-                if (Session["OnlineUser"] != null)
+                if (ModelState.IsValid)
                 {
-                    if (Session["UserRole"].Equals("SUPERADMIN") || Session["UserRole"].Equals("ADMIN") || Session["UserRole"].Equals("SUBADMIN"))
+                    if (Session["OnlineUser"] != null)
                     {
-                        db.Entry(tbl_Accident).State = EntityState.Modified;
-                        db.SaveChanges();
-                        return RedirectToAction("Index");
+                        if (Session["UserRole"].Equals("SUPERADMIN") || Session["UserRole"].Equals("ADMIN") || Session["UserRole"].Equals("SUBADMIN"))
+                        {
+                            db.Entry(tbl_Accident).State = EntityState.Modified;
+                            db.SaveChanges();
+                            return RedirectToAction("Index");
+                        }
+                        else
+                        {
+                            return RedirectToAction("Accessdenied", "Home");
+                        }
                     }
                     else
                     {
-                        return RedirectToAction("Accessdenied", "Home");
+                        return RedirectToAction("Login", "Account");
                     }
                 }
-                else
-                {
-                    return RedirectToAction("Login", "Account");
-                }
-            }
-            ViewBag.AccidentTypeId = db.tbl_AccidentType.ToList();
-            ViewBag.AccidentUsageId = db.tbl_Usage.ToList();
-            ViewBag.AccidentWid = db.tbl_weather.ToList();
-            ViewBag.AccidentUserId = db.tbl_User.ToList();
-            ViewBag.OpState = db.tbl_State.ToList();
-            ViewBag.Organization = db.tbl_Organizations.ToList();
-            ViewBag.Emp = db.tbl_Employee.ToList();
-            ViewBag.material = db.tbl_Material.ToList();
-            ViewBag.Cause = db.tbl_Cause.ToList();
+                ViewBag.AccidentTypeId = db.tbl_AccidentType.ToList();
+                ViewBag.AccidentUsageId = db.tbl_Usage.ToList();
+                ViewBag.AccidentWid = db.tbl_weather.ToList();
+                ViewBag.AccidentUserId = db.tbl_User.ToList();
+                ViewBag.OpState = db.tbl_State.ToList();
+                ViewBag.Organization = db.tbl_Organizations.ToList();
+                ViewBag.Emp = db.tbl_Employee.ToList();
+                ViewBag.material = db.tbl_Material.ToList();
+                ViewBag.Cause = db.tbl_Cause.ToList();
 
-            return View(tbl_Accident);
+                return View(tbl_Accident);
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError(ex.Message, ex.InnerException.ToString());
+                return View();
+            }
+
         }
 
         // GET: Accident/Delete/5

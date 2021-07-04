@@ -21,59 +21,77 @@ namespace FireStation.Controllers
         [HttpPost]
         public ActionResult Login(LoginViewModel model)
         {
-            if (ModelState.IsValid)
+            try
             {
-                Context _context = new Context();
-                List<tbl_User> _user = _context.tbl_User.ToList();
-                foreach (var item in _user)
+                if (ModelState.IsValid)
                 {
-                    //hashPassword.Equals(item.WHU4)
-                    //string hashPassword = new Functions().CreateHashPass(model.Password);
-                    if (item.UserUserName.Contains(model.UserName) && item.UserPassword.Contains(model.Password))
+                    Context _context = new Context();
+                    List<tbl_User> _user = _context.tbl_User.ToList();
+                    foreach (var item in _user)
                     {
-                        var user = _context.tbl_User.Single(u => u.UserUserName == model.UserName && u.UserPassword == model.Password);
-                        if (user != null)
+                        //hashPassword.Equals(item.WHU4)
+                        //string hashPassword = new Functions().CreateHashPass(model.Password);
+                        if (item.UserUserName.Contains(model.UserName) && item.UserPassword.Contains(model.Password))
                         {
-                            Session["OnlineUser"] = user.UserId.ToString();
-                            Session["UserName"] = user.UserUserName.ToString();
-                            Session["UserRole"] = user.UserRole.ToString();
-                            Session["nafa"] = string.Format("{0} {1}", user.tbl_Employee.EmployeeName, user.tbl_Employee.EmployeeLastName);
-                            Session["Pic"] = user.tbl_Employee.EmployeePicUrl;
-                            return RedirectToAction("Index", "Home");
+                            var user = _context.tbl_User.Single(u => u.UserUserName == model.UserName && u.UserPassword == model.Password);
+                            if (user != null)
+                            {
+                                Session["OnlineUser"] = user.UserId.ToString();
+                                Session["UserName"] = user.UserUserName.ToString();
+                                Session["UserRole"] = user.UserRole.ToString();
+                                Session["nafa"] = string.Format("{0} {1}", user.tbl_Employee.EmployeeName, user.tbl_Employee.EmployeeLastName);
+                                Session["Pic"] = user.tbl_Employee.EmployeePicUrl;
+                                return RedirectToAction("Index", "Home");
+                            }
+                            else
+                            {
+                                ModelState.AddModelError("", "نام کاربری یا کلمه عبور وارد شده صحیح نیست");
+                            }
                         }
                         else
                         {
-                            ModelState.AddModelError("", "نام کاربری یا کلمه عبور وارد شده صحیح نیست");
+                            ModelState.AddModelError("", "نام کاربری یا کلمه عبور وارد شده وجود ندارد");
                         }
                     }
-                    else
-                    {
-                        ModelState.AddModelError("", "نام کاربری یا کلمه عبور وارد شده وجود ندارد");
-                    }
-                }
 
+                }
+                return View(model);
             }
-            return View(model);
+            catch (Exception ex)
+            {
+                ModelState.AddModelError(ex.Message, ex.InnerException.ToString());
+                return View();
+            }
+
         }
         public ActionResult AdminPannel()
         {
-            if (Session["OnlineUser"] != null)
+            try
             {
-                if (Session["UserRole"].Equals("SUPERADMIN") || Session["UserRole"].Equals("ADMIN"))
+                if (Session["OnlineUser"] != null)
                 {
-                    ViewBag.back = db.tbl_Accident.ToList();
-                    return View();
+                    if (Session["UserRole"].Equals("SUPERADMIN") || Session["UserRole"].Equals("ADMIN"))
+                    {
+                        ViewBag.back = db.tbl_Accident.ToList();
+                        return View();
+                    }
+                    else
+                    {
+                        return RedirectToAction("Accessdenied");
+
+                    }
                 }
                 else
                 {
-                    return RedirectToAction("Accessdenied");
-
+                    return RedirectToAction("Login");
                 }
             }
-            else
+            catch (Exception ex)
             {
-                return RedirectToAction("Login");
+                ModelState.AddModelError(ex.Message, ex.InnerException.ToString());
+                return View();
             }
+
         }
         public ActionResult Logout()
         {

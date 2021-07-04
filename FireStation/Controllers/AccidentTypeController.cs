@@ -17,66 +17,16 @@ namespace FireStation.Controllers
         // GET: AccidentType
         public ActionResult Index()
         {
-            if (Session["OnlineUser"] != null)
-            {
-                if (Session["UserRole"].Equals("SUPERADMIN"))
-                {
-                    return View(db.tbl_AccidentType.ToList());
-                }
-                else
-                {
-                    return RedirectToAction("Accessdenied", "Home");
-                }
-            }
-            else
-            {
-                return RedirectToAction("Login", "Account");
-            }
-        }
-        //GET:AccidentType/Create
-        public ActionResult Create()
-        {
-            if (Session["OnlineUser"] != null)
-            {
-                if (Session["UserRole"].Equals("SUPERADMIN"))
-                {
-                    return View();
-                }
-                else
-                {
-                    return RedirectToAction("Accessdenied", "Home");
-                }
-            }
-            else
-            {
-                return RedirectToAction("Login", "Account");
-            }
-        }
-        [HttpPost]
-        public ActionResult Create([Bind(Include = "AccidentTypeId,AccidentTypeTitel")] tbl_AccidentType tbl_AccidentType)
-        {
-            int itemid = 0;
-            if (ModelState.IsValid)
+            try
             {
                 if (Session["OnlineUser"] != null)
                 {
                     if (Session["UserRole"].Equals("SUPERADMIN"))
                     {
-                        Random ra = new Random();
-                        itemid = ra.Next(1000, 9999);
-                        while (db.tbl_AccidentType.FirstOrDefault(x => x.AccidentTypeId == itemid) != null)
-                        {
-                            itemid = ra.Next(1000, 9999);
-                        }
-                        tbl_AccidentType.AccidentTypeId = itemid;
-                        db.tbl_AccidentType.Add(tbl_AccidentType);
-                        db.SaveChanges();
-                        return RedirectToAction("Index");
-
+                        return View(db.tbl_AccidentType.ToList());
                     }
                     else
                     {
-
                         return RedirectToAction("Accessdenied", "Home");
                     }
                 }
@@ -85,64 +35,156 @@ namespace FireStation.Controllers
                     return RedirectToAction("Login", "Account");
                 }
             }
-            return View(tbl_AccidentType);
+            catch (Exception ex)
+            {
+                ModelState.AddModelError(ex.Message, ex.InnerException.ToString());
+                return View();
+            }
+
+        }
+        //GET:AccidentType/Create
+        public ActionResult Create()
+        {
+            try
+            {
+                if (Session["OnlineUser"] != null)
+                {
+                    if (Session["UserRole"].Equals("SUPERADMIN"))
+                    {
+                        return View();
+                    }
+                    else
+                    {
+                        return RedirectToAction("Accessdenied", "Home");
+                    }
+                }
+                else
+                {
+                    return RedirectToAction("Login", "Account");
+                }
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError(ex.Message, ex.InnerException.ToString());
+                return View();
+            }
+
+        }
+        [HttpPost]
+        public ActionResult Create([Bind(Include = "AccidentTypeId,AccidentTypeTitel")] tbl_AccidentType tbl_AccidentType)
+        {
+            try
+            {
+                int itemid = 0;
+                if (ModelState.IsValid)
+                {
+                    if (Session["OnlineUser"] != null)
+                    {
+                        if (Session["UserRole"].Equals("SUPERADMIN"))
+                        {
+                            Random ra = new Random();
+                            itemid = ra.Next(1000, 9999);
+                            while (db.tbl_AccidentType.FirstOrDefault(x => x.AccidentTypeId == itemid) != null)
+                            {
+                                itemid = ra.Next(1000, 9999);
+                            }
+                            tbl_AccidentType.AccidentTypeId = itemid;
+                            db.tbl_AccidentType.Add(tbl_AccidentType);
+                            db.SaveChanges();
+                            return RedirectToAction("Index");
+                        }
+                        else
+                        {
+                            return RedirectToAction("Accessdenied", "Home");
+                        }
+                    }
+                    else
+                    {
+                        return RedirectToAction("Login", "Account");
+                    }
+                }
+                return View(tbl_AccidentType);
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError(ex.Message, ex.InnerException.ToString());
+                return View();
+            }
+
         }
         // GET: AccidentType/Details/5
         public ActionResult Details(int? id)
         {
-            if (Session["OnlineUser"] != null)
+            try
             {
-                if (Session["UserRole"].Equals("SUPERADMIN"))
+                if (Session["OnlineUser"] != null)
                 {
-                    if (id == null)
+                    if (Session["UserRole"].Equals("SUPERADMIN"))
                     {
-                        return RedirectToAction("Err", "Home", new { code = "E-3022", text = "هیچ حادثه ای انتخاب نشده است", url = Request.Url.Scheme });
+                        if (id == null)
+                        {
+                            return RedirectToAction("Err", "Home", new { code = "E-3022", text = "هیچ حادثه ای انتخاب نشده است", url = Request.Url.Scheme });
+                        }
+                        tbl_Accident tbl_Accident = db.tbl_Accident.Find(id);
+                        if (tbl_Accident == null)
+                        {
+                            return RedirectToAction("Err", "Home", new { code = "E-3022", text = "شناسه حادثه وارد شده معتبر نیست انتخاب نشده است", url = Request.Url.Scheme });
+                        }
+                        return View(tbl_Accident);
                     }
-                    tbl_Accident tbl_Accident = db.tbl_Accident.Find(id);
-                    if (tbl_Accident == null)
+                    else
                     {
-                        return RedirectToAction("Err", "Home", new { code = "E-3022", text = "شناسه حادثه وارد شده معتبر نیست انتخاب نشده است", url = Request.Url.Scheme });
+                        return RedirectToAction("Accessdenied", "Home");
                     }
-                    return View(tbl_Accident);
                 }
                 else
                 {
-                    return RedirectToAction("Accessdenied", "Home");
+                    return RedirectToAction("Login", "Account");
                 }
             }
-            else
+            catch (Exception ex)
             {
-                return RedirectToAction("Login", "Account");
+                ModelState.AddModelError(ex.Message, ex.InnerException.ToString());
+                return View();
             }
+
         }
         // GET: AccidentType/Edit/5
         public ActionResult Edit(int? id)
         {
-
-            if (Session["OnlineUser"] != null)
+            try
             {
-                if (Session["UserRole"].Equals("SUPERADMIN"))
+                if (Session["OnlineUser"] != null)
                 {
-                    if (id == null)
+                    if (Session["UserRole"].Equals("SUPERADMIN"))
                     {
-                        return RedirectToAction("Err", "Home", new { code = "E-1133", text = "هیچ نوع داده ای انتخاب نشده است", url = string.Format("{0}/", RouteData.Values["controller"].ToString()) });
+                        if (id == null)
+                        {
+                            return RedirectToAction("Err", "Home", new { code = "E-1133", text = "هیچ نوع داده ای انتخاب نشده است", url = string.Format("{0}/", RouteData.Values["controller"].ToString()) });
+                        }
+                        tbl_AccidentType tbl_AccidentType = db.tbl_AccidentType.Find(id);
+                        if (tbl_AccidentType == null)
+                        {
+                            return RedirectToAction("Err", "Home", new { code = "E-1133", text = "هیچ داده ای باشماره مورد نظر وجود ندارد", url = string.Format("{0}/", RouteData.Values["controller"].ToString()) });
+                        }
+                        return View(tbl_AccidentType);
                     }
-                    tbl_AccidentType tbl_AccidentType = db.tbl_AccidentType.Find(id);
-                    if (tbl_AccidentType == null)
+                    else
                     {
-                        return RedirectToAction("Err", "Home", new { code = "E-1133", text = "هیچ داده ای باشماره مورد نظر وجود ندارد", url = string.Format("{0}/", RouteData.Values["controller"].ToString()) });
+                        return RedirectToAction("Accessdenied", "Home");
                     }
-                    return View(tbl_AccidentType);
                 }
                 else
                 {
-                    return RedirectToAction("Accessdenied", "Home");
+                    return RedirectToAction("Login", "Account");
                 }
             }
-            else
+            catch (Exception ex)
             {
-                return RedirectToAction("Login", "Account");
+                ModelState.AddModelError(ex.Message, ex.InnerException.ToString());
+                return View();
             }
+
         }
 
         // POST: AccidentType/Edit/5
@@ -152,19 +194,60 @@ namespace FireStation.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "AccidentTypeId,AccidentTypeTitel")] tbl_AccidentType tbl_AccidentType)
         {
-            if (ModelState.IsValid)
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    if (Session["OnlineUser"] != null)
+                    {
+                        if (Session["UserRole"].Equals("SUPERADMIN"))
+                        {
+                            db.Entry(tbl_AccidentType).State = EntityState.Modified;
+                            db.SaveChanges();
+                            return RedirectToAction("Index");
+                        }
+                        else
+                        {
+
+                            return RedirectToAction("Accessdenied", "Home");
+                        }
+                    }
+                    else
+                    {
+                        return RedirectToAction("Login", "Account");
+                    }
+                }
+                return View(tbl_AccidentType);
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError(ex.Message, ex.InnerException.ToString());
+                return View();
+            }
+        }
+
+        // GET: AccidentType/Delete/5
+        public ActionResult Delete(int? id)
+        {
+            try
             {
                 if (Session["OnlineUser"] != null)
                 {
                     if (Session["UserRole"].Equals("SUPERADMIN"))
                     {
-                        db.Entry(tbl_AccidentType).State = EntityState.Modified;
-                        db.SaveChanges();
-                        return RedirectToAction("Index");
+                        if (id == null)
+                        {
+                            return RedirectToAction("Err", "Home", new { code = "E-1133", text = "هیچ نوع حادثه ای انتخاب نشده است", url = string.Format("{0}/", RouteData.Values["controller"].ToString()) });
+                        }
+                        tbl_AccidentType tbl_AccidentType = db.tbl_AccidentType.Find(id);
+                        if (tbl_AccidentType == null)
+                        {
+                            return RedirectToAction("Err", "Home", new { code = "E-1133", text = "هیچ حادثه ای باشماره مورد نظر وجود ندارد", url = string.Format("{0}/", RouteData.Values["controller"].ToString()) });
+                        }
+                        return View(tbl_AccidentType);
                     }
                     else
                     {
-
                         return RedirectToAction("Accessdenied", "Home");
                     }
                 }
@@ -173,36 +256,12 @@ namespace FireStation.Controllers
                     return RedirectToAction("Login", "Account");
                 }
             }
-            return View(tbl_AccidentType);
-        }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError(ex.Message, ex.InnerException.ToString());
+                return View();
+            }
 
-        // GET: AccidentType/Delete/5
-        public ActionResult Delete(int? id)
-        {
-            if (Session["OnlineUser"] != null)
-            {
-                if (Session["UserRole"].Equals("SUPERADMIN"))
-                {
-                    if (id == null)
-                    {
-                        return RedirectToAction("Err", "Home", new { code = "E-1133", text = "هیچ نوع حادثه ای انتخاب نشده است", url = string.Format("{0}/", RouteData.Values["controller"].ToString()) });
-                    }
-                    tbl_AccidentType tbl_AccidentType = db.tbl_AccidentType.Find(id);
-                    if (tbl_AccidentType == null)
-                    {
-                        return RedirectToAction("Err", "Home", new { code = "E-1133", text = "هیچ حادثه ای باشماره مورد نظر وجود ندارد", url = string.Format("{0}/", RouteData.Values["controller"].ToString()) });
-                    }
-                    return View(tbl_AccidentType);
-                }
-                else
-                {
-                    return RedirectToAction("Accessdenied", "Home");
-                }
-            }
-            else
-            {
-                return RedirectToAction("Login", "Account");
-            }
         }
 
         // POST: AccidentType/Delete/5
@@ -217,10 +276,10 @@ namespace FireStation.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return RedirectToAction("Err", "Home", new { code = "E-1133", text = "ارور بررسی نشده", url = string.Format("{0}/", RouteData.Values["controller"].ToString()) });
-                throw;
+                ModelState.AddModelError(ex.Message, ex.InnerException.ToString());
+                return View();
             }
 
         }

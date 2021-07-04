@@ -18,78 +18,105 @@ namespace FireStation.Controllers
         // GET: Employee
         public ActionResult Index()
         {
-            if (Session["OnlineUser"] != null)
+            try
             {
-                if (Session["UserRole"].Equals("SUPERADMIN") || Session["UserRole"].Equals("SUBADMIN"))
+                if (Session["OnlineUser"] != null)
                 {
-                    ViewBag.OnlineUser = Session["UserName"].ToString();
-                    ViewBag.OnlineUserRole = Session["UserRole"].ToString();
-                    var tbl_Employee = db.tbl_Employee.Include(t => t.tbl_State);
-                    return View(tbl_Employee.ToList());
+                    if (Session["UserRole"].Equals("SUPERADMIN") || Session["UserRole"].Equals("SUBADMIN"))
+                    {
+                        ViewBag.OnlineUser = Session["UserName"].ToString();
+                        ViewBag.OnlineUserRole = Session["UserRole"].ToString();
+                        var tbl_Employee = db.tbl_Employee.Include(t => t.tbl_State);
+                        return View(tbl_Employee.ToList());
+                    }
+                    else
+                    {
+                        return RedirectToAction("Accessdenied", "Home");
+                    }
                 }
                 else
                 {
-                    return RedirectToAction("Accessdenied", "Home");
+                    return RedirectToAction("Login", "Account");
                 }
             }
-            else
+            catch (Exception ex)
             {
-                return RedirectToAction("Login", "Account");
+                ModelState.AddModelError(ex.Message, ex.InnerException.ToString());
+                return View();
             }
+
         }
 
         // GET: Employee/Details/5
         public ActionResult Details(int? id)
         {
-            if (Session["OnlineUser"] != null)
+            try
             {
-                if (Session["UserRole"].Equals("SUPERADMIN") || Session["UserRole"].Equals("SUBADMIN"))
+                if (Session["OnlineUser"] != null)
                 {
-                    ViewBag.OnlineUser = Session["UserName"].ToString();
-                    ViewBag.OnlineUserRole = Session["UserRole"].ToString();
-                    if (id == null)
+                    if (Session["UserRole"].Equals("SUPERADMIN") || Session["UserRole"].Equals("SUBADMIN"))
                     {
-                        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                        ViewBag.OnlineUser = Session["UserName"].ToString();
+                        ViewBag.OnlineUserRole = Session["UserRole"].ToString();
+                        if (id == null)
+                        {
+                            return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                        }
+                        tbl_Employee tbl_Employee = db.tbl_Employee.Find(id);
+                        if (tbl_Employee == null)
+                        {
+                            return HttpNotFound();
+                        }
+                        return View(tbl_Employee);
                     }
-                    tbl_Employee tbl_Employee = db.tbl_Employee.Find(id);
-                    if (tbl_Employee == null)
+                    else
                     {
-                        return HttpNotFound();
+                        return RedirectToAction("Accessdenied", "Home");
                     }
-                    return View(tbl_Employee);
                 }
                 else
                 {
-                    return RedirectToAction("Accessdenied", "Home");
+                    return RedirectToAction("Login", "Account");
                 }
             }
-            else
+            catch (Exception ex)
             {
-                return RedirectToAction("Login", "Account");
+                ModelState.AddModelError(ex.Message, ex.InnerException.ToString());
+                return View();
             }
+
         }
 
         // GET: Employee/Create
         public ActionResult Create()
         {
-            if (Session["OnlineUser"] != null)
+            try
             {
-                if (Session["UserRole"].Equals("SUPERADMIN") || Session["UserRole"].Equals("SUBADMIN"))
+                if (Session["OnlineUser"] != null)
                 {
-                    ViewBag.OnlineUser = Session["UserName"].ToString();
-                    ViewBag.OnlineUserRole = Session["UserRole"].ToString();
-                    ViewBag.StateId = new SelectList(db.tbl_State, "StateId", "StateName");
-                    return View();
+                    if (Session["UserRole"].Equals("SUPERADMIN") || Session["UserRole"].Equals("SUBADMIN"))
+                    {
+                        ViewBag.OnlineUser = Session["UserName"].ToString();
+                        ViewBag.OnlineUserRole = Session["UserRole"].ToString();
+                        ViewBag.StateId = new SelectList(db.tbl_State, "StateId", "StateName");
+                        return View();
+                    }
+                    else
+                    {
+                        return RedirectToAction("Accessdenied", "Home");
+                    }
                 }
                 else
                 {
-                    return RedirectToAction("Accessdenied", "Home");
+                    return RedirectToAction("Login", "Account");
                 }
             }
-            else
+            catch (Exception ex)
             {
-                return RedirectToAction("Login", "Account");
+                ModelState.AddModelError(ex.Message, ex.InnerException.ToString());
+                return View();
             }
+
         }
 
         // POST: Employee/Create
@@ -99,36 +126,82 @@ namespace FireStation.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "EmployeeId,EmployeeCode,EmployeeName,EmployeeLastName,EmployeePhone,EmployeeAdress,EmployeePicUrl,StateId,EmployeeFName,EmployeeMCode,EmployeeBirthdate,EmployeeSex,EmployeeWork,EmployeeDateRegistered")] tbl_Employee tbl_Employee, HttpPostedFileBase pic)
         {
-            Random rand = new Random();
-            int ra;
-            if (ModelState.IsValid)
+            try
+            {
+                Random rand = new Random();
+                int ra;
+                if (ModelState.IsValid)
+                {
+                    if (Session["OnlineUser"] != null)
+                    {
+                        if (Session["UserRole"].Equals("SUPERADMIN") || Session["UserRole"].Equals("SUBADMIN"))
+                        {
+                            ra = rand.Next(11111, 99999);
+                            while (db.tbl_Employee.FirstOrDefault(f => f.EmployeeId == ra) != null)
+                            {
+                                ra = rand.Next(1000000, 2000000);
+                            }
+                            if (pic != null)
+                            {
+                                var Fi1 = Path.GetExtension(pic.FileName);
+                                var Ri1 = Path.Combine(Server.MapPath("~/Documents/Pic/"), string.Format("{0}{1}", ra.ToString(), Fi1));
+                                pic.SaveAs(Ri1);
+                                tbl_Employee.EmployeePicUrl = string.Format("Documents/Pic/{0}{1}", ra.ToString(), Fi1);
+                            }
+                            else
+                            {
+                                tbl_Employee.EmployeePicUrl = "no image yet";
+                            }
+                            tbl_Employee.EmployeeId = ra;
+                            ViewBag.OnlineUser = Session["UserName"].ToString();
+                            ViewBag.OnlineUserRole = Session["UserRole"].ToString();
+                            db.tbl_Employee.Add(tbl_Employee);
+                            db.SaveChanges();
+                            return RedirectToAction("Index");
+                        }
+                        else
+                        {
+                            return RedirectToAction("Accessdenied", "Home");
+                        }
+                    }
+                    else
+                    {
+                        return RedirectToAction("Login", "Account");
+                    }
+                }
+                ViewBag.StateId = new SelectList(db.tbl_State, "StateId", "StateName", tbl_Employee.StateId);
+                ViewBag.Emp = db.tbl_Employee.ToList();
+                return View(tbl_Employee);
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError(ex.Message, ex.InnerException.ToString());
+                return View();
+            }
+        }
+
+        // GET: Employee/Edit/5
+        public ActionResult Edit(int? id)
+        {
+            try
             {
                 if (Session["OnlineUser"] != null)
                 {
                     if (Session["UserRole"].Equals("SUPERADMIN") || Session["UserRole"].Equals("SUBADMIN"))
                     {
-                        ra = rand.Next(11111, 99999);
-                        while (db.tbl_Employee.FirstOrDefault(f => f.EmployeeId == ra) != null)
-                        {
-                            ra = rand.Next(1000000, 2000000);
-                        }
-                        if (pic != null)
-                        {
-                            var Fi1 = Path.GetExtension(pic.FileName);
-                            var Ri1 = Path.Combine(Server.MapPath("~/Documents/Pic/"), string.Format("{0}{1}", ra.ToString(), Fi1));
-                            pic.SaveAs(Ri1);
-                            tbl_Employee.EmployeePicUrl = string.Format("Documents/Pic/{0}{1}", ra.ToString(), Fi1);
-                        }
-                        else
-                        {
-                            tbl_Employee.EmployeePicUrl = "no image yet";
-                        }
-                        tbl_Employee.EmployeeId = ra;
                         ViewBag.OnlineUser = Session["UserName"].ToString();
                         ViewBag.OnlineUserRole = Session["UserRole"].ToString();
-                        db.tbl_Employee.Add(tbl_Employee);
-                        db.SaveChanges();
-                        return RedirectToAction("Index");
+                        if (id == null)
+                        {
+                            return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                        }
+                        tbl_Employee tbl_Employee = db.tbl_Employee.Find(id);
+                        if (tbl_Employee == null)
+                        {
+                            return HttpNotFound();
+                        }
+                        ViewBag.StateId = new SelectList(db.tbl_State, "StateId", "StateName", tbl_Employee.StateId);
+                        return View(tbl_Employee);
                     }
                     else
                     {
@@ -140,41 +213,12 @@ namespace FireStation.Controllers
                     return RedirectToAction("Login", "Account");
                 }
             }
-            ViewBag.StateId = new SelectList(db.tbl_State, "StateId", "StateName", tbl_Employee.StateId);
-            ViewBag.Emp = db.tbl_Employee.ToList();
-            return View(tbl_Employee);
-        }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError(ex.Message, ex.InnerException.ToString());
+                return View();
+            }
 
-        // GET: Employee/Edit/5
-        public ActionResult Edit(int? id)
-        {
-            if (Session["OnlineUser"] != null)
-            {
-                if (Session["UserRole"].Equals("SUPERADMIN") || Session["UserRole"].Equals("SUBADMIN"))
-                {
-                    ViewBag.OnlineUser = Session["UserName"].ToString();
-                    ViewBag.OnlineUserRole = Session["UserRole"].ToString();
-                    if (id == null)
-                    {
-                        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-                    }
-                    tbl_Employee tbl_Employee = db.tbl_Employee.Find(id);
-                    if (tbl_Employee == null)
-                    {
-                        return HttpNotFound();
-                    }
-                    ViewBag.StateId = new SelectList(db.tbl_State, "StateId", "StateName", tbl_Employee.StateId);
-                    return View(tbl_Employee);
-                }
-                else
-                {
-                    return RedirectToAction("Accessdenied", "Home");
-                }
-            }
-            else
-            {
-                return RedirectToAction("Login", "Account");
-            }
         }
 
         // POST: Employee/Edit/5
@@ -184,9 +228,59 @@ namespace FireStation.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "EmployeeId,EmployeeCode,EmployeeName,EmployeeLastName,EmployeePhone,EmployeeAdress,EmployeePicUrl,StateId,EmployeeFName,EmployeeMCode,EmployeeBirthdate,EmployeeSex,EmployeeWork,EmployeeDateRegistered")] tbl_Employee tbl_Employee, HttpPostedFileBase pic)
         {
-            Random rand = new Random();
-            int ra;
-            if (ModelState.IsValid)
+            try
+            {
+                Random rand = new Random();
+                int ra;
+                if (ModelState.IsValid)
+                {
+                    if (Session["OnlineUser"] != null)
+                    {
+                        if (Session["UserRole"].Equals("SUPERADMIN") || Session["UserRole"].Equals("SUBADMIN"))
+                        {
+                            ViewBag.OnlineUser = Session["UserName"].ToString();
+                            ViewBag.OnlineUserRole = Session["UserRole"].ToString();
+                            ra = rand.Next(111111, 999999);
+                            while (db.tbl_Employee.FirstOrDefault(f => f.EmployeeId == ra) != null)
+                            {
+                                ra = rand.Next(111111, 999999);
+                            }
+                            if (pic != null)
+                            {
+                                var Fi1 = Path.GetExtension(pic.FileName);
+                                var Ri1 = Path.Combine(Server.MapPath("~/Documents/Pic/"), string.Format("{0}{1}", ra.ToString(), Fi1));
+                                pic.SaveAs(Ri1);
+                                tbl_Employee.EmployeePicUrl = string.Format("Documents/Pic/{0}{1}", ra.ToString(), Fi1);
+                            }
+                            db.Entry(tbl_Employee).State = EntityState.Modified;
+                            db.SaveChanges();
+                            return RedirectToAction("Index");
+                        }
+                        else
+                        {
+                            return RedirectToAction("Accessdenied", "Home");
+                        }
+                    }
+                    else
+                    {
+                        return RedirectToAction("Login", "Account");
+                    }
+                }
+                ViewBag.StateId = new SelectList(db.tbl_State, "StateId", "StateName", tbl_Employee.StateId);
+                return View(tbl_Employee);
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError(ex.Message, ex.InnerException.ToString());
+                return View();
+            }
+
+        }
+
+        // GET: Employee/Delete/5
+        public ActionResult Delete(int? id)
+        {
+            try
             {
                 if (Session["OnlineUser"] != null)
                 {
@@ -194,21 +288,16 @@ namespace FireStation.Controllers
                     {
                         ViewBag.OnlineUser = Session["UserName"].ToString();
                         ViewBag.OnlineUserRole = Session["UserRole"].ToString();
-                        ra = rand.Next(111111, 999999);
-                        while (db.tbl_Employee.FirstOrDefault(f => f.EmployeeId == ra) != null)
+                        if (id == null)
                         {
-                            ra = rand.Next(111111, 999999);
+                            return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                         }
-                        if (pic != null)
+                        tbl_Employee tbl_Employee = db.tbl_Employee.Find(id);
+                        if (tbl_Employee == null)
                         {
-                            var Fi1 = Path.GetExtension(pic.FileName);
-                            var Ri1 = Path.Combine(Server.MapPath("~/Documents/Pic/"), string.Format("{0}{1}", ra.ToString(), Fi1));
-                            pic.SaveAs(Ri1);
-                            tbl_Employee.EmployeePicUrl = string.Format("Documents/Pic/{0}{1}", ra.ToString(), Fi1);
+                            return HttpNotFound();
                         }
-                        db.Entry(tbl_Employee).State = EntityState.Modified;
-                        db.SaveChanges();
-                        return RedirectToAction("Index");
+                        return View(tbl_Employee);
                     }
                     else
                     {
@@ -220,39 +309,12 @@ namespace FireStation.Controllers
                     return RedirectToAction("Login", "Account");
                 }
             }
-            ViewBag.StateId = new SelectList(db.tbl_State, "StateId", "StateName", tbl_Employee.StateId);
-            return View(tbl_Employee);
-        }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError(ex.Message, ex.InnerException.ToString());
+                return View();
+            }
 
-        // GET: Employee/Delete/5
-        public ActionResult Delete(int? id)
-        {
-            if (Session["OnlineUser"] != null)
-            {
-                if (Session["UserRole"].Equals("SUPERADMIN") || Session["UserRole"].Equals("SUBADMIN"))
-                {
-                    ViewBag.OnlineUser = Session["UserName"].ToString();
-                    ViewBag.OnlineUserRole = Session["UserRole"].ToString();
-                    if (id == null)
-                    {
-                        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-                    }
-                    tbl_Employee tbl_Employee = db.tbl_Employee.Find(id);
-                    if (tbl_Employee == null)
-                    {
-                        return HttpNotFound();
-                    }
-                    return View(tbl_Employee);
-                }
-                else
-                {
-                    return RedirectToAction("Accessdenied", "Home");
-                }
-            }
-            else
-            {
-                return RedirectToAction("Login", "Account");
-            }
         }
 
         // POST: Employee/Delete/5
@@ -260,10 +322,18 @@ namespace FireStation.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            tbl_Employee tbl_Employee = db.tbl_Employee.Find(id);
-            db.tbl_Employee.Remove(tbl_Employee);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            try
+            {
+                tbl_Employee tbl_Employee = db.tbl_Employee.Find(id);
+                db.tbl_Employee.Remove(tbl_Employee);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError(ex.Message, ex.InnerException.ToString());
+                return View();
+            }
         }
 
         protected override void Dispose(bool disposing)

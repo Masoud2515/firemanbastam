@@ -16,32 +16,41 @@ namespace FireStation.Controllers
         // GET: 
         public ActionResult Edit(int? id, int? acid)
         {
-            if (Session["OnlineUser"] != null)
+            try
             {
-                if (Session["UserRole"].Equals("SUPERADMIN") || Session["UserRole"].Equals("ADMIN") || Session["UserRole"].Equals("SUBADMIN") || Session["UserRole"].Equals("OPRATOR"))
+                if (Session["OnlineUser"] != null)
                 {
-                    if (id == null)
+                    if (Session["UserRole"].Equals("SUPERADMIN") || Session["UserRole"].Equals("ADMIN") || Session["UserRole"].Equals("SUBADMIN") || Session["UserRole"].Equals("OPRATOR"))
                     {
-                        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                        if (id == null)
+                        {
+                            return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                        }
+                        tbl_AccidentM tbl_AccidentM = db.tbl_AccidentM.FirstOrDefault(x => x.AccidentId == acid && x.MaterialId == id);
+                        if (tbl_AccidentM == null)
+                        {
+                            return HttpNotFound();
+                        }
+                        ViewBag.AccidentId = new SelectList(db.tbl_Accident, "AccidentId", "AccidentEventLocation", tbl_AccidentM.AccidentId);
+                        ViewBag.MaterialId = new SelectList(db.tbl_Material, "MaterialId", "MaterialCode", tbl_AccidentM.MaterialId);
+                        return View(tbl_AccidentM);
                     }
-                    tbl_AccidentM tbl_AccidentM = db.tbl_AccidentM.FirstOrDefault(x => x.AccidentId == acid && x.MaterialId == id);
-                    if (tbl_AccidentM == null)
+                    else
                     {
-                        return HttpNotFound();
+                        return RedirectToAction("Accessdenied", "Home");
                     }
-                    ViewBag.AccidentId = new SelectList(db.tbl_Accident, "AccidentId", "AccidentEventLocation", tbl_AccidentM.AccidentId);
-                    ViewBag.MaterialId = new SelectList(db.tbl_Material, "MaterialId", "MaterialCode", tbl_AccidentM.MaterialId);
-                    return View(tbl_AccidentM);
                 }
                 else
                 {
-                    return RedirectToAction("Accessdenied", "Home");
+                    return RedirectToAction("Login", "Account");
                 }
             }
-            else
+            catch (Exception ex)
             {
-                return RedirectToAction("Login", "Account");
+                ModelState.AddModelError(ex.Message, ex.InnerException.ToString());
+                return View();
             }
+
         }
 
         // POST: AccidentM/Edit/5
@@ -51,58 +60,76 @@ namespace FireStation.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "AccidentMid,AccidentId,MaterialId,tedad")] tbl_AccidentM tbl_AccidentM)
         {
-            if (Session["OnlineUser"] != null)
+            try
             {
-                if (Session["UserRole"].Equals("SUPERADMIN") || Session["UserRole"].Equals("ADMIN") || Session["UserRole"].Equals("SUBADMIN") || Session["UserRole"].Equals("OPRATOR"))
+                if (Session["OnlineUser"] != null)
                 {
-                    if (ModelState.IsValid)
+                    if (Session["UserRole"].Equals("SUPERADMIN") || Session["UserRole"].Equals("ADMIN") || Session["UserRole"].Equals("SUBADMIN") || Session["UserRole"].Equals("OPRATOR"))
                     {
-                        db.Entry(tbl_AccidentM).State = EntityState.Modified;
-                        db.SaveChanges();
-                        return RedirectToAction("Edit", "Accident", new { id = tbl_AccidentM.AccidentId });
+                        if (ModelState.IsValid)
+                        {
+                            db.Entry(tbl_AccidentM).State = EntityState.Modified;
+                            db.SaveChanges();
+                            return RedirectToAction("Edit", "Accident", new { id = tbl_AccidentM.AccidentId });
+                        }
+                    }
+                    else
+                    {
+                        return RedirectToAction("Accessdenied", "Home");
                     }
                 }
                 else
                 {
-                    return RedirectToAction("Accessdenied", "Home");
+                    return RedirectToAction("Login", "Account");
                 }
+                ViewBag.AccidentId = new SelectList(db.tbl_Accident, "AccidentId", "AccidentEventLocation", tbl_AccidentM.AccidentId);
+                ViewBag.MaterialId = new SelectList(db.tbl_Material, "MaterialId", "MaterialCode", tbl_AccidentM.MaterialId);
+                return View(tbl_AccidentM);
             }
-            else
+            catch (Exception ex)
             {
-                return RedirectToAction("Login", "Account");
+                ModelState.AddModelError(ex.Message, ex.InnerException.ToString());
+                return View();
             }
-            ViewBag.AccidentId = new SelectList(db.tbl_Accident, "AccidentId", "AccidentEventLocation", tbl_AccidentM.AccidentId);
-            ViewBag.MaterialId = new SelectList(db.tbl_Material, "MaterialId", "MaterialCode", tbl_AccidentM.MaterialId);
-            return View(tbl_AccidentM);
+
         }
 
         // GET: AccidentM/Delete/5
         public ActionResult Delete(int? id, int? acid)
         {
-            if (Session["OnlineUser"] != null)
+            try
             {
-                if (Session["UserRole"].Equals("SUPERADMIN") || Session["UserRole"].Equals("ADMIN") || Session["UserRole"].Equals("SUBADMIN") || Session["UserRole"].Equals("OPRATOR"))
+                if (Session["OnlineUser"] != null)
                 {
-                    if (id == null)
+                    if (Session["UserRole"].Equals("SUPERADMIN") || Session["UserRole"].Equals("ADMIN") || Session["UserRole"].Equals("SUBADMIN") || Session["UserRole"].Equals("OPRATOR"))
                     {
-                        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                        if (id == null)
+                        {
+                            return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                        }
+                        tbl_AccidentM tbl_AccidentM = db.tbl_AccidentM.FirstOrDefault(x => x.AccidentId == acid && x.MaterialId == id);
+                        if (tbl_AccidentM == null)
+                        {
+                            return HttpNotFound();
+                        }
+                        return View(tbl_AccidentM);
                     }
-                    tbl_AccidentM tbl_AccidentM = db.tbl_AccidentM.FirstOrDefault(x => x.AccidentId == acid && x.MaterialId == id);
-                    if (tbl_AccidentM == null)
+                    else
                     {
-                        return HttpNotFound();
+                        return RedirectToAction("Accessdenied", "Home");
                     }
-                    return View(tbl_AccidentM);
                 }
                 else
                 {
-                    return RedirectToAction("Accessdenied", "Home");
+                    return RedirectToAction("Login", "Account");
                 }
             }
-            else
+            catch (Exception ex)
             {
-                return RedirectToAction("Login", "Account");
+                ModelState.AddModelError(ex.Message, ex.InnerException.ToString());
+                return View();
             }
+
         }
 
         // POST: AccidentM/Delete/5
@@ -110,26 +137,35 @@ namespace FireStation.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id, int acid)
         {
-            if (Session["OnlineUser"] != null)
+            try
             {
-                if (Session["UserRole"].Equals("SUPERADMIN") || Session["UserRole"].Equals("ADMIN") || Session["UserRole"].Equals("SUBADMIN") || Session["UserRole"].Equals("OPRATOR"))
+                if (Session["OnlineUser"] != null)
                 {
-                    ViewBag.OnlineUser = Session["UserName"].ToString();
-                    ViewBag.OnlineUserRole = Session["UserRole"].ToString();
-                    tbl_AccidentM tbl_AccidentM = db.tbl_AccidentM.FirstOrDefault(x => x.AccidentId == acid && x.MaterialId == id);
-                    db.tbl_AccidentM.Remove(tbl_AccidentM);
-                    db.SaveChanges();
-                    return RedirectToAction("Edit", "Accident", new { id = tbl_AccidentM.AccidentId });
+                    if (Session["UserRole"].Equals("SUPERADMIN") || Session["UserRole"].Equals("ADMIN") || Session["UserRole"].Equals("SUBADMIN") || Session["UserRole"].Equals("OPRATOR"))
+                    {
+                        ViewBag.OnlineUser = Session["UserName"].ToString();
+                        ViewBag.OnlineUserRole = Session["UserRole"].ToString();
+                        tbl_AccidentM tbl_AccidentM = db.tbl_AccidentM.FirstOrDefault(x => x.AccidentId == acid && x.MaterialId == id);
+                        db.tbl_AccidentM.Remove(tbl_AccidentM);
+                        db.SaveChanges();
+                        return RedirectToAction("Edit", "Accident", new { id = tbl_AccidentM.AccidentId });
+                    }
+                    else
+                    {
+                        return RedirectToAction("Accessdenied", "Home");
+                    }
                 }
                 else
                 {
-                    return RedirectToAction("Accessdenied", "Home");
+                    return RedirectToAction("Login", "Account");
                 }
             }
-            else
+            catch (Exception ex)
             {
-                return RedirectToAction("Login", "Account");
+                ModelState.AddModelError(ex.Message, ex.InnerException.ToString());
+                return View();
             }
+
         }
 
         protected override void Dispose(bool disposing)

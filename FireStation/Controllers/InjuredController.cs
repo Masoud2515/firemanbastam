@@ -17,76 +17,103 @@ namespace FireStation.Controllers
         // GET: Injured
         public ActionResult Index()
         {
-            if (Session["OnlineUser"] != null)
+            try
             {
-                if (Session["UserRole"].Equals("SUPERADMIN") || Session["UserRole"].Equals("ADMIN") || Session["UserRole"].Equals("SUBADMIN") || Session["UserRole"].Equals("OPRATOR"))
+                if (Session["OnlineUser"] != null)
                 {
-                    ViewBag.OnlineUser = Session["UserName"].ToString();
-                    ViewBag.OnlineUserRole = Session["UserRole"].ToString();
-                    return View(db.tbl_Injured.ToList());
+                    if (Session["UserRole"].Equals("SUPERADMIN") || Session["UserRole"].Equals("ADMIN") || Session["UserRole"].Equals("SUBADMIN") || Session["UserRole"].Equals("OPRATOR"))
+                    {
+                        ViewBag.OnlineUser = Session["UserName"].ToString();
+                        ViewBag.OnlineUserRole = Session["UserRole"].ToString();
+                        return View(db.tbl_Injured.ToList());
+                    }
+                    else
+                    {
+                        return RedirectToAction("Accessdenied", "Home");
+                    }
                 }
                 else
                 {
-                    return RedirectToAction("Accessdenied", "Home");
+                    return RedirectToAction("Login", "Account");
                 }
             }
-            else
+            catch (Exception ex)
             {
-                return RedirectToAction("Login", "Account");
+                ModelState.AddModelError(ex.Message, ex.InnerException.ToString());
+                return View();
             }
+
         }
 
         // GET: Injured/Details/5
         public ActionResult Details(int? id)
         {
-            if (Session["OnlineUser"] != null)
+            try
             {
-                if (Session["UserRole"].Equals("SUPERADMIN") || Session["UserRole"].Equals("ADMIN") || Session["UserRole"].Equals("SUBADMIN") || Session["UserRole"].Equals("OPRATOR"))
+                if (Session["OnlineUser"] != null)
                 {
-                    ViewBag.OnlineUser = Session["UserName"].ToString();
-                    ViewBag.OnlineUserRole = Session["UserRole"].ToString();
-                    if (id == null)
+                    if (Session["UserRole"].Equals("SUPERADMIN") || Session["UserRole"].Equals("ADMIN") || Session["UserRole"].Equals("SUBADMIN") || Session["UserRole"].Equals("OPRATOR"))
                     {
-                        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                        ViewBag.OnlineUser = Session["UserName"].ToString();
+                        ViewBag.OnlineUserRole = Session["UserRole"].ToString();
+                        if (id == null)
+                        {
+                            return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                        }
+                        tbl_Injured tbl_Injured = db.tbl_Injured.Find(id);
+                        if (tbl_Injured == null)
+                        {
+                            return HttpNotFound();
+                        }
+                        return View(tbl_Injured);
                     }
-                    tbl_Injured tbl_Injured = db.tbl_Injured.Find(id);
-                    if (tbl_Injured == null)
+                    else
                     {
-                        return HttpNotFound();
+                        return RedirectToAction("Accessdenied", "Home");
                     }
-                    return View(tbl_Injured);
                 }
                 else
                 {
-                    return RedirectToAction("Accessdenied", "Home");
+                    return RedirectToAction("Login", "Account");
                 }
             }
-            else
+            catch (Exception ex)
             {
-                return RedirectToAction("Login", "Account");
+                ModelState.AddModelError(ex.Message, ex.InnerException.ToString());
+                return View();
             }
+
         }
 
         // GET: Injured/Create
         public ActionResult Create()
         {
-            if (Session["OnlineUser"] != null)
+            try
             {
-                if (Session["UserRole"].Equals("SUPERADMIN") || Session["UserRole"].Equals("ADMIN") || Session["UserRole"].Equals("SUBADMIN") || Session["UserRole"].Equals("OPRATOR"))
+                if (Session["OnlineUser"] != null)
                 {
-                    ViewBag.OnlineUser = Session["UserName"].ToString();
-                    ViewBag.OnlineUserRole = Session["UserRole"].ToString();
-                    return View();
+                    if (Session["UserRole"].Equals("SUPERADMIN") || Session["UserRole"].Equals("ADMIN") || Session["UserRole"].Equals("SUBADMIN") || Session["UserRole"].Equals("OPRATOR"))
+                    {
+                        ViewBag.OnlineUser = Session["UserName"].ToString();
+                        ViewBag.OnlineUserRole = Session["UserRole"].ToString();
+                        return View();
+                    }
+                    else
+                    {
+                        return RedirectToAction("Accessdenied", "Home");
+                    }
                 }
                 else
                 {
-                    return RedirectToAction("Accessdenied", "Home");
+                    return RedirectToAction("Login", "Account");
                 }
             }
-            else
+            catch (Exception ex)
             {
-                return RedirectToAction("Login", "Account");
+                ModelState.AddModelError(ex.Message, ex.InnerException.ToString());
+                return View();
             }
+
         }
 
         // POST: Injured/Create
@@ -96,60 +123,78 @@ namespace FireStation.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "InjuredID,InjuredName,InjuredLastName,InjuredSex,InjuredType,InjuredTypeinjury,InjuredDescription,InjuredLocation")] tbl_Injured tbl_Injured)
         {
-            if (Session["OnlineUser"] != null)
+            try
             {
-                if (Session["UserRole"].Equals("SUPERADMIN") || Session["UserRole"].Equals("ADMIN") || Session["UserRole"].Equals("SUBADMIN") || Session["UserRole"].Equals("OPRATOR"))
+                if (Session["OnlineUser"] != null)
                 {
-                    ViewBag.OnlineUser = Session["UserName"].ToString();
-                    ViewBag.OnlineUserRole = Session["UserRole"].ToString();
-                    if (ModelState.IsValid)
+                    if (Session["UserRole"].Equals("SUPERADMIN") || Session["UserRole"].Equals("ADMIN") || Session["UserRole"].Equals("SUBADMIN") || Session["UserRole"].Equals("OPRATOR"))
                     {
-                        db.tbl_Injured.Add(tbl_Injured);
-                        db.SaveChanges();
-                        return RedirectToAction("Index");
+                        ViewBag.OnlineUser = Session["UserName"].ToString();
+                        ViewBag.OnlineUserRole = Session["UserRole"].ToString();
+                        if (ModelState.IsValid)
+                        {
+                            db.tbl_Injured.Add(tbl_Injured);
+                            db.SaveChanges();
+                            return RedirectToAction("Index");
+                        }
+                    }
+                    else
+                    {
+                        return RedirectToAction("Accessdenied", "Home");
                     }
                 }
                 else
                 {
-                    return RedirectToAction("Accessdenied", "Home");
+                    return RedirectToAction("Login", "Account");
                 }
+                return View(tbl_Injured);
             }
-            else
+            catch (Exception ex)
             {
-                return RedirectToAction("Login", "Account");
+                ModelState.AddModelError(ex.Message, ex.InnerException.ToString());
+                return View();
             }
-            return View(tbl_Injured);
+
         }
 
         // GET: Injured/Edit/5
         public ActionResult Edit(int? id)
         {
-            if (Session["OnlineUser"] != null)
+            try
             {
-                if (Session["UserRole"].Equals("SUPERADMIN") || Session["UserRole"].Equals("ADMIN") || Session["UserRole"].Equals("SUBADMIN") || Session["UserRole"].Equals("OPRATOR"))
+                if (Session["OnlineUser"] != null)
                 {
-                    ViewBag.OnlineUser = Session["UserName"].ToString();
-                    ViewBag.OnlineUserRole = Session["UserRole"].ToString();
-                    if (id == null)
+                    if (Session["UserRole"].Equals("SUPERADMIN") || Session["UserRole"].Equals("ADMIN") || Session["UserRole"].Equals("SUBADMIN") || Session["UserRole"].Equals("OPRATOR"))
                     {
-                        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                        ViewBag.OnlineUser = Session["UserName"].ToString();
+                        ViewBag.OnlineUserRole = Session["UserRole"].ToString();
+                        if (id == null)
+                        {
+                            return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                        }
+                        tbl_Injured tbl_Injured = db.tbl_Injured.Find(id);
+                        if (tbl_Injured == null)
+                        {
+                            return HttpNotFound();
+                        }
+                        return View(tbl_Injured);
                     }
-                    tbl_Injured tbl_Injured = db.tbl_Injured.Find(id);
-                    if (tbl_Injured == null)
+                    else
                     {
-                        return HttpNotFound();
+                        return RedirectToAction("Accessdenied", "Home");
                     }
-                    return View(tbl_Injured);
                 }
                 else
                 {
-                    return RedirectToAction("Accessdenied", "Home");
+                    return RedirectToAction("Login", "Account");
                 }
             }
-            else
+            catch (Exception ex)
             {
-                return RedirectToAction("Login", "Account");
+                ModelState.AddModelError(ex.Message, ex.InnerException.ToString());
+                return View();
             }
+
         }
 
         // POST: Injured/Edit/5
@@ -159,28 +204,46 @@ namespace FireStation.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "InjuredID,InjuredName,InjuredLastName,InjuredSex,InjuredType,InjuredTypeinjury,InjuredDescription,InjuredLocation")] tbl_Injured tbl_Injured)
         {
-            if (ModelState.IsValid)
+            try
             {
-                db.Entry(tbl_Injured).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                if (ModelState.IsValid)
+                {
+                    db.Entry(tbl_Injured).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                return View(tbl_Injured);
             }
-            return View(tbl_Injured);
+            catch (Exception ex)
+            {
+                ModelState.AddModelError(ex.Message, ex.InnerException.ToString());
+                return View();
+            }
+
         }
 
         // GET: Injured/Delete/5
         public ActionResult Delete(int? id)
         {
-            if (id == null)
+            try
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                tbl_Injured tbl_Injured = db.tbl_Injured.Find(id);
+                if (tbl_Injured == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(tbl_Injured);
             }
-            tbl_Injured tbl_Injured = db.tbl_Injured.Find(id);
-            if (tbl_Injured == null)
+            catch (Exception ex)
             {
-                return HttpNotFound();
+                ModelState.AddModelError(ex.Message, ex.InnerException.ToString());
+                return View();
             }
-            return View(tbl_Injured);
+
         }
 
         // POST: Injured/Delete/5
@@ -188,10 +251,19 @@ namespace FireStation.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            tbl_Injured tbl_Injured = db.tbl_Injured.Find(id);
-            db.tbl_Injured.Remove(tbl_Injured);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            try
+            {
+                tbl_Injured tbl_Injured = db.tbl_Injured.Find(id);
+                db.tbl_Injured.Remove(tbl_Injured);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError(ex.Message, ex.InnerException.ToString());
+                return View();
+            }
+
         }
 
         protected override void Dispose(bool disposing)

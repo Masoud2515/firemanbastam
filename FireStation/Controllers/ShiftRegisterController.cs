@@ -18,31 +18,40 @@ namespace FireStation.Controllers
         // GET: ShiftRegister
         public ActionResult Index()
         {
-            if (Session["OnlineUser"] != null)
+            try
             {
-                if (Session["UserRole"].Equals("SUPERADMIN") || Session["UserRole"].Equals("ADMIN") || Session["UserRole"].Equals("SUBADMIN") || Session["UserRole"].Equals("OPRATOR"))
+                if (Session["OnlineUser"] != null)
                 {
-                    ViewBag.OnlineUser = Session["UserName"].ToString();
-                    ViewBag.OnlineUserRole = Session["UserRole"].ToString();
-                    var tbl_ShiftRegister = db.tbl_ShiftRegister.Include(t => t.tbl_shift);
-                    return View(tbl_ShiftRegister.ToList());
+                    if (Session["UserRole"].Equals("SUPERADMIN") || Session["UserRole"].Equals("ADMIN") || Session["UserRole"].Equals("SUBADMIN") || Session["UserRole"].Equals("OPRATOR"))
+                    {
+                        ViewBag.OnlineUser = Session["UserName"].ToString();
+                        ViewBag.OnlineUserRole = Session["UserRole"].ToString();
+                        var tbl_ShiftRegister = db.tbl_ShiftRegister.Include(t => t.tbl_shift);
+                        return View(tbl_ShiftRegister.ToList());
+                    }
+                    else
+                    {
+                        return RedirectToAction("Accessdenied", "Home");
+                    }
                 }
                 else
                 {
-                    return RedirectToAction("Accessdenied", "Home");
+                    return RedirectToAction("Login", "Account");
                 }
             }
-            else
+            catch (Exception ex)
             {
-                return RedirectToAction("Login", "Account");
+                ModelState.AddModelError(ex.Message, ex.InnerException.ToString());
+                return View();
             }
+
         }
         [HttpPost]
         public ActionResult GetShiftByStateId(int Eid)
         {
             List<tbl_shift> objshift = new List<tbl_shift>();
             objshift = db.tbl_shift.Where(m => m.StateId == Eid).ToList();
-            SelectList obg = new SelectList(objshift, "ShiftId", "ShiftName",0);
+            SelectList obg = new SelectList(objshift, "ShiftId", "ShiftName", 0);
             return Json(obg);
         }
         [HttpPost]
@@ -66,58 +75,76 @@ namespace FireStation.Controllers
         // GET: ShiftRegister/Details/5k
         public ActionResult Details(int? id)
         {
-            if (Session["OnlineUser"] != null)
+            try
             {
-                if (Session["UserRole"].Equals("SUPERADMIN") || Session["UserRole"].Equals("ADMIN") || Session["UserRole"].Equals("SUBADMIN") || Session["UserRole"].Equals("OPRATOR"))
+                if (Session["OnlineUser"] != null)
                 {
-                    ViewBag.OnlineUser = Session["UserName"].ToString();
-                    ViewBag.OnlineUserRole = Session["UserRole"].ToString();
-                    if (id == null)
+                    if (Session["UserRole"].Equals("SUPERADMIN") || Session["UserRole"].Equals("ADMIN") || Session["UserRole"].Equals("SUBADMIN") || Session["UserRole"].Equals("OPRATOR"))
                     {
-                        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                        ViewBag.OnlineUser = Session["UserName"].ToString();
+                        ViewBag.OnlineUserRole = Session["UserRole"].ToString();
+                        if (id == null)
+                        {
+                            return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                        }
+                        tbl_ShiftRegister tbl_ShiftRegister = db.tbl_ShiftRegister.Find(id);
+                        if (tbl_ShiftRegister == null)
+                        {
+                            return HttpNotFound();
+                        }
+                        return View(tbl_ShiftRegister);
                     }
-                    tbl_ShiftRegister tbl_ShiftRegister = db.tbl_ShiftRegister.Find(id);
-                    if (tbl_ShiftRegister == null)
+                    else
                     {
-                        return HttpNotFound();
+                        return RedirectToAction("Accessdenied", "Home");
                     }
-                    return View(tbl_ShiftRegister);
                 }
                 else
                 {
-                    return RedirectToAction("Accessdenied", "Home");
+                    return RedirectToAction("Login", "Account");
                 }
             }
-            else
+            catch (Exception ex)
             {
-                return RedirectToAction("Login", "Account");
+                ModelState.AddModelError(ex.Message, ex.InnerException.ToString());
+                return View();
             }
+
         }
 
         // GET: ShiftRegister/Create
         public ActionResult Create()
         {
-            if (Session["OnlineUser"] != null)
+            try
             {
-                if (Session["UserRole"].Equals("SUPERADMIN") || Session["UserRole"].Equals("ADMIN") || Session["UserRole"].Equals("SUBADMIN") || Session["UserRole"].Equals("OPRATOR"))
+                if (Session["OnlineUser"] != null)
                 {
-                    ViewBag.OnlineUser = Session["UserName"].ToString();
-                    ViewBag.OnlineUserRole = Session["UserRole"].ToString();
-                    ViewBag.ShiftRegisterShifId = new SelectList(db.tbl_shift, "ShiftId", "ShiftName");
-                    ViewBag.OpState = db.tbl_State.ToList();
-                    ViewBag.Emp = db.tbl_Employee.ToList();
-                    ViewBag.shiftname = db.tbl_shift.ToList();
-                    return View();
+                    if (Session["UserRole"].Equals("SUPERADMIN") || Session["UserRole"].Equals("ADMIN") || Session["UserRole"].Equals("SUBADMIN") || Session["UserRole"].Equals("OPRATOR"))
+                    {
+                        ViewBag.OnlineUser = Session["UserName"].ToString();
+                        ViewBag.OnlineUserRole = Session["UserRole"].ToString();
+                        ViewBag.ShiftRegisterShifId = new SelectList(db.tbl_shift, "ShiftId", "ShiftName");
+                        ViewBag.OpState = db.tbl_State.ToList();
+                        ViewBag.Emp = db.tbl_Employee.ToList();
+                        ViewBag.shiftname = db.tbl_shift.ToList();
+                        return View();
+                    }
+                    else
+                    {
+                        return RedirectToAction("Accessdenied", "Home");
+                    }
                 }
                 else
                 {
-                    return RedirectToAction("Accessdenied", "Home");
+                    return RedirectToAction("Login", "Account");
                 }
             }
-            else
+            catch (Exception ex)
             {
-                return RedirectToAction("Login", "Account");
+                ModelState.AddModelError(ex.Message, ex.InnerException.ToString());
+                return View();
             }
+
         }
 
         // POST: ShiftRegister/Create
@@ -127,69 +154,87 @@ namespace FireStation.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ShiftRegisterid,ShiftRegisterDec,ShiftRegisterCommandor,ShiftRegisterTimeStart,ShiftRegisterTimeEnd,ShiftRegisterDateStart,ShiftRegisteridDateEnd,ShiftRegisterurl,ShiftRegisterShifId")] tbl_ShiftRegister tbl_ShiftRegister)
         {
-            if (Session["OnlineUser"] != null)
+            try
             {
-                if (Session["UserRole"].Equals("SUPERADMIN") || Session["UserRole"].Equals("ADMIN") || Session["UserRole"].Equals("SUBADMIN") || Session["UserRole"].Equals("OPRATOR"))
+                if (Session["OnlineUser"] != null)
                 {
-                    ViewBag.OnlineUser = Session["UserName"].ToString();
-                    ViewBag.OnlineUserRole = Session["UserRole"].ToString();
-                    ViewBag.OpState = db.tbl_State.ToList();
-                    ViewBag.Emp = db.tbl_Employee.ToList();
-                    ViewBag.shiftname = db.tbl_shift.ToList();
-                    if (ModelState.IsValid)
+                    if (Session["UserRole"].Equals("SUPERADMIN") || Session["UserRole"].Equals("ADMIN") || Session["UserRole"].Equals("SUBADMIN") || Session["UserRole"].Equals("OPRATOR"))
                     {
-                        db.tbl_ShiftRegister.Add(tbl_ShiftRegister);
-                        db.SaveChanges();
-                        return RedirectToAction("Index");
+                        ViewBag.OnlineUser = Session["UserName"].ToString();
+                        ViewBag.OnlineUserRole = Session["UserRole"].ToString();
+                        ViewBag.OpState = db.tbl_State.ToList();
+                        ViewBag.Emp = db.tbl_Employee.ToList();
+                        ViewBag.shiftname = db.tbl_shift.ToList();
+                        if (ModelState.IsValid)
+                        {
+                            db.tbl_ShiftRegister.Add(tbl_ShiftRegister);
+                            db.SaveChanges();
+                            return RedirectToAction("Index");
+                        }
+                        ViewBag.ShiftRegisterShifId = new SelectList(db.tbl_shift, "ShiftId", "ShiftName", tbl_ShiftRegister.ShiftRegisterShifId);
+                        return View(tbl_ShiftRegister);
                     }
-                    ViewBag.ShiftRegisterShifId = new SelectList(db.tbl_shift, "ShiftId", "ShiftName", tbl_ShiftRegister.ShiftRegisterShifId);
-                    return View(tbl_ShiftRegister);
+                    else
+                    {
+                        return RedirectToAction("Accessdenied", "Home");
+                    }
                 }
                 else
                 {
-                    return RedirectToAction("Accessdenied", "Home");
+                    return RedirectToAction("Login", "Account");
                 }
             }
-            else
+            catch (Exception ex)
             {
-                return RedirectToAction("Login", "Account");
+                ModelState.AddModelError(ex.Message, ex.InnerException.ToString());
+                return View();
             }
+
         }
 
         // GET: ShiftRegister/Edit/5
         public ActionResult Edit(int? id)
         {
-            if (Session["OnlineUser"] != null)
+            try
             {
-                if (Session["UserRole"].Equals("SUPERADMIN") || Session["UserRole"].Equals("ADMIN") || Session["UserRole"].Equals("SUBADMIN") || Session["UserRole"].Equals("OPRATOR"))
+                if (Session["OnlineUser"] != null)
                 {
-                    ViewBag.OnlineUser = Session["UserName"].ToString();
-                    ViewBag.OnlineUserRole = Session["UserRole"].ToString();
-                    ViewBag.OpState = db.tbl_State.ToList();
-                    ViewBag.Emp = db.tbl_Employee.ToList();
-                    ViewBag.shiftname = db.tbl_shift.ToList();
+                    if (Session["UserRole"].Equals("SUPERADMIN") || Session["UserRole"].Equals("ADMIN") || Session["UserRole"].Equals("SUBADMIN") || Session["UserRole"].Equals("OPRATOR"))
+                    {
+                        ViewBag.OnlineUser = Session["UserName"].ToString();
+                        ViewBag.OnlineUserRole = Session["UserRole"].ToString();
+                        ViewBag.OpState = db.tbl_State.ToList();
+                        ViewBag.Emp = db.tbl_Employee.ToList();
+                        ViewBag.shiftname = db.tbl_shift.ToList();
 
-                    if (id == null)
-                    {
-                        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                        if (id == null)
+                        {
+                            return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                        }
+                        tbl_ShiftRegister tbl_ShiftRegister = db.tbl_ShiftRegister.Find(id);
+                        if (tbl_ShiftRegister == null)
+                        {
+                            return HttpNotFound();
+                        }
+                        ViewBag.ShiftRegisterShifId = new SelectList(db.tbl_shift, "ShiftId", "ShiftName", tbl_ShiftRegister.ShiftRegisterShifId);
+                        return View(tbl_ShiftRegister);
                     }
-                    tbl_ShiftRegister tbl_ShiftRegister = db.tbl_ShiftRegister.Find(id);
-                    if (tbl_ShiftRegister == null)
+                    else
                     {
-                        return HttpNotFound();
+                        return RedirectToAction("Accessdenied", "Home");
                     }
-                    ViewBag.ShiftRegisterShifId = new SelectList(db.tbl_shift, "ShiftId", "ShiftName", tbl_ShiftRegister.ShiftRegisterShifId);
-                    return View(tbl_ShiftRegister);
                 }
                 else
                 {
-                    return RedirectToAction("Accessdenied", "Home");
+                    return RedirectToAction("Login", "Account");
                 }
             }
-            else
+            catch (Exception ex)
             {
-                return RedirectToAction("Login", "Account");
+                ModelState.AddModelError(ex.Message, ex.InnerException.ToString());
+                return View();
             }
+
         }
 
         // POST: ShiftRegister/Edit/5
@@ -199,64 +244,82 @@ namespace FireStation.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "ShiftRegisterid,ShiftRegisterDec,ShiftRegisterCommandor,ShiftRegisterTimeStart,ShiftRegisterTimeEnd,ShiftRegisterDateStart,ShiftRegisteridDateEnd,ShiftRegisterurl,ShiftRegisterShifId")] tbl_ShiftRegister tbl_ShiftRegister)
         {
-            if (Session["OnlineUser"] != null)
+            try
             {
-                if (Session["UserRole"].Equals("SUPERADMIN") || Session["UserRole"].Equals("ADMIN") || Session["UserRole"].Equals("SUBADMIN") || Session["UserRole"].Equals("OPRATOR"))
+                if (Session["OnlineUser"] != null)
                 {
-                    ViewBag.OnlineUser = Session["UserName"].ToString();
-                    ViewBag.OnlineUserRole = Session["UserRole"].ToString();
-                    ViewBag.OpState = db.tbl_State.ToList();
-                    ViewBag.Emp = db.tbl_Employee.ToList();
-                    ViewBag.shiftname = db.tbl_shift.ToList();
-                    if (ModelState.IsValid)
+                    if (Session["UserRole"].Equals("SUPERADMIN") || Session["UserRole"].Equals("ADMIN") || Session["UserRole"].Equals("SUBADMIN") || Session["UserRole"].Equals("OPRATOR"))
                     {
-                        db.Entry(tbl_ShiftRegister).State = EntityState.Modified;
-                        db.SaveChanges();
-                        return RedirectToAction("Index");
+                        ViewBag.OnlineUser = Session["UserName"].ToString();
+                        ViewBag.OnlineUserRole = Session["UserRole"].ToString();
+                        ViewBag.OpState = db.tbl_State.ToList();
+                        ViewBag.Emp = db.tbl_Employee.ToList();
+                        ViewBag.shiftname = db.tbl_shift.ToList();
+                        if (ModelState.IsValid)
+                        {
+                            db.Entry(tbl_ShiftRegister).State = EntityState.Modified;
+                            db.SaveChanges();
+                            return RedirectToAction("Index");
+                        }
+                    }
+                    else
+                    {
+                        return RedirectToAction("Accessdenied", "Home");
                     }
                 }
                 else
                 {
-                    return RedirectToAction("Accessdenied", "Home");
+                    return RedirectToAction("Login", "Account");
                 }
+                ViewBag.ShiftRegisterShifId = new SelectList(db.tbl_shift, "ShiftId", "ShiftName", tbl_ShiftRegister.ShiftRegisterShifId);
+                return View(tbl_ShiftRegister);
             }
-            else
+            catch (Exception ex)
             {
-                return RedirectToAction("Login", "Account");
+                ModelState.AddModelError(ex.Message, ex.InnerException.ToString());
+                return View();
             }
-            ViewBag.ShiftRegisterShifId = new SelectList(db.tbl_shift, "ShiftId", "ShiftName", tbl_ShiftRegister.ShiftRegisterShifId);
-            return View(tbl_ShiftRegister);
+
         }
 
         // GET: ShiftRegister/Delete/5
         public ActionResult Delete(int? id)
         {
-            if (Session["OnlineUser"] != null)
+            try
             {
-                if (Session["UserRole"].Equals("SUPERADMIN") || Session["UserRole"].Equals("ADMIN") || Session["UserRole"].Equals("SUBADMIN") || Session["UserRole"].Equals("OPRATOR"))
+                if (Session["OnlineUser"] != null)
                 {
-                    ViewBag.OnlineUser = Session["UserName"].ToString();
-                    ViewBag.OnlineUserRole = Session["UserRole"].ToString();
-                    if (id == null)
+                    if (Session["UserRole"].Equals("SUPERADMIN") || Session["UserRole"].Equals("ADMIN") || Session["UserRole"].Equals("SUBADMIN") || Session["UserRole"].Equals("OPRATOR"))
                     {
-                        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                        ViewBag.OnlineUser = Session["UserName"].ToString();
+                        ViewBag.OnlineUserRole = Session["UserRole"].ToString();
+                        if (id == null)
+                        {
+                            return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                        }
+                        tbl_ShiftRegister tbl_ShiftRegister = db.tbl_ShiftRegister.Find(id);
+                        if (tbl_ShiftRegister == null)
+                        {
+                            return HttpNotFound();
+                        }
+                        return View(tbl_ShiftRegister);
                     }
-                    tbl_ShiftRegister tbl_ShiftRegister = db.tbl_ShiftRegister.Find(id);
-                    if (tbl_ShiftRegister == null)
+                    else
                     {
-                        return HttpNotFound();
+                        return RedirectToAction("Accessdenied", "Home");
                     }
-                    return View(tbl_ShiftRegister);
                 }
                 else
                 {
-                    return RedirectToAction("Accessdenied", "Home");
+                    return RedirectToAction("Login", "Account");
                 }
             }
-            else
+            catch (Exception ex)
             {
-                return RedirectToAction("Login", "Account");
+                ModelState.AddModelError(ex.Message, ex.InnerException.ToString());
+                return View();
             }
+
         }
 
         // POST: ShiftRegister/Delete/5
@@ -264,25 +327,33 @@ namespace FireStation.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            if (Session["OnlineUser"] != null)
+            try
             {
-                if (Session["UserRole"].Equals("SUPERADMIN") || Session["UserRole"].Equals("ADMIN") || Session["UserRole"].Equals("SUBADMIN") || Session["UserRole"].Equals("OPRATOR"))
+                if (Session["OnlineUser"] != null)
                 {
-                    ViewBag.OnlineUser = Session["UserName"].ToString();
-                    ViewBag.OnlineUserRole = Session["UserRole"].ToString();
-                    tbl_ShiftRegister tbl_ShiftRegister = db.tbl_ShiftRegister.Find(id);
-                    db.tbl_ShiftRegister.Remove(tbl_ShiftRegister);
-                    db.SaveChanges();
-                    return RedirectToAction("Index");
+                    if (Session["UserRole"].Equals("SUPERADMIN") || Session["UserRole"].Equals("ADMIN") || Session["UserRole"].Equals("SUBADMIN") || Session["UserRole"].Equals("OPRATOR"))
+                    {
+                        ViewBag.OnlineUser = Session["UserName"].ToString();
+                        ViewBag.OnlineUserRole = Session["UserRole"].ToString();
+                        tbl_ShiftRegister tbl_ShiftRegister = db.tbl_ShiftRegister.Find(id);
+                        db.tbl_ShiftRegister.Remove(tbl_ShiftRegister);
+                        db.SaveChanges();
+                        return RedirectToAction("Index");
+                    }
+                    else
+                    {
+                        return RedirectToAction("Accessdenied", "Home");
+                    }
                 }
                 else
                 {
-                    return RedirectToAction("Accessdenied", "Home");
+                    return RedirectToAction("Login", "Account");
                 }
             }
-            else
+            catch (Exception ex)
             {
-                return RedirectToAction("Login", "Account");
+                ModelState.AddModelError(ex.Message, ex.InnerException.ToString());
+                return View();
             }
         }
 

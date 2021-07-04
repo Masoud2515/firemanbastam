@@ -17,79 +17,106 @@ namespace FireStation.Controllers
         // GET: Repair
         public ActionResult Index()
         {
-            if (Session["OnlineUser"] != null)
+            try
             {
-                if (Session["UserRole"].Equals("SUPERADMIN") || Session["UserRole"].Equals("SUBADMIN"))
+                if (Session["OnlineUser"] != null)
                 {
-                    ViewBag.OnlineUser = Session["UserName"].ToString();
-                    ViewBag.OnlineUserRole = Session["UserRole"].ToString();
-                    var tbl_Repair = db.tbl_Repair.Include(t => t.tbl_Material);
-                    return View(tbl_Repair.ToList());
+                    if (Session["UserRole"].Equals("SUPERADMIN") || Session["UserRole"].Equals("SUBADMIN"))
+                    {
+                        ViewBag.OnlineUser = Session["UserName"].ToString();
+                        ViewBag.OnlineUserRole = Session["UserRole"].ToString();
+                        var tbl_Repair = db.tbl_Repair.Include(t => t.tbl_Material);
+                        return View(tbl_Repair.ToList());
+                    }
+                    else
+                    {
+                        return RedirectToAction("Accessdenied", "Home");
+                    }
                 }
                 else
                 {
-                    return RedirectToAction("Accessdenied", "Home");
+                    return RedirectToAction("Login", "Account");
                 }
             }
-            else
+            catch (Exception ex)
             {
-                return RedirectToAction("Login", "Account");
+                ModelState.AddModelError(ex.Message, ex.InnerException.ToString());
+                return View();
             }
+
         }
 
         // GET: Repair/Details/5
         public ActionResult Details(int? id)
         {
-            if (Session["OnlineUser"] != null)
+            try
             {
-                if (Session["UserRole"].Equals("SUPERADMIN") || Session["UserRole"].Equals("SUBADMIN"))
+                if (Session["OnlineUser"] != null)
                 {
-                    ViewBag.OnlineUser = Session["UserName"].ToString();
-                    ViewBag.OnlineUserRole = Session["UserRole"].ToString();
-                    if (id == null)
+                    if (Session["UserRole"].Equals("SUPERADMIN") || Session["UserRole"].Equals("SUBADMIN"))
                     {
-                        return RedirectToAction("Err", "Home", new { code = "E-1133", text = "هیچ شناسه ای وارد نشده", url = string.Format("{0}/", RouteData.Values["controller"].ToString()) });
+                        ViewBag.OnlineUser = Session["UserName"].ToString();
+                        ViewBag.OnlineUserRole = Session["UserRole"].ToString();
+                        if (id == null)
+                        {
+                            return RedirectToAction("Err", "Home", new { code = "E-1133", text = "هیچ شناسه ای وارد نشده", url = string.Format("{0}/", RouteData.Values["controller"].ToString()) });
+                        }
+                        tbl_Repair tbl_Repair = db.tbl_Repair.Find(id);
+                        if (tbl_Repair == null)
+                        {
+                            return RedirectToAction("Err", "Home", new { code = "E-1133", text = "هیچ عملیاتی ای با شناسه وارد شده ثبت نشده است", url = string.Format("{0}/", RouteData.Values["controller"].ToString()) });
+                        }
+                        return View(tbl_Repair);
                     }
-                    tbl_Repair tbl_Repair = db.tbl_Repair.Find(id);
-                    if (tbl_Repair == null)
+                    else
                     {
-                        return RedirectToAction("Err", "Home", new { code = "E-1133", text = "هیچ عملیاتی ای با شناسه وارد شده ثبت نشده است", url = string.Format("{0}/", RouteData.Values["controller"].ToString()) });
+                        return RedirectToAction("Accessdenied", "Home");
                     }
-                    return View(tbl_Repair);
                 }
                 else
                 {
-                    return RedirectToAction("Accessdenied", "Home");
+                    return RedirectToAction("Login", "Account");
                 }
             }
-            else
+            catch (Exception ex)
             {
-                return RedirectToAction("Login", "Account");
+                ModelState.AddModelError(ex.Message, ex.InnerException.ToString());
+                return View();
             }
+
         }
 
         // GET: Repair/Create
         public ActionResult Create()
         {
-            if (Session["OnlineUser"] != null)
+            try
             {
-                if (Session["UserRole"].Equals("SUPERADMIN") || Session["UserRole"].Equals("SUBADMIN"))
+                if (Session["OnlineUser"] != null)
                 {
-                    ViewBag.OnlineUser = Session["UserName"].ToString();
-                    ViewBag.OnlineUserRole = Session["UserRole"].ToString();
-                    ViewBag.MaterialId = db.tbl_Material.ToList();
-                    ViewBag.StationName = db.tbl_State.ToList();
-                    return View();
+                    if (Session["UserRole"].Equals("SUPERADMIN") || Session["UserRole"].Equals("SUBADMIN"))
+                    {
+                        ViewBag.OnlineUser = Session["UserName"].ToString();
+                        ViewBag.OnlineUserRole = Session["UserRole"].ToString();
+                        ViewBag.MaterialId = db.tbl_Material.ToList();
+                        ViewBag.StationName = db.tbl_State.ToList();
+                        return View();
+                    }
+                    else
+                    {
+                        return RedirectToAction("Accessdenied", "Home");
+                    }
                 }
                 else
                 {
-                    return RedirectToAction("Accessdenied", "Home");
+                    return RedirectToAction("Login", "Account");
                 }
             }
-            else
+            catch (Exception ex)
             {
-                return RedirectToAction("Login", "Account");
+                ModelState.AddModelError(ex.Message, ex.InnerException.ToString());
+                return View();
             }
+
         }
 
         // POST: Repair/Create
@@ -99,23 +126,70 @@ namespace FireStation.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "RepairId,RepairDescription,RepairPrice,RepairTitel,MaterialId,StateId")] tbl_Repair tbl_Repair)
         {
-            Random rand = new Random();
-            int ra;
-            if (ModelState.IsValid)
+            try
+            {
+                Random rand = new Random();
+                int ra;
+                if (ModelState.IsValid)
+                {
+                    if (Session["OnlineUser"] != null)
+                    {
+                        if (Session["UserRole"].Equals("SUPERADMIN"))
+                        {
+                            ra = rand.Next(1000000, 2000000);
+                            while (db.tbl_Repair.FirstOrDefault(f => f.RepairId == ra) != null)
+                            {
+                                ra = rand.Next(1000000, 2000000);
+                            }
+                            tbl_Repair.RepairId = ra;
+                            db.tbl_Repair.Add(tbl_Repair);
+                            db.SaveChanges();
+                            return RedirectToAction("Index");
+                        }
+                        else
+                        {
+                            return RedirectToAction("Accessdenied", "Home");
+                        }
+                    }
+                    else
+                    {
+                        return RedirectToAction("Login", "Account");
+                    }
+                }
+                ViewBag.MaterialId = new SelectList(db.tbl_Material, "MaterialId", "MaterialCode", tbl_Repair.MaterialId);
+                return View(tbl_Repair);
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError(ex.Message, ex.InnerException.ToString());
+                return View();
+            }
+
+        }
+
+        // GET: Repair/Edit/5
+        public ActionResult Edit(int? id)
+        {
+            try
             {
                 if (Session["OnlineUser"] != null)
                 {
-                    if (Session["UserRole"].Equals("SUPERADMIN"))
+                    if (Session["UserRole"].Equals("SUPERADMIN") || Session["UserRole"].Equals("SUBADMIN"))
                     {
-                        ra = rand.Next(1000000, 2000000);
-                        while (db.tbl_Repair.FirstOrDefault(f => f.RepairId == ra) != null)
+                        ViewBag.OnlineUser = Session["UserName"].ToString();
+                        ViewBag.OnlineUserRole = Session["UserRole"].ToString();
+                        ViewBag.StationName = db.tbl_State.ToList();
+                        if (id == null)
                         {
-                            ra = rand.Next(1000000, 2000000);
+                            return RedirectToAction("Err", "Home", new { code = "E-1133", text = "هیچ شناسه ای وارد نشده", url = string.Format("{0}/", RouteData.Values["controller"].ToString()) });
                         }
-                        tbl_Repair.RepairId = ra;
-                        db.tbl_Repair.Add(tbl_Repair);
-                        db.SaveChanges();
-                        return RedirectToAction("Index");
+                        tbl_Repair tbl_Repair = db.tbl_Repair.Find(id);
+                        if (tbl_Repair == null)
+                        {
+                            return RedirectToAction("Err", "Home", new { code = "E-1133", text = "هیچ عملیاتی ای با شناسه وارد شده ثبت نشده است", url = string.Format("{0}/", RouteData.Values["controller"].ToString()) });
+                        }
+                        ViewBag.MaterialId = new SelectList(db.tbl_Material, "MaterialId", "MaterialCode", tbl_Repair.MaterialId);
+                        return View(tbl_Repair);
                     }
                     else
                     {
@@ -127,41 +201,12 @@ namespace FireStation.Controllers
                     return RedirectToAction("Login", "Account");
                 }
             }
-            ViewBag.MaterialId = new SelectList(db.tbl_Material, "MaterialId", "MaterialCode", tbl_Repair.MaterialId);
-            return View(tbl_Repair);
-        }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError(ex.Message, ex.InnerException.ToString());
+                return View();
+            }
 
-        // GET: Repair/Edit/5
-        public ActionResult Edit(int? id)
-        {
-            if (Session["OnlineUser"] != null)
-            {
-                if (Session["UserRole"].Equals("SUPERADMIN") || Session["UserRole"].Equals("SUBADMIN"))
-                {
-                    ViewBag.OnlineUser = Session["UserName"].ToString();
-                    ViewBag.OnlineUserRole = Session["UserRole"].ToString();
-                    ViewBag.StationName = db.tbl_State.ToList();
-                    if (id == null)
-                    {
-                        return RedirectToAction("Err", "Home", new { code = "E-1133", text = "هیچ شناسه ای وارد نشده", url = string.Format("{0}/", RouteData.Values["controller"].ToString()) });
-                    }
-                    tbl_Repair tbl_Repair = db.tbl_Repair.Find(id);
-                    if (tbl_Repair == null)
-                    {
-                        return RedirectToAction("Err", "Home", new { code = "E-1133", text = "هیچ عملیاتی ای با شناسه وارد شده ثبت نشده است", url = string.Format("{0}/", RouteData.Values["controller"].ToString()) });
-                    }
-                    ViewBag.MaterialId = new SelectList(db.tbl_Material, "MaterialId", "MaterialCode", tbl_Repair.MaterialId);
-                    return View(tbl_Repair);
-                }
-                else
-                {
-                    return RedirectToAction("Accessdenied", "Home");
-                }
-            }
-            else
-            {
-                return RedirectToAction("Login", "Account");
-            }
         }
 
         // POST: Repair/Edit/5
@@ -171,7 +216,46 @@ namespace FireStation.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "RepairId,RepairDescription,RepairPrice,RepairTitel,MaterialId,StateId")] tbl_Repair tbl_Repair)
         {
-            if (ModelState.IsValid)
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    if (Session["OnlineUser"] != null)
+                    {
+                        if (Session["UserRole"].Equals("SUPERADMIN") || Session["UserRole"].Equals("SUBADMIN"))
+                        {
+                            ViewBag.OnlineUser = Session["UserName"].ToString();
+                            ViewBag.OnlineUserRole = Session["UserRole"].ToString();
+                            ViewBag.StationName = db.tbl_State.ToList();
+                            db.Entry(tbl_Repair).State = EntityState.Modified;
+                            db.SaveChanges();
+                            return RedirectToAction("Index");
+                        }
+                        else
+                        {
+                            return RedirectToAction("Accessdenied", "Home");
+                        }
+                    }
+                    else
+                    {
+                        return RedirectToAction("Login", "Account");
+                    }
+                }
+                ViewBag.MaterialId = new SelectList(db.tbl_Material, "MaterialId", "MaterialCode", tbl_Repair.MaterialId);
+                return View(tbl_Repair);
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError(ex.Message, ex.InnerException.ToString());
+                return View();
+            }
+
+        }
+
+        // GET: Repair/Delete/5
+        public ActionResult Delete(int? id)
+        {
+            try
             {
                 if (Session["OnlineUser"] != null)
                 {
@@ -179,10 +263,16 @@ namespace FireStation.Controllers
                     {
                         ViewBag.OnlineUser = Session["UserName"].ToString();
                         ViewBag.OnlineUserRole = Session["UserRole"].ToString();
-                        ViewBag.StationName = db.tbl_State.ToList();
-                        db.Entry(tbl_Repair).State = EntityState.Modified;
-                        db.SaveChanges();
-                        return RedirectToAction("Index");
+                        if (id == null)
+                        {
+                            return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                        }
+                        tbl_Repair tbl_Repair = db.tbl_Repair.Find(id);
+                        if (tbl_Repair == null)
+                        {
+                            return HttpNotFound();
+                        }
+                        return View(tbl_Repair);
                     }
                     else
                     {
@@ -194,39 +284,12 @@ namespace FireStation.Controllers
                     return RedirectToAction("Login", "Account");
                 }
             }
-            ViewBag.MaterialId = new SelectList(db.tbl_Material, "MaterialId", "MaterialCode", tbl_Repair.MaterialId);
-            return View(tbl_Repair);
-        }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError(ex.Message, ex.InnerException.ToString());
+                return View();
+            }
 
-        // GET: Repair/Delete/5
-        public ActionResult Delete(int? id)
-        {
-            if (Session["OnlineUser"] != null)
-            {
-                if (Session["UserRole"].Equals("SUPERADMIN") || Session["UserRole"].Equals("SUBADMIN"))
-                {
-                    ViewBag.OnlineUser = Session["UserName"].ToString();
-                    ViewBag.OnlineUserRole = Session["UserRole"].ToString();
-                    if (id == null)
-                    {
-                        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-                    }
-                    tbl_Repair tbl_Repair = db.tbl_Repair.Find(id);
-                    if (tbl_Repair == null)
-                    {
-                        return HttpNotFound();
-                    }
-                    return View(tbl_Repair);
-                }
-                else
-                {
-                    return RedirectToAction("Accessdenied", "Home");
-                }
-            }
-            else
-            {
-                return RedirectToAction("Login", "Account");
-            }
         }
 
         // POST: Repair/Delete/5
@@ -241,10 +304,10 @@ namespace FireStation.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return RedirectToAction("Err", "Home", new { code = "E-1133", text = "ارور بررسی نشده", url = string.Format("{0}/", RouteData.Values["controller"].ToString()) });
-                throw;
+                ModelState.AddModelError(ex.Message, ex.InnerException.ToString());
+                return View();
             }
         }
 
