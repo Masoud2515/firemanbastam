@@ -108,7 +108,6 @@ namespace FireStation.Controllers
                 ModelState.AddModelError(ex.Message, ex.InnerException.ToString());
                 return View();
             }
-
         }
 
         // GET: Accident/Details/5
